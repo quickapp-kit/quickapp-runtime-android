@@ -1,0 +1,8 @@
+--------- beginning of main
+08-25 16:00:05.189 27675 27675 I QuickAppKit: android.input.click surface=srf:1 node=node:6
+08-25 16:00:05.189 27675 27675 I QuickAppKit: android.event.click.received surface=srf:1 node=node:6
+08-25 16:00:05.190 27675 27701 I QuickAppKit: android.event.js_callback posted=1 error=
+08-25 16:00:05.190 27675 27701 I QuickAppKit: android.event.click.dispatched=1
+08-25 16:00:05.190 27675 27702 I QuickAppKit: android.event.handler_execute surface=srf:1 handler=hdl:1 dispatched=1
+08-25 16:00:05.192 27675 27701 I QuickAppKit: android.feature.result request=req:j-200001 surface=srf:1 module=0 method=2 status=completed
+08-25 16:00:05.192 27675 27701 I QuickAppKit: android.feature.callback posted=1 error=

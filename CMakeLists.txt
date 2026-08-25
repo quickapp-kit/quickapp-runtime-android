@@ -24,6 +24,19 @@ target_link_libraries(and_s01_contract_tests PRIVATE quickapp_android_host)
 target_compile_options(and_s01_contract_tests PRIVATE -Wall -Wextra -Wpedantic -Werror)
 add_test(NAME and_s01_contract_tests COMMAND and_s01_contract_tests)
 
+add_executable(and_b04_feature_provider_tests
+  tests/b4_feature_provider_tests.cpp
+  src/feature_provider.cpp
+  ../quickapp-runtime-core/src/module_registry.cpp
+  ../quickapp-runtime-core/src/error.cpp
+  ../quickapp-runtime-core/src/runtime_value.cpp
+)
+target_include_directories(and_b04_feature_provider_tests PRIVATE
+  include ../quickapp-runtime-core/include)
+target_compile_options(and_b04_feature_provider_tests PRIVATE
+  -Wall -Wextra -Wpedantic -Werror)
+add_test(NAME and_b04_feature_provider_tests COMMAND and_b04_feature_provider_tests)
+
 if(ANDROID)
   set(QUICKAPP_ANDROID_ROOT "${CMAKE_CURRENT_SOURCE_DIR}")
   set(QUICKAPP_CORE_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/../quickapp-runtime-core")
@@ -37,6 +50,7 @@ if(ANDROID)
                    "${CMAKE_CURRENT_BINARY_DIR}/quickapp-runtime-js")
 
   add_library(quickapp_android_platform STATIC
+    src/feature_provider.cpp
     src/platform_adapter.cpp
     src/runtime_spine.cpp
   )
@@ -44,6 +58,7 @@ if(ANDROID)
   target_link_libraries(quickapp_android_platform PUBLIC
     quickapp_android_host
     quickapp_core_package
+    quickapp_core_features
     quickapp_core_render
     quickapp_js_engine_quickjs
     quickapp_js_engine_api

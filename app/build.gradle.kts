@@ -28,11 +28,11 @@ android {
     externalNativeBuild {
         cmake {
             path = file("../CMakeLists.txt")
-            version = "3.22.1"
+            version = "4.1.2"
         }
     }
 
-    sourceSets["main"].assets.srcDir(layout.buildDirectory.dir("generated/case001-assets"))
+    sourceSets["main"].assets.srcDir("${layout.buildDirectory.get().asFile}/generated/case001-assets")
 
     buildTypes {
         debug {
@@ -44,12 +44,23 @@ android {
     }
 }
 
-val syncCase001Rpk by tasks.registering(Copy::class) {
-    from("../../quickapp-toolkit/evidence/tk-s07-case001.rpk")
+val syncGoldenRpk by tasks.registering(Copy::class) {
+    from("../../quickapp-toolkit/evidence/tk-s12-lvgl-p0.rpk") {
+        rename { "golden-app.rpk" }
+    }
+    from("../../quickapp-examples/showcases/gallery-001/dist/gallery-001.rpk")
+    from("../../quickapp-examples/showcases/consumer-001/dist/consumer-001.rpk")
+    from("../../quickapp-examples/showcases/wearable-001/dist/wearable-001.rpk")
+    from("../../quickapp-examples/showcases/commerce-001/dist/commerce-001.rpk")
+    from("../../quickapp-examples/showcases/controls-001/dist/controls-001.rpk")
+    from("../../quickapp-examples/showcases/controls-002/dist/controls-002.rpk")
+    from("../../quickapp-examples/showcases/list-001/dist/list-001.rpk")
+    from("../../quickapp-examples/showcases/platform-001/dist/platform-001.rpk")
+    from("../../quickapp-examples/showcases/media-001/dist/media-001.rpk")
+    from("../../quickapp-examples/showcases/tabs-001/dist/tabs-001.rpk")
     into(layout.buildDirectory.dir("generated/case001-assets"))
-    rename { "case001.rpk" }
 }
 
 tasks.named("preBuild").configure {
-    dependsOn(syncCase001Rpk)
+    dependsOn(syncGoldenRpk)
 }

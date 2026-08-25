@@ -5,8 +5,23 @@
 #include <string_view>
 #include <type_traits>
 
+#if defined(__ANDROID__)
+#include <android/log.h>
+#endif
+
 namespace quickapp::android::platform {
 namespace {
+
+void androidMountStage(const core::render::MountTransaction& transaction) noexcept {
+#if defined(__ANDROID__)
+  __android_log_print(ANDROID_LOG_INFO, "QuickAppKit",
+                      "android.native.mount surface=%s operations=%zu",
+                      transaction.surface_id.wire().c_str(),
+                      transaction.operations.size());
+#else
+  (void)transaction;
+#endif
+}
 
 core::EnqueueResult accepted(bool value, std::string_view message) noexcept {
   if (value) return core::EnqueueResult::success(core::Accepted{});
@@ -51,7 +66,17 @@ core::EnqueueResult SurfacePort::post(
                           "Android rejected CreateSurfaceHost");
         } else if constexpr (std::is_same_v<
                                  Value, core::surface::SurfacePresentCommand>) {
-          return accepted(gateway_.postPresentSurface(value),
+#if defined(__ANDROID__)
+          __android_log_print(ANDROID_LOG_INFO, "QuickAppKit",
+                              "android.native.surface.present.enter request=%s surface=%s",
+                              value.request_id.wire().c_str(), value.target.wire().c_str());
+#endif
+          const bool posted = gateway_.postPresentSurface(value);
+#if defined(__ANDROID__)
+          __android_log_print(ANDROID_LOG_INFO, "QuickAppKit",
+                              "android.native.surface.present.exit posted=%d", posted ? 1 : 0);
+#endif
+          return accepted(posted,
                           "Android rejected PresentSurfaceHost");
         } else if constexpr (std::is_same_v<
                                  Value, core::surface::SurfaceVisibilityCommand>) {
@@ -74,6 +99,7 @@ core::EnqueueResult MountPort::post(
   if (!accepting_.load(std::memory_order_acquire)) {
     return core::EnqueueResult::failure(platformError("Android Mount port is closed"));
   }
+  androidMountStage(transaction);
   return accepted(gateway_.postMount(transaction),
                   "Android rejected MountTransaction");
 }

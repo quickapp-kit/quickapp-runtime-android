@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public final class MainActivity extends Activity {
+    private static final String DEFAULT_RPK = "golden-app.rpk";
+
     private RuntimeBridge runtime;
 
     @Override
@@ -30,8 +32,9 @@ public final class MainActivity extends Activity {
             float density = getResources().getDisplayMetrics().density;
             float width = root.getWidth() / density;
             float height = root.getHeight() / density;
-            runtime = new RuntimeBridge(this, root, width, height);
-            runtime.start(copyRuntimeRpk().getAbsolutePath());
+            String rpkPath = copyRuntimeRpk(selectedRpkAsset()).getAbsolutePath();
+            runtime = new RuntimeBridge(this, root, width, height, rpkPath);
+            runtime.start(rpkPath);
         });
     }
 
@@ -41,9 +44,26 @@ public final class MainActivity extends Activity {
         super.onDestroy();
     }
 
-    private File copyRuntimeRpk() {
-        File output = new File(getFilesDir(), "case001.rpk");
-        try (InputStream input = getAssets().open("case001.rpk");
+    private String selectedRpkAsset() {
+        String requested = getIntent().getStringExtra("quickapp.rpk");
+        if ("gallery-001.rpk".equals(requested) ||
+                "consumer-001.rpk".equals(requested) ||
+                "wearable-001.rpk".equals(requested) ||
+                "commerce-001.rpk".equals(requested) ||
+                "controls-001.rpk".equals(requested) ||
+                "controls-002.rpk".equals(requested) ||
+                "list-001.rpk".equals(requested) ||
+                "platform-001.rpk".equals(requested) ||
+                "media-001.rpk".equals(requested) ||
+                "tabs-001.rpk".equals(requested)) {
+            return requested;
+        }
+        return DEFAULT_RPK;
+    }
+
+    private File copyRuntimeRpk(String assetName) {
+        File output = new File(getFilesDir(), assetName);
+        try (InputStream input = getAssets().open(assetName);
              FileOutputStream stream = new FileOutputStream(output, false)) {
             byte[] buffer = new byte[16 * 1024];
             int read;

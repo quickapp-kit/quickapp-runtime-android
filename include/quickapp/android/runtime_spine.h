@@ -31,6 +31,14 @@ class RuntimeSpine final : public std::enable_shared_from_this<RuntimeSpine> {
   void start(std::string rpk_path) noexcept;
   void dispatchClick(std::string surface_id, std::string node_id,
                      std::uint64_t timestamp_ns) noexcept;
+  void dispatchEvent(std::string surface_id, std::string node_id,
+                     std::string event_type, std::optional<std::string> value,
+                     std::string number_name, std::optional<double> number,
+                     bool checked, bool has_checked,
+                     bool from_user, bool has_from_user,
+                     double scroll_offset, double content_size,
+                     double viewport_size, bool has_scroll_metrics,
+                     std::uint64_t timestamp_ns) noexcept;
   void acceptSurfaceResult(std::string request_id, int kind,
                            std::string target_surface_id,
                            std::optional<std::string> source_surface_id,

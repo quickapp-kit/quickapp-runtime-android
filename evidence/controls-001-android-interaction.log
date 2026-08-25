@@ -1,0 +1,94 @@
+--------- beginning of main
+I/QuickAppKit(18371): android.stage=run.begin
+I/QuickAppKit(18371): android.stage=factory.created
+I/QuickAppKit(18371): android.stage=rpk.read
+I/QuickAppKit(18371): android.stage=rpk.loader.created
+I/QuickAppKit(18371): android.stage=rpk.verified
+I/QuickAppKit(18371): android.stage=js.started
+I/QuickAppKit(18371): android.stage=coordinator.created
+I/QuickAppKit(18371): android.stage=surface_controller.created
+I/QuickAppKit(18371): android.stage=js.module.loaded
+I/QuickAppKit(18371): android.js.module id=@quickapp-kit/app kind=app status=loaded error=
+I/QuickAppKit(18371): android.stage=js.setup.finished
+I/QuickAppKit(18371): android.stage=js.setup
+I/QuickAppKit(18371): android.stage=root.enqueued
+I/QuickAppKit(18371): android.stage=core.loop.before
+I/QuickAppKit(18371): android.stage=core.loop.mailbox.drained
+I/QuickAppKit(18371): android.native.create surface=srf:1
+I/QuickAppKit(18371): android.platform.create request=req:29 surface=srf:1
+I/QuickAppKit(18371): android.stage=core.loop.controller.work
+I/QuickAppKit(18371): android.core.controller.drained count=1
+I/QuickAppKit(18371): android.stage=core.loop.controller.drained
+I/QuickAppKit(18371): android.platform.create.ui surface=srf:1
+I/QuickAppKit(18371): android.platform.create.ui.result=true
+I/QuickAppKit(18371): android.stage=surface.result.received
+I/QuickAppKit(18371): android.platform.create.completed surface=srf:1
+I/QuickAppKit(18371): android.stage=surface.result.core
+I/QuickAppKit(18371): android.stage=page.command.received
+I/QuickAppKit(18371): android.stage=core.loop.controller.work
+I/QuickAppKit(18371): android.stage=page.command.js
+I/QuickAppKit(18371): android.core.controller.drained count=1
+I/QuickAppKit(18371): android.stage=js.module.loaded
+I/QuickAppKit(18371): android.js.module id=@quickapp-kit/page/pages/Home kind=page status=loaded error=
+I/QuickAppKit(18371): android.stage=page.start.completed
+I/QuickAppKit(18371): android.stage=initial.command.received
+I/QuickAppKit(18371): android.stage=initial.command.coordinator
+I/QuickAppKit(18371): android.stage=initial.command.js
+I/QuickAppKit(18371): android.stage=core.loop.controller.work
+I/QuickAppKit(18371): android.core.controller.drained count=1
+I/QuickAppKit(18371): android.stage=page.vm.ready
+I/QuickAppKit(18371): android.event.handler_bind surface=srf:1 handler=hdl:1 method=onInput bound=1 method_ok=1 vm_ok=1
+I/QuickAppKit(18371): android.event.handler_bind surface=srf:1 handler=hdl:2 method=onChange bound=1 method_ok=1 vm_ok=1
+I/QuickAppKit(18371): android.event.handler_bind surface=srf:1 handler=hdl:3 method=onFocus bound=1 method_ok=1 vm_ok=1
+I/QuickAppKit(18371): android.event.handler_bind surface=srf:1 handler=hdl:4 method=onSwitch bound=1 method_ok=1 vm_ok=1
+I/QuickAppKit(18371): android.event.handler_bind surface=srf:1 handler=hdl:5 method=onRefresh bound=1 method_ok=1 vm_ok=1
+I/QuickAppKit(18371): android.stage=core.ingress.instantiate
+I/QuickAppKit(18371): android.native.mount surface=srf:1 operations=56
+I/QuickAppKit(18371): android.platform.mount surface=srf:1 operations=56
+I/QuickAppKit(18371): android.stage=core.ingress.instantiate.accepted
+I/QuickAppKit(18371): android.event.handlers count=5 hdl1node=node:4
+I/QuickAppKit(18371): android.platform.mount.ui surface=srf:1
+I/QuickAppKit(18371): android.platform.mount.result surface=srf:1 ok=true
+I/QuickAppKit(18371): android.mount.result.received surface=srf:1 revision=0 attempt=mnt:1 source=req:j-1 mounted=1
+I/QuickAppKit(18371): android.stage=core.initial.prepared
+I/QuickAppKit(18371): android.initial.result surface=srf:1 prepared=1 error=
+I/QuickAppKit(18371): android.initial.controller.enqueue=1
+I/QuickAppKit(18371): android.mount.result.accepted=1
+I/QuickAppKit(18371): android.native.surface.present.enter request=req:37 surface=srf:1
+I/QuickAppKit(18371): android.native.present request=req:37 surface=srf:1 push=0
+I/QuickAppKit(18371): android.platform.present request=req:37 surface=srf:1
+I/QuickAppKit(18371): android.native.surface.present.exit posted=1
+I/QuickAppKit(18371): android.stage=core.loop.controller.work
+I/QuickAppKit(18371): android.core.controller.drained count=1
+I/QuickAppKit(18371): android.platform.present.ui surface=srf:1
+I/QuickAppKit(18371): android.stage=surface.result.received
+I/QuickAppKit(18371): android.stage=surface.result.core
+I/QuickAppKit(18371): android.stage=page.command.received
+I/QuickAppKit(18371): android.stage=core.loop.controller.work
+I/QuickAppKit(18371): android.core.controller.drained count=1
+I/QuickAppKit(18371): android.stage=page.command.js
+I/QuickAppKit(18371): android.stage=surface.operation.completed
+I/QuickAppKit(18371): android.surface.operation kind=0 request=req:android-root target=srf:1 error=
+I/QuickAppKit(18371): android.stage=core.loop.controller.work
+I/QuickAppKit(18371): android.core.controller.drained count=1
+I/QuickAppKit(18371): android.event.focus.received surface=srf:1 node=node:4
+I/QuickAppKit(18371): android.event.js_callback posted=1 error=
+I/QuickAppKit(18371): android.event.focus.dispatched=1
+I/QuickAppKit(18371): android.event.handler_execute surface=srf:1 handler=hdl:3 dispatched=1
+I/QuickAppKit(18371): android.event.input.received surface=srf:1 node=node:4
+I/QuickAppKit(18371): android.event.js_callback posted=1 error=
+I/QuickAppKit(18371): android.event.input.dispatched=1
+I/QuickAppKit(18371): android.event.handler_execute surface=srf:1 handler=hdl:1 dispatched=1
+I/QuickAppKit(18371): android.event.change.received surface=srf:1 node=node:4
+I/QuickAppKit(18371): android.event.js_callback posted=1 error=
+I/QuickAppKit(18371): android.event.change.dispatched=1
+I/QuickAppKit(18371): android.event.handler_execute surface=srf:1 handler=hdl:2 dispatched=1
+I/QuickAppKit(18371): android.event.change.received surface=srf:1 node=node:7
+I/QuickAppKit(18371): android.event.js_callback posted=1 error=
+I/QuickAppKit(18371): android.event.handler_execute surface=srf:1 handler=hdl:4 dispatched=1
+I/QuickAppKit(18371): android.event.change.dispatched=1
+I/QuickAppKit(18371): android.input.click surface=srf:1 node=node:9
+I/QuickAppKit(18371): android.event.click.received surface=srf:1 node=node:9
+I/QuickAppKit(18371): android.event.js_callback posted=1 error=
+I/QuickAppKit(18371): android.event.click.dispatched=1
+I/QuickAppKit(18371): android.event.handler_execute surface=srf:1 handler=hdl:5 dispatched=1

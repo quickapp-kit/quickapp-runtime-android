@@ -1,6 +1,8 @@
 #include "quickapp/android/runtime_spine.h"
 
 #include <condition_variable>
+#include <chrono>
+#include <cstdint>
 #include <cstdio>
 #include <fstream>
 #include <functional>
@@ -9,14 +11,22 @@
 #include <mutex>
 #include <optional>
 #include <queue>
+#include <set>
 #include <thread>
 #include <utility>
 #include <variant>
+#include <vector>
+
+#if defined(__ANDROID__)
+#include <android/log.h>
+#endif
 
 #include "quickapp/core/foundation/app_runtime_factory.h"
+#include "quickapp/core/feature/module_registry.h"
 #include "quickapp/core/package/package_loader.h"
 #include "quickapp/core/render/initial_render_pipeline.h"
 #include "quickapp/core/surface/surface_controller.h"
+#include "quickapp/android/feature_provider.h"
 #include "quickapp/js/abi/runtime_abi_service.h"
 #include "quickapp/js/alpha/alpha_page_initialization_stage.h"
 #include "quickapp/js/binding/alpha_initial_binding_stage.h"
@@ -33,12 +43,21 @@
 namespace quickapp::android {
 namespace {
 
+void androidStage(const char* stage) noexcept {
+#if defined(__ANDROID__)
+  __android_log_print(ANDROID_LOG_INFO, "QuickAppKit", "android.stage=%s", stage);
+#else
+  (void)stage;
+#endif
+}
+
 namespace qc = core;
 namespace qp = core::package;
 namespace qr = core::render;
 namespace qs = core::surface;
 namespace qj = js;
 namespace ja = js::abi;
+namespace qcf = core::feature;
 
 class CoreMailbox final {
  public:
@@ -177,7 +196,16 @@ class TraceSink final : public qj::TraceSink {
 class ModuleCompletion final : public qj::module::ModuleCompletionPort {
  public:
   qj::module::ModuleEnqueueResult post(
-      const qj::module::ModuleLoadCompletion&) noexcept override {
+      const qj::module::ModuleLoadCompletion& completion) noexcept override {
+    androidStage(completion.status == "loaded" ? "js.module.loaded"
+                                                : "js.module.failed");
+#if defined(__ANDROID__)
+    __android_log_print(ANDROID_LOG_INFO, "QuickAppKit",
+                        "android.js.module id=%s kind=%s status=%s error=%s",
+                        completion.moduleId.c_str(), completion.moduleKind.c_str(),
+                        completion.status.c_str(),
+                        completion.error ? completion.error->message.c_str() : "");
+#endif
     return {qj::module::ModuleEnqueueStatus::Accepted};
   }
 };
@@ -185,7 +213,7 @@ class ModuleCompletion final : public qj::module::ModuleCompletionPort {
 class RequestIds final : public qj::framework::JsRequestIdAllocatorPort {
  public:
   std::string nextRequestId() noexcept override {
-    return "req:android-js-" + std::to_string(next_++);
+    return "req:j-" + std::to_string(next_++);
   }
 
  private:
@@ -255,14 +283,34 @@ class ControllerLifecycleResults final : public qs::SurfaceLifecycleResultSink {
 
 class ControllerInitialResults final : public qr::InitialContentResultSink {
  public:
-  void bind(qs::SurfaceController& controller) noexcept { controller_ = &controller; }
-  void complete(qs::surface::InitialContentResult result) noexcept override {
-    if (controller_) static_cast<void>(controller_->enqueue(std::move(result)));
+  explicit ControllerInitialResults(
+      std::unique_ptr<qs::SurfaceController>* controller_slot) noexcept
+      : controller_slot_(controller_slot) {}
+
+  void complete(qs::InitialContentResult result) noexcept override {
+    androidStage(result.prepared ? "core.initial.prepared"
+                                 : "core.initial.failed");
+#if defined(__ANDROID__)
+    __android_log_print(ANDROID_LOG_INFO, "QuickAppKit",
+                        "android.initial.result surface=%s prepared=%d error=%s",
+                        result.surface_id.wire().c_str(), result.prepared ? 1 : 0,
+                        result.error ? std::string(result.error->message).c_str() : "");
+#endif
+    auto* controller = controller_slot_ == nullptr ? nullptr : controller_slot_->get();
+    const auto accepted = controller ? controller->enqueue(std::move(result))
+                                      : qc::EnqueueResult::failure(
+                                            qc::RuntimeError::simple(
+                                                qc::RuntimeErrorCode::kPlatformRejected,
+                                                "Android controller unavailable"));
+#if defined(__ANDROID__)
+    __android_log_print(ANDROID_LOG_INFO, "QuickAppKit",
+                        "android.initial.controller.enqueue=%d", accepted ? 1 : 0);
+#endif
   }
   void close() noexcept override {}
 
  private:
-  qs::SurfaceController* controller_{nullptr};
+  std::unique_ptr<qs::SurfaceController>* controller_slot_{nullptr};
 };
 
 class ControllerOperationResults final : public qs::SurfaceOperationResultSink {
@@ -341,7 +389,8 @@ class RenderResults final : public qr::RenderTransactionResultSink {
     std::optional<ja::MessageRuntimeError> error;
     if (result.error) {
       error = ja::MessageRuntimeError{
-          std::string(qc::to_wire(result.error->code)), result.error->message,
+          std::string(qc::to_wire(result.error->code)),
+          std::string(result.error->message),
           result.error->retryable, result.surface_id.wire(), std::nullopt,
           result.transaction_id.wire(), std::nullopt};
     }
@@ -362,13 +411,30 @@ class RenderResults final : public qr::RenderTransactionResultSink {
 class JsCoreIngress final : public ja::CoreIngressPort,
                             public qc::event::JsEventDispatchPort {
  public:
+  using HandlerBindingSink =
+      std::function<void(std::string, std::string,
+                         std::vector<ja::HandlerBinding>)>;
+  using HandlerUnbindSink =
+      std::function<void(std::string, std::vector<std::string>)>;
+
   explicit JsCoreIngress(CoreMailbox& mailbox) : mailbox_(mailbox) {}
 
+  void bindEventRouter(qc::event::EventRouter& event_router) noexcept {
+    event_router_ = &event_router;
+  }
+
   void bind(qr::MountCoordinator& coordinator, qs::SurfaceController& controller,
-            ja::RuntimeAbiService& runtime_abi) noexcept {
+            ja::RuntimeAbiService& runtime_abi,
+            qcf::ModuleRegistry& feature_registry) noexcept {
     coordinator_ = &coordinator;
     controller_ = &controller;
     runtime_abi_ = &runtime_abi;
+    feature_registry_ = &feature_registry;
+  }
+  void bindHandlerSinks(HandlerBindingSink bind_sink,
+                        HandlerUnbindSink unbind_sink) noexcept {
+    handler_binding_sink_ = std::move(bind_sink);
+    handler_unbind_sink_ = std::move(unbind_sink);
   }
   void bindPage(const qc::SurfaceId& surface, qp::PageIrHandle page) {
     std::lock_guard lock(pages_mutex_);
@@ -389,6 +455,13 @@ class JsCoreIngress final : public ja::CoreIngressPort,
         static_cast<double>(event.timestamp_ns), {}};
     const auto posted = runtime_abi_->postCallback(ja::JsInboundMessage{
         std::move(dispatch)});
+#if defined(__ANDROID__)
+    __android_log_print(ANDROID_LOG_INFO, "QuickAppKit",
+                        "android.event.js_callback posted=%d error=%s",
+                        posted.ok ? 1 : 0,
+                        posted.error ? std::string(ja::abiErrorCodeName(
+                            posted.error->code)).c_str() : "");
+#endif
     return posted.ok ? qc::EnqueueResult::success(qc::Accepted{})
                      : qc::EnqueueResult::failure(qc::RuntimeError::simple(
                            qc::RuntimeErrorCode::kQueueOverflow,
@@ -420,6 +493,7 @@ class JsCoreIngress final : public ja::CoreIngressPort,
   void handle(ja::CoreInboundMessage message) {
     if (coordinator_ == nullptr || controller_ == nullptr) return;
     if (auto* instantiate = std::get_if<ja::InstantiateTemplate>(&message)) {
+      androidStage("core.ingress.instantiate");
       const auto surface = qc::SurfaceId::parse(instantiate->surfaceId);
       const auto owner = qc::ComponentInstanceId::parse(instantiate->ownerInstanceId);
       std::optional<qp::PageIrHandle> page;
@@ -443,12 +517,91 @@ class JsCoreIngress final : public ja::CoreIngressPort,
         auto handler_owner = qc::ComponentInstanceId::parse(value.ownerInstanceId);
         auto template_id = qc::TemplateHandlerId::from(value.templateHandlerId);
         if (!handler || !handler_owner || !template_id) return;
+        const auto* definition = (*page)->find_handler(template_id.value().value());
+        if (definition == nullptr) return;
+        // JS reports the complete page handler catalog. Block-scoped handlers
+        // are carried by their InitialBlock request and must not be staged as
+        // page handlers, or Core will reject the initial transaction.
+        if (definition->scope_block_id.has_value()) continue;
         handlers.push_back({handler_owner.value(), template_id.value(), handler.value()});
       }
-      static_cast<void>(coordinator_->submit(qr::InitialRenderIntent{
+
+      const auto parse_owner = [](const std::string& wire)
+          -> std::optional<qc::OwnerInstanceId> {
+        if (const auto component = qc::ComponentInstanceId::parse(wire)) {
+          return qc::OwnerInstanceId(component.value());
+        }
+        if (const auto block = qc::BlockInstanceId::parse(wire)) {
+          return qc::OwnerInstanceId(block.value());
+        }
+        return std::nullopt;
+      };
+      std::vector<qc::runtime_tree::InstantiateBlockRequest> initial_blocks;
+      std::vector<ja::HandlerBinding> js_block_handlers;
+      initial_blocks.reserve(instantiate->initialBlocks.size());
+      for (const auto& block : instantiate->initialBlocks) {
+        const auto block_id = qc::BlockInstanceId::parse(block.blockInstanceId);
+        const auto template_id = qc::TemplateBlockId::from(block.templateBlockId);
+        const auto parent_template_id =
+            qc::TemplateNodeId::from(block.parent.templateNodeId);
+        const auto parent_owner = parse_owner(block.parent.ownerInstanceId);
+        if (!block_id || !template_id || !parent_template_id || !parent_owner) return;
+
+        std::map<std::uint64_t, qc::runtime_tree::BindingValue> block_bindings;
+        for (const auto& [id, value] : block.initialBindings) {
+          block_bindings.emplace(id, std::visit(
+              [](const auto& item) -> qc::runtime_tree::BindingValue {
+                return item;
+              }, value));
+        }
+        std::vector<qc::runtime_tree::HandlerRegistration> block_handlers;
+        for (const auto& binding : block.handlers) {
+          const auto owner = qc::BlockInstanceId::parse(binding.ownerInstanceId);
+          const auto handler_template =
+              qc::TemplateHandlerId::from(binding.templateHandlerId);
+          const auto handler_id = qc::HandlerId::parse(binding.handlerId);
+          if (!owner || !handler_template || !handler_id) return;
+          block_handlers.push_back(
+              {owner.value(), handler_template.value(), handler_id.value()});
+          js_block_handlers.push_back(binding);
+          block_handler_ids_[block_id.value().wire()].push_back(binding.handlerId);
+        }
+        qc::runtime_tree::BlockKey key = std::string("");
+        if (block.key.has_value()) {
+          key = std::visit([](const auto& item) -> qc::runtime_tree::BlockKey {
+            using Item = std::decay_t<decltype(item)>;
+            if constexpr (std::is_same_v<Item, std::string>) {
+              return item;
+            } else {
+              return static_cast<std::int64_t>(item);
+            }
+          }, *block.key);
+        }
+        initial_blocks.push_back({
+            template_id.value(), block_id.value(),
+            {parent_owner.value(), parent_template_id.value()}, block.index,
+            std::move(key), std::move(block_bindings), std::move(block_handlers)});
+      }
+      if (handler_binding_sink_ && !js_block_handlers.empty()) {
+        handler_binding_sink_(surface.value().wire(), instantiate->templateId,
+                             std::move(js_block_handlers));
+      }
+      const auto submitted = coordinator_->submit(qr::InitialRenderIntent{
           surface.value(), request_id.value(), owner.value(), *page,
           std::move(bindings), {viewport_width_, viewport_height_},
-          std::move(handlers)}));
+          std::move(handlers), std::move(initial_blocks)});
+      androidStage(submitted ? "core.ingress.instantiate.accepted"
+                             : "core.ingress.instantiate.rejected");
+#if defined(__ANDROID__)
+      const auto handler = qc::HandlerId::parse("hdl:1");
+      const auto node = handler && event_router_
+                            ? event_router_->nodeForHandler(surface.value(), handler.value())
+                            : std::nullopt;
+      __android_log_print(ANDROID_LOG_INFO, "QuickAppKit",
+                          "android.event.handlers count=%zu hdl1node=%s",
+                          event_router_ ? event_router_->handlerCount() : 0,
+                          node ? node->wire().c_str() : "");
+#endif
       return;
     }
     if (auto* navigation = std::get_if<ja::NavigationPush>(&message)) {
@@ -456,8 +609,141 @@ class JsCoreIngress final : public ja::CoreIngressPort,
       auto source = qc::SurfaceId::parse(navigation->sourceSurfaceId);
       if (!request_id || !source) return;
       navigation_sources_[request_id.value().wire()] = source.value().wire();
-      static_cast<void>(controller_->enqueue(qs::SurfaceRequest(
-          qs::NavigationPushRequest{request_id.value(), source.value(), navigation->uri})));
+      const auto accepted = controller_->enqueue(qs::SurfaceRequest(
+          qs::NavigationPushRequest{request_id.value(), source.value(), navigation->uri}));
+#if defined(__ANDROID__)
+      __android_log_print(ANDROID_LOG_INFO, "QuickAppKit",
+                          "android.navigation.push request=%s source=%s uri=%s accepted=%d",
+                          request_id.value().wire().c_str(), source.value().wire().c_str(),
+                          navigation->uri.c_str(), accepted ? 1 : 0);
+#endif
+      return;
+    }
+    if (auto* navigation = std::get_if<ja::NavigationClose>(&message)) {
+      auto request_id = qc::RequestId::parse(navigation->requestId);
+      auto source = qc::SurfaceId::parse(navigation->sourceSurfaceId);
+      if (!request_id || !source) return;
+      navigation_sources_[request_id.value().wire()] = source.value().wire();
+      const auto accepted = controller_->enqueue(qs::SurfaceRequest(
+          qs::NavigationCloseRequest{request_id.value(), source.value()}));
+#if defined(__ANDROID__)
+      __android_log_print(ANDROID_LOG_INFO, "QuickAppKit",
+                          "android.navigation.close request=%s source=%s accepted=%d",
+                          request_id.value().wire().c_str(), source.value().wire().c_str(),
+                          accepted ? 1 : 0);
+#endif
+      return;
+    }
+    if (auto* feature = std::get_if<ja::FeatureRequest>(&message)) {
+      if (feature_registry_ == nullptr || runtime_abi_ == nullptr) return;
+      const auto request_id = qc::RequestId::parse(feature->requestId);
+      const auto surface_id = qc::SurfaceId::parse(feature->surfaceId);
+      if (!request_id || !surface_id) return;
+
+      qcf::Request request{
+          request_id.value(), surface_id.value(), qcf::ModuleId::kSystemPrompt,
+          qcf::Method::kShowToast, {}, std::nullopt, 0, std::nullopt, {}, {},
+          std::nullopt, 0, {}, std::nullopt, std::nullopt, std::nullopt};
+      request.module = feature->module == ja::FeatureModule::Prompt
+                           ? qcf::ModuleId::kSystemPrompt
+                           : feature->module == ja::FeatureModule::Fetch
+                                 ? qcf::ModuleId::kSystemFetch
+                                 : qcf::ModuleId::kSystemFile;
+      switch (feature->method) {
+        case ja::FeatureMethod::Alert:
+          request.method = qcf::Method::kAlert;
+          break;
+        case ja::FeatureMethod::Confirm:
+          request.method = qcf::Method::kConfirm;
+          break;
+        case ja::FeatureMethod::Fetch:
+          request.method = qcf::Method::kFetch;
+          break;
+        case ja::FeatureMethod::FetchCancel:
+          request.method = qcf::Method::kFetchCancel;
+          break;
+        case ja::FeatureMethod::FileRead:
+          request.method = qcf::Method::kFileRead;
+          break;
+        case ja::FeatureMethod::FileWrite:
+          request.method = qcf::Method::kFileWrite;
+          break;
+        case ja::FeatureMethod::FileExists:
+          request.method = qcf::Method::kFileExists;
+          break;
+        case ja::FeatureMethod::FileDelete:
+          request.method = qcf::Method::kFileDelete;
+          break;
+        case ja::FeatureMethod::OpenUrl:
+        case ja::FeatureMethod::WebviewOpen:
+          // B6 URL providers are not part of this Android batch yet. Route
+          // these public ABI requests to an unregistered Core module so they
+          // complete as typed unsupported instead of entering a file provider.
+          request.module = qcf::ModuleId::kPageHost;
+          request.method = qcf::Method::kShowToast;
+          break;
+      }
+      request.text = feature->text;
+      request.url = feature->url.empty() ? std::nullopt
+                                         : std::optional<std::string>(feature->url);
+      request.http_method = feature->httpMethod;
+      request.headers.reserve(feature->headers.size());
+      for (const auto& header : feature->headers)
+        request.headers.push_back({header.name, header.value});
+      request.body = feature->body;
+      request.timeout_ms = feature->timeoutMs;
+      request.response_type = feature->responseType;
+      request.cancel_request_id = std::nullopt;
+      if (!feature->targetRequestId.empty()) {
+        if (const auto target = qc::RequestId::parse(feature->targetRequestId))
+          request.cancel_request_id = target.value();
+      }
+      request.path = feature->path.empty() ? std::nullopt
+                                           : std::optional<std::string>(feature->path);
+      request.data = feature->data;
+
+      std::optional<qcf::Result> result;
+      if (request.method == qcf::Method::kFetchCancel) {
+        if (!request.cancel_request_id) {
+          result = qcf::Result{request.request_id, request.surface_id, qcf::Status::kFailed,
+                    std::nullopt,
+                    qcf::Error{"INVALID_ARGUMENT", "target request id is required", false},
+                    std::nullopt, std::nullopt, std::nullopt, std::nullopt,
+                    std::nullopt, std::nullopt};
+        } else {
+          result = feature_registry_->cancel(request.cancel_request_id.value(),
+                                              request.surface_id);
+          result->request_id = request.request_id;
+        }
+      } else {
+        result = feature_registry_->invoke(request);
+      }
+      std::optional<ja::MessageRuntimeError> error;
+      if (result->error) {
+        error = ja::MessageRuntimeError{
+            result->error->code, result->error->message, result->error->retryable,
+            std::nullopt, result->request_id.wire(), std::nullopt, std::nullopt};
+      }
+#if defined(__ANDROID__)
+      __android_log_print(ANDROID_LOG_INFO, "QuickAppKit",
+                          "android.feature.result request=%s surface=%s module=%d method=%d status=%s",
+                          feature->requestId.c_str(), feature->surfaceId.c_str(),
+                          static_cast<int>(request.module), static_cast<int>(request.method),
+                          std::string(qcf::status_wire(result->status)).c_str());
+#endif
+      const auto posted = runtime_abi_->postCallback(ja::JsInboundMessage{
+          ja::FeatureResult{feature->requestId, feature->surfaceId,
+                            std::string(qcf::status_wire(result->status)),
+                            result->confirmed, result->http_status,
+                            result->response_body, result->response_is_json,
+                            result->file_data, result->file_exists, std::move(error)}});
+#if defined(__ANDROID__)
+      __android_log_print(ANDROID_LOG_INFO, "QuickAppKit",
+                          "android.feature.callback posted=%d error=%s",
+                          posted.ok ? 1 : 0,
+                          posted.error ? std::string(ja::abiErrorCodeName(
+                              posted.error->code)).c_str() : "");
+#endif
       return;
     }
     if (auto* render = std::get_if<ja::SubmitRenderTransaction>(&message)) {
@@ -465,31 +751,134 @@ class JsCoreIngress final : public ja::CoreIngressPort,
       auto transaction = qc::TransactionId::parse(render->transactionId);
       if (!surface || !transaction) return;
       std::vector<qc::runtime_tree::BindingUpdate> updates;
+      std::vector<qc::runtime_tree::InstantiateBlockRequest> block_instantiates;
+      std::vector<qc::BlockInstanceId> block_removes;
+      std::vector<qc::runtime_tree::MoveBlockRequest> block_moves;
+      std::vector<ja::HandlerBinding> js_block_handlers;
+      std::vector<std::string> js_unbind_handlers;
+      const auto parse_owner = [](const std::string& wire)
+          -> std::optional<qc::OwnerInstanceId> {
+        if (const auto component = qc::ComponentInstanceId::parse(wire)) {
+          return qc::OwnerInstanceId(component.value());
+        }
+        if (const auto block = qc::BlockInstanceId::parse(wire)) {
+          return qc::OwnerInstanceId(block.value());
+        }
+        return std::nullopt;
+      };
       for (const auto& operation : render->operations) {
         const auto* update = std::get_if<ja::UpdateBindingOperation>(&operation);
-        if (!update) continue;
-        auto owner = qc::ComponentInstanceId::parse(update->ownerInstanceId);
-        if (!owner) continue;
-        updates.push_back({owner.value(), update->templateBindingId,
-                           std::visit([](const auto& item)
-                                      -> qc::runtime_tree::BindingValue { return item; },
-                                      update->value)});
+        if (update != nullptr) {
+          auto owner = qc::ComponentInstanceId::parse(update->ownerInstanceId);
+          if (!owner) continue;
+          updates.push_back({owner.value(), update->templateBindingId,
+                             std::visit([](const auto& item)
+                                        -> qc::runtime_tree::BindingValue { return item; },
+                                        update->value)});
+          continue;
+        }
+        if (const auto* instantiate =
+                std::get_if<ja::InstantiateBlockOperation>(&operation)) {
+        const auto block_id = qc::BlockInstanceId::parse(instantiate->blockInstanceId);
+        const auto template_id = qc::TemplateBlockId::from(instantiate->templateBlockId);
+        const auto parent_template_id =
+            qc::TemplateNodeId::from(instantiate->parent.templateNodeId);
+        const auto parent_owner = parse_owner(instantiate->parent.ownerInstanceId);
+        if (!block_id || !template_id || !parent_template_id || !parent_owner) return;
+        std::map<std::uint64_t, qc::runtime_tree::BindingValue> block_bindings;
+        for (const auto& [id, value] : instantiate->initialBindings) {
+          block_bindings.emplace(id, std::visit(
+              [](const auto& item) -> qc::runtime_tree::BindingValue {
+                return item;
+              }, value));
+        }
+        std::vector<qc::runtime_tree::HandlerRegistration> block_handlers;
+        for (const auto& binding : instantiate->handlers) {
+          const auto owner = qc::BlockInstanceId::parse(binding.ownerInstanceId);
+          const auto handler_template =
+              qc::TemplateHandlerId::from(binding.templateHandlerId);
+          const auto handler_id = qc::HandlerId::parse(binding.handlerId);
+          if (!owner || !handler_template || !handler_id) return;
+          block_handlers.push_back(
+              {owner.value(), handler_template.value(), handler_id.value()});
+          js_block_handlers.push_back(binding);
+          block_handler_ids_[block_id.value().wire()].push_back(binding.handlerId);
+        }
+        qc::runtime_tree::BlockKey key = std::string("");
+        if (instantiate->key.has_value()) {
+          key = std::visit([](const auto& item) -> qc::runtime_tree::BlockKey {
+            using Item = std::decay_t<decltype(item)>;
+            if constexpr (std::is_same_v<Item, std::string>) {
+              return item;
+            } else {
+              return static_cast<std::int64_t>(item);
+            }
+          }, *instantiate->key);
+        }
+        block_instantiates.push_back({
+            template_id.value(), block_id.value(),
+            {parent_owner.value(), parent_template_id.value()}, instantiate->index,
+            std::move(key), std::move(block_bindings), std::move(block_handlers)});
+        continue;
+          continue;
+        }
+        if (const auto* remove = std::get_if<ja::RemoveBlockOperation>(&operation)) {
+        const auto block_id = qc::BlockInstanceId::parse(remove->blockInstanceId);
+        if (!block_id) return;
+        block_removes.push_back(block_id.value());
+        auto handlers = block_handler_ids_.find(block_id.value().wire());
+        if (handlers != block_handler_ids_.end()) {
+          js_unbind_handlers.insert(js_unbind_handlers.end(),
+                                    handlers->second.begin(), handlers->second.end());
+          block_handler_ids_.erase(handlers);
+        }
+        continue;
+          continue;
+        }
+        if (const auto* move = std::get_if<ja::MoveBlockOperation>(&operation)) {
+        const auto block_id = qc::BlockInstanceId::parse(move->blockInstanceId);
+        const auto parent_template_id = qc::TemplateNodeId::from(move->parent.templateNodeId);
+        const auto parent_owner = parse_owner(move->parent.ownerInstanceId);
+        if (!block_id || !parent_template_id || !parent_owner) return;
+        block_moves.push_back({block_id.value(),
+                               {parent_owner.value(), parent_template_id.value()},
+                               move->index});
+        }
+      }
+      const auto page_template = [&]() -> std::optional<std::string> {
+        std::lock_guard lock(pages_mutex_);
+        const auto found = pages_.find(render->surfaceId);
+        if (found == pages_.end() || !found->second) return std::nullopt;
+        return (*found->second).template_id();
+      }();
+      if (page_template && handler_binding_sink_ && !js_block_handlers.empty()) {
+        handler_binding_sink_(surface.value().wire(), *page_template,
+                             std::move(js_block_handlers));
+      }
+      if (handler_unbind_sink_ && !js_unbind_handlers.empty()) {
+        handler_unbind_sink_(surface.value().wire(), std::move(js_unbind_handlers));
       }
       std::optional<qc::RequestId> causal;
       if (render->requestId) causal = qc::RequestId::parse(*render->requestId).value();
       static_cast<void>(coordinator_->submit(qr::RenderTransactionIntent{
           surface.value(), transaction.value(), render->revision, causal,
-          std::move(updates)}));
+          std::move(updates), std::move(block_instantiates),
+          std::move(block_removes), std::move(block_moves)}));
     }
   }
 
   CoreMailbox& mailbox_;
+  qc::event::EventRouter* event_router_{nullptr};
   qr::MountCoordinator* coordinator_{nullptr};
   qs::SurfaceController* controller_{nullptr};
   ja::RuntimeAbiService* runtime_abi_{nullptr};
+  qcf::ModuleRegistry* feature_registry_{nullptr};
   std::mutex pages_mutex_;
   std::map<std::string, qp::PageIrHandle, std::less<>> pages_;
   std::map<std::string, std::string, std::less<>> navigation_sources_;
+  std::map<std::string, std::vector<std::string>, std::less<>> block_handler_ids_;
+  HandlerBindingSink handler_binding_sink_;
+  HandlerUnbindSink handler_unbind_sink_;
   double viewport_width_{360};
   double viewport_height_{640};
 
@@ -522,9 +911,17 @@ struct RuntimeSpine::Impl final {
       try {
         run(std::move(path));
       } catch (const std::exception& error) {
+#if defined(__ANDROID__)
+        __android_log_print(ANDROID_LOG_ERROR, "QuickAppKit",
+                            "android.runtime.exception error=%s", error.what());
+#endif
         if (gateway) gateway->notifyFailed("RUNTIME_FAILED", error.what());
         running.store(false);
       } catch (...) {
+#if defined(__ANDROID__)
+        __android_log_print(ANDROID_LOG_ERROR, "QuickAppKit",
+                            "android.runtime.exception error=unknown");
+#endif
         if (gateway) gateway->notifyFailed("RUNTIME_FAILED", "unknown runtime error");
         running.store(false);
       }
@@ -532,42 +929,52 @@ struct RuntimeSpine::Impl final {
   }
 
   void run(std::string path) {
+    androidStage("run.begin");
     factory = std::make_unique<qc::AppRuntimeFactory>();
     identity = std::move(factory->create()).value();
+    androidStage("factory.created");
     auto bytes = readFile(path);
+    androidStage("rpk.read");
     auto source = std::make_shared<MemorySource>(std::move(bytes));
     qp::RuntimeComposition composition{
         "quickapp-kit-runtime-v1", "quickapp-kit-js-engine-v1",
-        {"View", "Text", "Button"},
-        {"system.prompt", "system.router", "system.fetch", "system.device"}};
+        {"View", "Text", "Button", "Image", "Input", "Switch", "Slider", "Picker",
+         "List", "Scroll", "Video", "Tabs"},
+        {"system.prompt", "system.router", "system.shortcut", "system.fetch",
+         "system.device", "system.file"}};
     loader = std::move(qp::PackageLoader::create(
-                         source, identity.request_ids(), std::move(composition)))
+                         source, identity->request_ids(), std::move(composition)))
                  .value();
+    androidStage("rpk.loader.created");
     if (!loader->open([this](auto result) {
           if (result) package = std::move(result).value();
           else startup_error = result.error().message;
         }) || !package) {
       throw std::runtime_error(startup_error.empty() ? "RPK open failed" : startup_error);
     }
+    androidStage("rpk.verified");
 
     auto provider = std::make_unique<qj::QuickJsEngineProvider>();
     Clock clock;
     TraceSink trace_sink;
     auto registration = qj::TraceSinkRegistration::admit(
         trace_sink, {.nonblocking = true, .noReentry = true});
-    if (!registration) throw std::runtime_error("TraceSink registration failed");
+    if (!registration.ok()) throw std::runtime_error("TraceSink registration failed");
     qj::JsEngineConfig engine_config;
     engine_config.expectedEngine = provider->describe();
     engine_config.limits.maxPendingTasks = 64;
     engine = std::make_unique<qj::JsEngineService>(
         identity->id().wire(), std::move(provider), engine_config, clock,
-        std::move(registration).value(), {false, "run:android-a1", "android-monotonic", 0});
+        std::move(registration).value(),
+        qj::ObservationConfig{false, "run:android-a1", "android-monotonic", 0});
     std::promise<qj::ServiceResult> started_result;
+    auto started_future = started_result.get_future();
     if (!engine->start([&](qj::ServiceResult result) {
           started_result.set_value(std::move(result));
-        }) || !started_result.get_future().get()) {
+        }) || !started_future.get().ok()) {
       throw std::runtime_error("QuickJS start failed");
     }
+    androidStage("js.started");
 
     auto* surface_sink = gateway.get();
     (void)surface_sink;
@@ -577,17 +984,18 @@ struct RuntimeSpine::Impl final {
     auto mount = std::make_unique<platform::MountPort>(*gateway);
     auto render_results = std::make_unique<RenderResults>();
     render_results_raw = render_results.get();
-    auto initial_results = std::make_unique<ControllerInitialResults>();
-    initial_results_raw = initial_results.get();
+    auto initial_results = std::make_unique<ControllerInitialResults>(&controller);
     core_ingress = std::make_unique<JsCoreIngress>(mailbox);
-    core_ingress->setViewport(viewport_width, viewport_height);
     event_router = std::make_unique<qc::event::EventRouter>(*core_ingress);
+    core_ingress->bindEventRouter(*event_router);
+    core_ingress->setViewport(viewport_width, viewport_height);
     auto coordinator_result = qr::MountCoordinator::create(
         {&identity->request_ids(), counters.get(), std::move(measure),
          std::move(mount), std::move(initial_results), nullptr, nullptr,
          event_router.get(), std::move(render_results)});
     if (!coordinator_result) throw std::runtime_error("MountCoordinator create failed");
     coordinator = std::move(coordinator_result).value();
+    androidStage("coordinator.created");
     mount_results->bind(*coordinator);
 
     facades = std::make_unique<qj::framework::StaticFacadeCatalog>();
@@ -616,22 +1024,116 @@ struct RuntimeSpine::Impl final {
           onSurfaceOperation(kind, std::move(request), std::move(target),
                              completed, std::move(error));
         });
+    AppState app_state;
     auto controller_result = qs::SurfaceController::create(
-        {nullptr, &identity->request_ids(), std::move(pages),
+        {&app_state, &identity->request_ids(), std::move(pages),
          std::move(platform_port), std::move(page_lifecycle),
          std::move(initial_pipeline), std::move(operations),
          std::make_unique<ControllerStatus>(),
          std::make_unique<ControllerLifecycleResults>(), counters.get()});
     if (!controller_result) throw std::runtime_error("SurfaceController create failed");
     controller = std::move(controller_result).value();
+    androidStage("surface_controller.created");
+
+    feature_registry = std::make_unique<qcf::ModuleRegistry>();
+    feature_provider = std::make_unique<platform::AndroidFeatureProvider>();
+    if (!feature_registry->register_provider(qcf::ModuleId::kSystemPrompt,
+                                             *feature_provider) ||
+        !feature_registry->register_provider(qcf::ModuleId::kSystemFetch,
+                                             *feature_provider) ||
+        !feature_registry->register_provider(qcf::ModuleId::kSystemFile,
+                                             *feature_provider)) {
+      throw std::runtime_error("Android feature provider registration failed");
+    }
+    androidStage("feature.registry.created");
 
     setupJs();
-    core_ingress->bind(*coordinator, *controller, *runtime_abi);
+    androidStage("js.setup");
+    core_ingress->bindHandlerSinks(
+        [this](std::string surface_id, std::string template_id,
+               std::vector<ja::HandlerBinding> bindings) {
+          if (!engine) return;
+          const auto task = engine->post(
+              [this, surface_id = std::move(surface_id),
+               template_id = std::move(template_id),
+               bindings = std::move(bindings)](qj::JsEnginePort&,
+                                               const qj::JsContextRef&) mutable {
+                if (!modules || !handler_registry || !vm) return;
+                const auto definition = modules->pageDefinitionForSurfaceOnExecutor(
+                    surface_id, template_id);
+                if (!definition) return;
+                for (const auto& binding : bindings) {
+                  const auto method = modules->handlerMethodNameOnExecutor(
+                      *definition, binding.templateHandlerId);
+                  auto page_vm = vm->pageVmOnExecutor(surface_id);
+                  const auto bound = method
+                                         && page_vm.ok()
+                                         ? handler_registry->bind(
+                                               surface_id, binding.handlerId,
+                                               *method,
+                                               std::move(page_vm).value())
+                                         : false;
+#if defined(__ANDROID__)
+                  __android_log_print(
+                      ANDROID_LOG_INFO, "QuickAppKit",
+                      "android.event.block_handler_bind surface=%s handler=%s method=%s bound=%d",
+                      surface_id.c_str(), binding.handlerId.c_str(),
+                      method ? method->c_str() : "", bound ? 1 : 0);
+#endif
+                }
+              });
+          if (task.status != qj::PostStatus::Accepted) {
+#if defined(__ANDROID__)
+            __android_log_print(ANDROID_LOG_ERROR, "QuickAppKit",
+                                "android.event.block_handler_queue_rejected surface=%s",
+                                surface_id.c_str());
+#endif
+          }
+        },
+        [this](std::string surface_id, std::vector<std::string> handlers) {
+          if (!engine) return;
+          const auto task = engine->post(
+              [this, surface_id = std::move(surface_id),
+               handlers = std::move(handlers)](qj::JsEnginePort&, const qj::JsContextRef&) {
+                if (!handler_registry) return;
+                for (const auto& handler : handlers)
+                  handler_registry->unbind(surface_id, handler);
+              });
+          (void)task;
+        });
+    core_ingress->bind(*coordinator, *controller, *runtime_abi,
+                       *feature_registry);
     if (!postRoot()) throw std::runtime_error("Android root request rejected");
+    androidStage("root.enqueued");
     running.store(true);
+    bool first_loop = true;
     while (!stopping.load()) {
+      if (first_loop) androidStage("core.loop.before");
       mailbox.drain(128);
-      if (controller) static_cast<void>(controller->drain());
+      if (first_loop) androidStage("core.loop.mailbox.drained");
+      if (controller) {
+        auto drained = controller->drain();
+        if (!drained) {
+#if defined(__ANDROID__)
+          __android_log_print(ANDROID_LOG_ERROR, "QuickAppKit",
+                              "android.core.controller.failed error=%s",
+                              std::string(drained.error().message).c_str());
+#endif
+          throw std::runtime_error(std::string(drained.error().message));
+        }
+        if (drained.value() != 0) {
+          androidStage("core.loop.controller.work");
+#if defined(__ANDROID__)
+          __android_log_print(ANDROID_LOG_INFO, "QuickAppKit",
+                              "android.core.controller.drained count=%zu",
+                              drained.value());
+#endif
+        }
+      }
+      if (first_loop) {
+        androidStage("core.loop.controller.drained");
+        first_loop = false;
+      }
       std::this_thread::sleep_for(std::chrono::milliseconds(1));
       if (mailbox.depth() == 0 && controller && !controller->snapshot().accepting &&
           stopping.load()) break;
@@ -640,8 +1142,9 @@ struct RuntimeSpine::Impl final {
   }
 
   bool postRoot() {
-    return controller->enqueue(qs::SurfaceRequest(qs::RootSurfaceRequest{
-        parseRequest("req:android-root"), package->entry_route()}));
+    return static_cast<bool>(controller->enqueue(qs::SurfaceRequest(
+        qs::RootSurfaceRequest{parseRequest("req:android-root"),
+                               package->entry_route()})));
   }
 
   void setupJs() {
@@ -656,7 +1159,7 @@ struct RuntimeSpine::Impl final {
           *engine, *module_completion, identity->id().wire(), package->package_id(),
           qj::module::ModuleLoaderLimits{}, facades.get());
       if (!modules->startOnExecutor(js, context)) throw std::runtime_error("module setup failed");
-      if (!runtime_abi->startOnExecutor(js, context, ja::kRuntimeAbiIdentity))
+      if (!runtime_abi->startOnExecutor(js, context, ja::kRuntimeAbiIdentity).ok())
         throw std::runtime_error("ABI setup failed");
       handler_registry = new qj::event::HandlerRegistry(*engine);
       page_controls = new qj::page::PageHostControlInstaller(*engine, *runtime_abi, *js_request_ids);
@@ -676,49 +1179,97 @@ struct RuntimeSpine::Impl final {
       slots.surfaceContext = std::move(vm_slots.surfaceContext);
       slots.vmInitializationDispatch = std::move(vm_slots.vmInitializationDispatch);
       slots.jsEventDispatch = [this](const ja::JsEventDispatch& event) {
-        if (handler_registry) static_cast<void>(handler_registry->dispatchOnExecutor(event));
+        if (handler_registry) {
+          const auto dispatched = handler_registry->dispatchOnExecutor(event);
+#if defined(__ANDROID__)
+          __android_log_print(ANDROID_LOG_INFO, "QuickAppKit",
+                              "android.event.handler_execute surface=%s handler=%s dispatched=%d",
+                              event.surfaceId.c_str(), event.handlerId.c_str(),
+                              dispatched ? 1 : 0);
+#endif
+        }
       };
       slots.renderTransactionResult = [](const ja::RenderTransactionResult&) {};
-      if (!runtime_abi->registerConsumersOnExecutor(std::move(slots)) ||
+      if (!runtime_abi->registerConsumersOnExecutor(std::move(slots)).ok() ||
           !vm->startOnExecutor(js, context))
         throw std::runtime_error("JS consumer registration failed");
 
-      std::uint64_t sequence = 1;
-      auto load = [&](const qp::VerifiedModule& module, std::string kind,
-                      std::string scope, std::optional<ja::BootstrapExpectation> bootstrap) {
-        ja::LoadVerifiedModule message;
-        message.requestId = "req:android-module-" + std::to_string(sequence++);
-        message.packageId = module.package_id();
-        message.moduleKind = std::move(kind);
-        message.moduleId = module.module_id();
-        message.cacheScope = std::move(scope);
-        message.dependencies = module.dependencies();
-        message.bundle = {module.descriptor().path, module.descriptor().byte_length,
-                          module.descriptor().sha256,
-                          std::make_shared<const std::vector<std::uint8_t>>(*module.bytes())};
-        message.expectedBootstrap = std::move(bootstrap);
-        message.expectedBindingIds = module.expected_binding_ids();
-        message.expectedHandlerIds = module.expected_handler_ids();
-        modules->onLoadVerifiedModule(message);
+      std::vector<std::string> module_ids;
+      std::set<std::string, std::less<>> visited;
+      std::set<std::string, std::less<>> visiting;
+      std::function<void(const std::string&)> visit = [&](const std::string& module_id) {
+        if (visited.contains(module_id)) return;
+        if (!visiting.insert(module_id).second)
+          throw std::runtime_error("RPK module dependency cycle");
+        const auto found = package->modules().find(module_id);
+        if (found == package->modules().end())
+          throw std::runtime_error("RPK module dependency missing");
+        for (const auto& dependency : found->second.dependencies) visit(dependency);
+        visiting.erase(module_id);
+        visited.insert(module_id);
+        module_ids.push_back(module_id);
       };
+      visit("@quickapp-kit/app");
       for (const auto& [module_id, descriptor] : package->modules()) {
-        if (descriptor.kind == qp::ModuleKind::kShared) {
-          std::optional<qp::VerifiedModule> module;
-          if (!loader->load_module({module_id, std::nullopt}, [&](auto result) {
-                if (result) module = std::move(result).value();
-              }) || !module) throw std::runtime_error("shared module load failed");
-          load(*module, "shared", "appRuntime", std::nullopt);
-        }
+        if (descriptor.kind == qp::ModuleKind::kShared) visit(module_id);
       }
-      std::optional<qp::VerifiedModule> app;
-      if (!loader->load_module({"@quickapp-kit/app", std::nullopt}, [&](auto result) {
-            if (result) app = std::move(result).value();
-          }) || !app) throw std::runtime_error("app module load failed");
-      load(*app, "app", "appRuntime",
-           ja::BootstrapExpectation{"app", app->module_id(), std::nullopt});
-      vm->onAppContext({package->package_id(), "1.0.0", "1", 1,
-                        {"system.router", "system.prompt", "system.device"}});
-      vm->onVmInitialization({parseRequest("req:android-app-init"), "app", std::nullopt});
+      auto load_next = std::make_shared<std::function<void(std::size_t)>>();
+      *load_next = [this, module_ids = std::move(module_ids), load_next](
+                       std::size_t index) mutable {
+        if (index >= module_ids.size()) {
+          vm->onAppContext({package->package_id(), "1.0.0", "1", 1,
+                            {"system.router", "system.prompt", "system.device",
+                             "system.fetch", "system.file"}});
+          vm->onVmInitialization({
+              "req:" + std::to_string(vm_request_sequence.fetch_add(
+                  1, std::memory_order_relaxed)),
+              "app", std::nullopt});
+          js_setup_finished.store(true, std::memory_order_release);
+          androidStage("js.setup.finished");
+          return;
+        }
+        const auto module_id = module_ids[index];
+        const auto found = package->modules().find(module_id);
+        if (found == package->modules().end()) {
+          js_setup_failed.store(true, std::memory_order_release);
+          return;
+        }
+        const auto module_kind = found->second.kind == qp::ModuleKind::kShared
+                                     ? std::string("shared")
+                                     : std::string("app");
+        const auto expected_bootstrap = module_kind == "app"
+            ? std::optional<ja::BootstrapExpectation>{
+                  ja::BootstrapExpectation{"app", module_id, std::nullopt}}
+            : std::nullopt;
+        const auto accepted = loader->load_module(
+            {module_id, std::nullopt},
+            [this, module_id, module_kind, expected_bootstrap, load_next,
+             index](auto result) mutable {
+              if (!result) {
+                js_setup_failed.store(true, std::memory_order_release);
+                return;
+              }
+              auto module = std::move(result).value();
+              ja::LoadVerifiedModule message;
+              message.requestId = "req:j-" +
+                                  std::to_string(js_module_sequence.fetch_add(
+                                      1, std::memory_order_relaxed));
+              message.packageId = module.package_id();
+              message.moduleKind = module_kind;
+              message.moduleId = module.module_id();
+              message.cacheScope = "appRuntime";
+              message.dependencies = module.dependencies();
+              message.bundle = {module.descriptor().path, module.descriptor().byte_length,
+                                module.descriptor().sha256,
+                                std::make_shared<const std::vector<std::uint8_t>>(
+                                    *module.bytes())};
+              message.expectedBootstrap = expected_bootstrap;
+              modules->onLoadVerifiedModule(message);
+              (*load_next)(index + 1);
+            });
+        if (!accepted) js_setup_failed.store(true, std::memory_order_release);
+      };
+      (*load_next)(0);
     });
     if (setup.status != qj::PostStatus::Accepted) throw std::runtime_error("JS setup enqueue failed");
     waitForJsSetup();
@@ -726,18 +1277,21 @@ struct RuntimeSpine::Impl final {
 
   void waitForJsSetup() {
     for (std::size_t i = 0; i < 5000; ++i) {
-      if (modules != nullptr && vm != nullptr && runtime_abi != nullptr &&
-          runtime_abi->state() == ja::RuntimeAbiServiceState::Running) return;
+      if (js_setup_failed.load(std::memory_order_acquire))
+        throw std::runtime_error("JS module setup failed");
+      if (js_setup_finished.load(std::memory_order_acquire)) return;
       std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }
     throw std::runtime_error("JS setup timeout");
   }
 
   qc::EnqueueResult postPageCommand(qs::PageCommand&& command) {
+    androidStage("page.command.received");
     if (!engine || !modules || !vm || !runtime_abi) return qc::EnqueueResult::failure(
         qc::RuntimeError::simple(qc::RuntimeErrorCode::kPlatformRejected, "JS page service unavailable"));
     auto task = engine->post([this, command = std::move(command)](
                                  qj::JsEnginePort&, const qj::JsContextRef&) mutable {
+      androidStage("page.command.js");
       auto complete = [this](const qs::PageCommand& value, bool ok) {
         const auto* start = std::get_if<qs::PageStartCommand>(&value);
         const auto* hook = std::get_if<qs::PageHookCommand>(&value);
@@ -749,14 +1303,15 @@ struct RuntimeSpine::Impl final {
             ok, std::nullopt}));
       };
       if (auto* start = std::get_if<qs::PageStartCommand>(&command)) {
-        if (!runtime_abi->openSurfaceOnExecutor(start->surface_id.wire()) ||
+        if (!runtime_abi->openSurfaceOnExecutor(start->surface_id.wire()).ok() ||
             !modules->openSurfaceOnExecutor(start->surface_id.wire())) {
           complete(command, false);
           return;
         }
         const auto& module = start->page.module;
         modules->onLoadVerifiedModule(ja::LoadVerifiedModule{
-            "req:android-page-load", module.package_id(), "page", module.module_id(),
+            "req:j-" + std::to_string(js_module_sequence.fetch_add(
+                1, std::memory_order_relaxed)), module.package_id(), "page", module.module_id(),
             "surface", start->surface_id.wire(),
             {module.descriptor().path, module.descriptor().byte_length,
              module.descriptor().sha256,
@@ -769,13 +1324,13 @@ struct RuntimeSpine::Impl final {
                               start->page.route, module.expected_template_id().value_or(""),
                               {}, {"setTitleBar", "setMeta"},
                               {viewport_width, viewport_height, "logical-px"}});
-        vm->onVmInitialization({parseRequest("req:android-page-init"), "page",
-                                start->surface_id});
         complete(command, true);
+        androidStage("page.start.completed");
       } else if (auto* hook = std::get_if<qs::PageHookCommand>(&command)) {
         if (hook->hook == qs::PageHook::kOnDestroy) {
           if (handler_registry) handler_registry->closeSurface(hook->surface_id.wire());
           event_router->closeSurface(hook->surface_id);
+          if (feature_registry) feature_registry->teardown(hook->surface_id);
           vm->closeSurfaceOnExecutor(hook->surface_id.wire());
         }
         complete(command, true);
@@ -788,25 +1343,44 @@ struct RuntimeSpine::Impl final {
   }
 
   qc::EnqueueResult postInitialCommand(qs::InitialContentCommand&& command) {
+    androidStage("initial.command.received");
     if (!coordinator || !engine) return qc::EnqueueResult::failure(platform::platformError("Android initial services unavailable"));
     const auto surface = command.surface_id;
     const auto page_ir = command.page_ir;
     auto posted = coordinator->post(std::move(command));
+    androidStage("initial.command.coordinator");
     if (!posted) return posted;
     auto task = engine->post([this, surface, page_ir](qj::JsEnginePort&, const qj::JsContextRef&) {
+      androidStage("initial.command.js");
+      vm->onVmInitialization({
+          "req:" + std::to_string(vm_request_sequence.fetch_add(
+              1, std::memory_order_relaxed)),
+          "page", surface.wire()});
+      const auto page_vm = vm->pageVmOnExecutor(surface.wire());
+      androidStage(page_vm.ok() ? "page.vm.ready" : "page.vm.failed");
       if (!modules || !handler_registry) return;
       const auto definition = modules->pageDefinitionForSurfaceOnExecutor(
           surface.wire(), page_ir->template_id());
       if (!definition) return;
       const auto handlers = modules->handlerBindingsOnExecutor(
           *definition, "cmp:" + surface.wire());
-      if (!handlers) return;
+      if (!handlers.ok()) return;
       for (const auto& binding : handlers.value()) {
         const auto method = modules->handlerMethodNameOnExecutor(
             *definition, binding.templateHandlerId);
         auto vm_value = vm->pageVmOnExecutor(surface.wire());
-        if (method && vm_value) static_cast<void>(handler_registry->bind(
-            surface.wire(), binding.handlerId, *method, std::move(vm_value).value()));
+        const auto bound = method && vm_value.ok()
+                               ? handler_registry->bind(
+                                     surface.wire(), binding.handlerId, *method,
+                                     std::move(vm_value).value())
+                               : false;
+#if defined(__ANDROID__)
+        __android_log_print(ANDROID_LOG_INFO, "QuickAppKit",
+                            "android.event.handler_bind surface=%s handler=%s method=%s bound=%d method_ok=%d vm_ok=%d",
+                            surface.wire().c_str(), binding.handlerId.c_str(),
+                            method ? method->c_str() : "", bound ? 1 : 0,
+                            method ? 1 : 0, vm_value.ok() ? 1 : 0);
+#endif
       }
     });
     return task.status == qj::PostStatus::Accepted
@@ -818,19 +1392,52 @@ struct RuntimeSpine::Impl final {
   void onSurfaceOperation(qs::SurfaceOperationKind kind, qc::RequestId request,
                           std::optional<qc::SurfaceId> target, bool completed,
                           std::optional<qc::RuntimeError> error) {
-    if (kind != qs::SurfaceOperationKind::kPush || !runtime_abi) return;
+    androidStage(completed ? "surface.operation.completed"
+                           : "surface.operation.failed");
+#if defined(__ANDROID__)
+    __android_log_print(ANDROID_LOG_INFO, "QuickAppKit",
+                        "android.surface.operation kind=%d request=%s target=%s error=%s",
+                        static_cast<int>(kind), request.wire().c_str(),
+                        target ? target->wire().c_str() : "",
+                        error ? std::string(error->message).c_str() : "");
+#endif
+    if ((kind != qs::SurfaceOperationKind::kPush &&
+         kind != qs::SurfaceOperationKind::kClose) ||
+        !runtime_abi) return;
     auto source = core_ingress->takeNavigationSource(request.wire());
     if (!source) return;
     std::optional<ja::MessageRuntimeError> mapped;
     if (error) mapped = ja::MessageRuntimeError{
-        std::string(qc::to_wire(error->code)), error->message, error->retryable,
+        std::string(qc::to_wire(error->code)), std::string(error->message), error->retryable,
         std::nullopt, request.wire(), std::nullopt, std::nullopt};
-    static_cast<void>(runtime_abi->postCallback(ja::JsInboundMessage{
-        ja::NavigationPushResult{request.wire(), *source,
-                                  completed ? "completed" : "failed",
-                                  target ? std::optional<std::string>(target->wire())
-                                         : std::nullopt,
-                                  std::move(mapped)}}));
+    if (kind == qs::SurfaceOperationKind::kPush) {
+      static_cast<void>(runtime_abi->postCallback(ja::JsInboundMessage{
+          ja::NavigationPushResult{request.wire(), *source,
+                                    completed ? "presented" : "failed",
+                                    target ? std::optional<std::string>(target->wire())
+                                           : std::nullopt,
+                                    std::move(mapped)}}));
+    } else {
+      std::optional<std::string> revealed = target
+                                                ? std::optional<std::string>(target->wire())
+                                                : std::nullopt;
+      const auto reveal = navigation_reveals.find(*source);
+      if (reveal != navigation_reveals.end()) {
+        revealed = reveal->second;
+        navigation_reveals.erase(reveal);
+      }
+#if defined(__ANDROID__)
+      __android_log_print(ANDROID_LOG_INFO, "QuickAppKit",
+                          "android.navigation.close.result request=%s source=%s revealed=%s completed=%d",
+                          request.wire().c_str(), source->c_str(),
+                          revealed ? revealed->c_str() : "", completed ? 1 : 0);
+#endif
+      static_cast<void>(runtime_abi->postCallback(ja::JsInboundMessage{
+          ja::NavigationCloseResult{request.wire(), *source,
+                                    completed ? "closed" : "failed",
+                                    std::move(revealed),
+                                    std::move(mapped)}}));
+    }
   }
 
   void acceptSurfaceResult(std::string request_id, int kind,
@@ -838,10 +1445,12 @@ struct RuntimeSpine::Impl final {
                            std::optional<std::string> reveal, int visibility,
                            bool completed, std::optional<std::string> code,
                            std::optional<std::string> message) noexcept {
+    androidStage("surface.result.received");
     mailbox.post([this, request_id = std::move(request_id), kind,
                   target = std::move(target), source = std::move(source),
                   reveal = std::move(reveal), visibility, completed,
                   code = std::move(code), message = std::move(message)]() mutable {
+      androidStage("surface.result.core");
       auto request = qc::RequestId::parse(request_id);
       auto target_id = qc::SurfaceId::parse(target);
       if (!request || !target_id || !controller) return;
@@ -851,7 +1460,11 @@ struct RuntimeSpine::Impl final {
           request.value(), qs::SurfaceCommandKind::kCreate, target_id.value(),
           std::nullopt, std::nullopt, std::nullopt, completed, std::move(error)}));
       else if (kind == 1) {
-        auto source_id = source ? qc::SurfaceId::parse(*source) : std::nullopt;
+        std::optional<qc::SurfaceId> source_id;
+        if (source) {
+          auto parsed = qc::SurfaceId::parse(*source);
+          if (parsed) source_id = parsed.value();
+        }
         static_cast<void>(controller->enqueue(qs::SurfaceCommandResult{
             request.value(), qs::SurfaceCommandKind::kPresent, target_id.value(),
             source_id, std::nullopt, std::nullopt, completed, std::move(error)}));
@@ -862,8 +1475,17 @@ struct RuntimeSpine::Impl final {
                           : std::optional<qc::lifecycle::SurfaceVisibility>(qc::lifecycle::SurfaceVisibility::kHidden),
           completed, std::move(error)}));
       else if (kind == 3) {
-        auto source_id = source ? qc::SurfaceId::parse(*source) : std::nullopt;
-        auto reveal_id = reveal ? qc::SurfaceId::parse(*reveal) : std::nullopt;
+        std::optional<qc::SurfaceId> source_id;
+        std::optional<qc::SurfaceId> reveal_id;
+        if (source) {
+          auto parsed = qc::SurfaceId::parse(*source);
+          if (parsed) source_id = parsed.value();
+        }
+        if (reveal) {
+          auto parsed = qc::SurfaceId::parse(*reveal);
+          if (parsed) reveal_id = parsed.value();
+        }
+        if (source && reveal_id) navigation_reveals[*source] = reveal_id->wire();
         static_cast<void>(controller->enqueue(qs::SurfaceCommandResult{
             request.value(), qs::SurfaceCommandKind::kClose, target_id.value(),
             source_id, reveal_id, std::nullopt, completed, std::move(error)}));
@@ -877,35 +1499,142 @@ struct RuntimeSpine::Impl final {
                          std::string attempt, std::string source, bool mounted,
                          std::optional<std::string> code,
                          std::optional<std::string> message) noexcept {
+#if defined(__ANDROID__)
+    __android_log_print(ANDROID_LOG_INFO, "QuickAppKit",
+                        "android.mount.result.received surface=%s revision=%llu attempt=%s source=%s mounted=%d",
+                        surface_id.c_str(), static_cast<unsigned long long>(revision),
+                        attempt.c_str(), source.c_str(), mounted ? 1 : 0);
+#endif
     mailbox.post([this, surface_id = std::move(surface_id), revision,
                   attempt = std::move(attempt), source = std::move(source), mounted,
                   code = std::move(code), message = std::move(message)]() mutable {
       auto surface = qc::SurfaceId::parse(surface_id);
       auto mount_attempt = qc::MountAttemptId::parse(attempt);
-      if (!surface || !mount_attempt || !coordinator) return;
-      qr::RenderSourceId source_id = source.starts_with("txn:")
-                                         ? qr::RenderSourceId(qc::TransactionId::parse(source).value())
-                                         : qr::RenderSourceId(qc::RequestId::parse(source).value());
-      static_cast<void>(coordinator->accept(qr::MountTransactionResult{
-          surface.value(), revision, mount_attempt.value(), source_id, mounted,
+      if (!surface || !mount_attempt || !coordinator) {
+#if defined(__ANDROID__)
+        __android_log_print(ANDROID_LOG_ERROR, "QuickAppKit",
+                            "android.mount.result.rejected_parse surface=%s attempt=%s source=%s",
+                            surface_id.c_str(), attempt.c_str(), source.c_str());
+#endif
+        return;
+      }
+      std::optional<qr::RenderSourceId> source_id;
+      if (source.starts_with("txn:")) {
+        auto parsed = qc::TransactionId::parse(source);
+        if (!parsed) {
+#if defined(__ANDROID__)
+          __android_log_print(ANDROID_LOG_ERROR, "QuickAppKit",
+                              "android.mount.result.rejected_transaction source=%s",
+                              source.c_str());
+#endif
+          return;
+        }
+        source_id.emplace(parsed.value());
+      } else {
+        auto parsed = qc::RequestId::parse(source);
+        if (!parsed) {
+#if defined(__ANDROID__)
+          __android_log_print(ANDROID_LOG_ERROR, "QuickAppKit",
+                              "android.mount.result.rejected_request source=%s",
+                              source.c_str());
+#endif
+          return;
+        }
+        source_id.emplace(parsed.value());
+      }
+      const auto accepted = coordinator->accept(qr::MountTransactionResult{
+          surface.value(), revision, mount_attempt.value(), *source_id, mounted,
           mounted ? std::nullopt
                   : std::optional<qc::RuntimeError>(platform::platformError(
-                        message.value_or("Android Mount failed")))}));
+                        message.value_or("Android Mount failed")))});
+#if defined(__ANDROID__)
+      __android_log_print(ANDROID_LOG_INFO, "QuickAppKit",
+                          "android.mount.result.accepted=%d", accepted ? 1 : 0);
+#endif
     });
   }
 
   void dispatchClick(std::string surface_id, std::string node_id,
                      std::uint64_t timestamp_ns) noexcept {
+    dispatchEvent(std::move(surface_id), std::move(node_id), "click",
+                  std::nullopt, "value", std::nullopt, false, false, false, false,
+                  0, 0, 0, false, timestamp_ns);
+  }
+
+  void dispatchEvent(std::string surface_id, std::string node_id,
+                     std::string event_type, std::optional<std::string> value,
+                     std::string number_name, std::optional<double> number,
+                     bool checked, bool has_checked,
+                     bool from_user, bool has_from_user,
+                     double scroll_offset, double content_size,
+                     double viewport_size, bool has_scroll_metrics,
+                     std::uint64_t timestamp_ns) noexcept {
+#if defined(__ANDROID__)
+    __android_log_print(ANDROID_LOG_INFO, "QuickAppKit",
+                        "android.event.%s.received surface=%s node=%s",
+                        event_type.c_str(), surface_id.c_str(), node_id.c_str());
+#endif
     mailbox.post([this, surface_id = std::move(surface_id), node_id = std::move(node_id),
+                  event_type = std::move(event_type), value = std::move(value),
+                  number_name = std::move(number_name), number = std::move(number),
+                  checked, has_checked, from_user, has_from_user,
+                  scroll_offset, content_size, viewport_size, has_scroll_metrics,
                   timestamp_ns]() mutable {
       auto surface = qc::SurfaceId::parse(surface_id);
       auto node = qc::NodeId::parse(node_id);
       if (!surface || !node || !event_router) return;
-      auto request = identity->request_ids().next();
+      auto request = qc::RequestId::parse(
+          "req:p-" + std::to_string(platform_event_sequence.fetch_add(
+              1, std::memory_order_relaxed)));
       if (!request) return;
-      static_cast<void>(event_router->dispatch(qc::event::PlatformInputMessage{
-          request.value(), surface.value(), node.value(), qp::EventType::kClick,
-          timestamp_ns, {}}));
+      qp::EventType type = qp::EventType::kClick;
+      if (event_type == "input") type = qp::EventType::kInput;
+      else if (event_type == "change") type = qp::EventType::kChange;
+      else if (event_type == "focus") type = qp::EventType::kFocus;
+      else if (event_type == "scroll") type = qp::EventType::kScroll;
+      else if (event_type == "scrollend") type = qp::EventType::kScrollEnd;
+      else if (event_type == "scrolltop") type = qp::EventType::kScrollTop;
+      else if (event_type == "scrollbottom") type = qp::EventType::kScrollBottom;
+      else if (event_type == "prepared") type = qp::EventType::kPrepared;
+      else if (event_type == "start") type = qp::EventType::kStart;
+      else if (event_type == "pause") type = qp::EventType::kPause;
+      else if (event_type == "finish") type = qp::EventType::kFinish;
+      else if (event_type == "error") type = qp::EventType::kError;
+      else if (event_type == "timeupdate") type = qp::EventType::kTimeUpdate;
+      else if (event_type != "click") return;
+      qc::RuntimeValue::Object payload;
+      if (value) {
+        auto encoded = qc::RuntimeValue::utf8_string(*value);
+        if (!encoded) return;
+        payload.emplace("value", std::move(encoded).value());
+      }
+      if (number) {
+        auto encoded = qc::RuntimeValue::finite_number(*number);
+        if (!encoded) return;
+        payload.emplace(number_name.empty() ? "value" : number_name,
+                        std::move(encoded).value());
+      }
+      if (has_checked) payload.emplace("checked", qc::RuntimeValue::boolean(checked));
+      if (has_from_user) {
+        payload.emplace("isFromUser", qc::RuntimeValue::boolean(from_user));
+      }
+      if (has_scroll_metrics) {
+        auto offset = qc::RuntimeValue::finite_number(scroll_offset);
+        auto content = qc::RuntimeValue::finite_number(content_size);
+        auto viewport = qc::RuntimeValue::finite_number(viewport_size);
+        if (!offset || !content || !viewport) return;
+        payload.emplace("scrollOffset", std::move(offset).value());
+        payload.emplace("contentSize", std::move(content).value());
+        payload.emplace("viewportSize", std::move(viewport).value());
+      }
+      const auto dispatched = event_router->dispatch(qc::event::PlatformInputMessage{
+          request.value(), surface.value(), node.value(), type, timestamp_ns,
+          std::move(payload)});
+#if defined(__ANDROID__)
+    __android_log_print(ANDROID_LOG_INFO, "QuickAppKit",
+                          "android.event.%s.dispatched=%d", event_type.c_str(),
+                          dispatched ? 1 : 0);
+#endif
     });
   }
 
@@ -926,7 +1655,7 @@ struct RuntimeSpine::Impl final {
     }
     if (engine) {
       std::promise<void> stopped_result;
-      engine->post([this](qj::JsEnginePort&, const qj::JsContextRef&) {
+      static_cast<void>(engine->post([this](qj::JsEnginePort&, const qj::JsContextRef&) {
         if (handler_registry) handler_registry->stopOnExecutor();
         if (vm) vm->stopOnExecutor();
         if (transaction_builder) transaction_builder->stopOnExecutor();
@@ -935,8 +1664,8 @@ struct RuntimeSpine::Impl final {
         if (runtime_abi) runtime_abi->stopOnExecutor();
         if (modules) modules->stopOnExecutor();
         if (facades) facades->stopOnExecutor();
-      });
-      engine->stop({}, [&] { stopped_result.set_value(); });
+      }));
+      static_cast<void>(engine->stop({}, [&] { stopped_result.set_value(); }));
       stopped_result.get_future().wait();
     }
     delete handler_registry;
@@ -949,11 +1678,14 @@ struct RuntimeSpine::Impl final {
     delete modules;
     modules = nullptr;
     facades.reset();
+    if (feature_registry) feature_registry->close();
+    feature_registry.reset();
+    feature_provider.reset();
     loader.reset();
     if (factory) {
       factory->stop();
       if (identity) identity->reset();
-      factory->teardown();
+      static_cast<void>(factory->teardown());
       identity.reset();
       factory.reset();
     }
@@ -977,16 +1709,23 @@ struct RuntimeSpine::Impl final {
   std::shared_ptr<const qp::VerifiedPackage> package;
   std::string startup_error;
   std::unique_ptr<qj::JsEngineService> engine;
+  std::atomic<std::uint64_t> js_module_sequence{1};
+  std::atomic<std::uint64_t> vm_request_sequence{1};
+  std::atomic<std::uint64_t> platform_event_sequence{1};
+  std::map<std::string, std::string, std::less<>> navigation_reveals;
+  std::atomic<bool> js_setup_finished{false};
+  std::atomic<bool> js_setup_failed{false};
   std::unique_ptr<qc::RuntimeCounters> counters;
   std::unique_ptr<MountResults> mount_results;
-  std::unique_ptr<ControllerInitialResults> initial_results_raw;
   RenderResults* render_results_raw{nullptr};
   std::unique_ptr<qr::MountCoordinator> coordinator;
   std::unique_ptr<qc::event::EventRouter> event_router;
   std::unique_ptr<JsCoreIngress> core_ingress;
   std::unique_ptr<qj::framework::StaticFacadeCatalog> facades;
+  std::unique_ptr<qcf::ModuleRegistry> feature_registry;
+  std::unique_ptr<platform::AndroidFeatureProvider> feature_provider;
   std::unique_ptr<ModuleCompletion> module_completion;
-  std::unique_ptr<qj::module::ModuleLoader> modules;
+  qj::module::ModuleLoader* modules{nullptr};
   std::shared_ptr<ja::RuntimeAbiService> runtime_abi;
   qj::event::HandlerRegistry* handler_registry{nullptr};
   qj::page::PageHostControlInstaller* page_controls{nullptr};
@@ -1021,6 +1760,23 @@ void RuntimeSpine::start(std::string path) noexcept {
 void RuntimeSpine::dispatchClick(std::string surface_id, std::string node_id,
                                  std::uint64_t timestamp_ns) noexcept {
   if (impl_) impl_->dispatchClick(std::move(surface_id), std::move(node_id), timestamp_ns);
+}
+
+void RuntimeSpine::dispatchEvent(
+    std::string surface_id, std::string node_id, std::string event_type,
+    std::optional<std::string> value, std::string number_name,
+    std::optional<double> number,
+    bool checked, bool has_checked, bool from_user, bool has_from_user,
+    double scroll_offset, double content_size, double viewport_size,
+    bool has_scroll_metrics,
+    std::uint64_t timestamp_ns) noexcept {
+  if (impl_) impl_->dispatchEvent(std::move(surface_id), std::move(node_id),
+                                  std::move(event_type), std::move(value),
+                                  std::move(number_name), std::move(number),
+                                  checked, has_checked,
+                                  from_user, has_from_user,
+                                  scroll_offset, content_size, viewport_size,
+                                  has_scroll_metrics, timestamp_ns);
 }
 
 void RuntimeSpine::acceptSurfaceResult(

@@ -1,0 +1,15 @@
+--------- beginning of main
+08-25 15:57:24.873 27381 27381 I QuickAppKit: android.input.click surface=srf:1 node=node:7
+08-25 15:57:24.873 27381 27381 I QuickAppKit: android.event.click.received surface=srf:1 node=node:7
+08-25 15:57:24.877 27381 27442 I QuickAppKit: android.event.handler_execute surface=srf:1 handler=hdl:2 dispatched=1
+08-25 15:57:24.879 27381 27441 I QuickAppKit: android.event.js_callback posted=1 error=
+08-25 15:57:24.879 27381 27441 I QuickAppKit: android.event.click.dispatched=1
+08-25 15:57:24.879 27381 27441 I QuickAppKit: android.feature.result request=req:j-600001 surface=srf:1 module=4 method=6 status=completed
+08-25 15:57:24.879 27381 27441 I QuickAppKit: android.feature.callback posted=1 error=
+08-25 15:57:25.962 27381 27381 I QuickAppKit: android.input.click surface=srf:1 node=node:8
+08-25 15:57:25.962 27381 27381 I QuickAppKit: android.event.click.received surface=srf:1 node=node:8
+08-25 15:57:25.964 27381 27441 I QuickAppKit: android.event.js_callback posted=1 error=
+08-25 15:57:25.964 27381 27441 I QuickAppKit: android.event.click.dispatched=1
+08-25 15:57:25.965 27381 27442 I QuickAppKit: android.event.handler_execute surface=srf:1 handler=hdl:3 dispatched=1
+08-25 15:57:25.965 27381 27441 I QuickAppKit: android.feature.result request=req:j-500001 surface=srf:1 module=3 method=4 status=completed
+08-25 15:57:25.965 27381 27441 I QuickAppKit: android.feature.callback posted=1 error=

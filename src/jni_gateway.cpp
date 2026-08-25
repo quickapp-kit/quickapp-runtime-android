@@ -17,8 +17,6 @@
 namespace quickapp::android {
 namespace {
 
-constexpr char kLogTag[] = "QuickAppKit";
-
 std::string string(JNIEnv* env, jstring value) {
   if (value == nullptr) return {};
   const char* chars = env->GetStringUTFChars(value, nullptr);
@@ -124,12 +122,21 @@ class JniGateway final : public platform::Gateway {
 
   bool postCreateSurface(
       const core::surface::SurfaceCreateHostCommand& command) noexcept override {
+    __android_log_print(ANDROID_LOG_INFO, "QuickAppKit",
+                        "android.native.create surface=%s",
+                        command.surface_id.wire().c_str());
     return call(post_create_, command.request_id.wire(), command.surface_id.wire());
   }
 
   bool postPresentSurface(
       const core::surface::SurfacePresentCommand& command) noexcept override {
     const bool push = command.mode == core::surface::SurfacePresentMode::kPush;
+#if defined(__ANDROID__)
+    __android_log_print(ANDROID_LOG_INFO, "QuickAppKit",
+                        "android.native.present request=%s surface=%s push=%d",
+                        command.request_id.wire().c_str(), command.target.wire().c_str(),
+                        push ? 1 : 0);
+#endif
     return callPresent(command.request_id.wire(), command.target.wire(),
                        command.source ? command.source->wire() : std::string{}, push);
   }
@@ -376,10 +383,16 @@ class JniGateway final : public platform::Gateway {
         y = static_cast<float>(value.rect.y);
         width = static_cast<float>(value.rect.width);
         height = static_cast<float>(value.rect.height);
-      } else {
+      } else if constexpr (std::is_same_v<Value, core::render::InsertHostChild>) {
         kind = 3;
         parent_id = value.parent_node_id.wire();
         index = static_cast<int>(value.index);
+      } else if constexpr (std::is_same_v<Value, core::render::MoveHost>) {
+        kind = 4;
+        parent_id = value.new_parent_node_id.wire();
+        index = static_cast<int>(value.index);
+      } else if constexpr (std::is_same_v<Value, core::render::RemoveHost>) {
+        kind = 5;
       }
     }, operation);
     jstring node = javaString(env, node_id);
@@ -435,9 +448,10 @@ std::shared_ptr<Session> session(jlong handle) noexcept {
 }
 
 }  // namespace
-}  // namespace quickapp::android
 
-using quickapp::android::RuntimeSpine;
+}  // namespace
+
+namespace quickapp::android {
 
 extern "C" JNIEXPORT jlong JNICALL
 Java_dev_quickapp_kit_android_NativeGateway_create(
@@ -470,6 +484,32 @@ Java_dev_quickapp_kit_android_NativeGateway_dispatchClick(
   if (value) value->runtime->dispatchClick(
       quickapp::android::string(env, surface), quickapp::android::string(env, node),
       static_cast<std::uint64_t>(timestamp));
+}
+
+extern "C" JNIEXPORT void JNICALL
+Java_dev_quickapp_kit_android_NativeGateway_dispatchEvent(
+    JNIEnv* env, jclass, jlong handle, jstring surface, jstring node,
+    jstring event_type, jstring value, jstring number_name, jdouble number,
+    jboolean has_number,
+    jboolean checked, jboolean has_checked, jboolean from_user,
+    jboolean has_from_user, jdouble scroll_offset, jdouble content_size,
+    jdouble viewport_size, jboolean has_scroll_metrics, jlong timestamp) {
+  auto session = quickapp::android::session(handle);
+  if (session) {
+    session->runtime->dispatchEvent(
+        quickapp::android::string(env, surface),
+        quickapp::android::string(env, node),
+        quickapp::android::string(env, event_type),
+        quickapp::android::optionalString(env, value),
+        quickapp::android::string(env, number_name),
+        has_number == JNI_TRUE ? std::optional<double>(static_cast<double>(number))
+                               : std::nullopt,
+        checked == JNI_TRUE, has_checked == JNI_TRUE,
+        from_user == JNI_TRUE, has_from_user == JNI_TRUE,
+        static_cast<double>(scroll_offset), static_cast<double>(content_size),
+        static_cast<double>(viewport_size), has_scroll_metrics == JNI_TRUE,
+        static_cast<std::uint64_t>(timestamp));
+  }
 }
 
 extern "C" JNIEXPORT void JNICALL
@@ -515,3 +555,5 @@ Java_dev_quickapp_kit_android_NativeGateway_destroy(
   }
   value->runtime->destroy();
 }
+
+}  // namespace quickapp::android
