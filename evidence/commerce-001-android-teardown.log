@@ -1,0 +1,11 @@
+08-26 11:13:11.210  9266  9266 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+08-26 11:13:11.213  9266  9266 I AndroidRuntime: Using default boot image
+08-26 11:13:11.213  9266  9266 I AndroidRuntime: Leaving lock profiling enabled
+08-26 11:13:11.269  9266  9266 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+08-26 11:13:12.420  9266  9266 D AndroidRuntime: Shutting down VM
+08-26 11:14:49.971  9386  9386 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+08-26 11:14:49.973  9386  9386 I AndroidRuntime: Using default boot image
+08-26 11:14:49.973  9386  9386 I AndroidRuntime: Leaving lock profiling enabled
+08-26 11:14:50.025  9386  9386 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+08-26 11:14:51.101  9386  9386 D AndroidRuntime: Shutting down VM
+08-26 11:16:11.811  9152  9152 I QuickAppKit: android.runtime.destroy.begin surfaces=3 nodes=49

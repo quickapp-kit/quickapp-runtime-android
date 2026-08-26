@@ -1,0 +1,546 @@
+--------- beginning of main
+08-26 17:33:42.098   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.122   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.146   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.180   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.213   517   517 I adbd    : adbd service requested 'shell,v2,TERM=dumb,raw:input keyevent 4'
+08-26 17:33:42.219   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+--------- beginning of system
+08-26 17:33:42.233   961  1009 V WindowManagerShell: Transition requested (#153): android.os.BinderProxy@4b16cfc TransitionRequestInfo { type = CLOSE, triggerTask = TaskInfo{userId=0 taskId=98 effectiveUid=10231 seqId=0 displayId=0 isRunning=false baseIntent=Intent { flg=0x10000000 cmp=dev.quickapp.kit.android/.MainActivity } baseActivity=null topActivity=null origActivity=null realActivity=ComponentInfo{dev.quickapp.kit.android/dev.quickapp.kit.android.MainActivity} realActivityIsAppLockEnabled=false numActivities=0 lastActiveTime=171836110 supportsMultiWindow=true supportsMultiWindowWithoutConstraints=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{android.os.BinderProxy@e788504} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 0 - 0, 0) topActivityInfo=null launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=true isInteractive=true isVisible=true isVisibleRequested=true isTopActivityNoDisplay=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false isActivityStackTransparent=true lastNonFullscreenBounds=null leafTaskBoundsFromOptions= false capturedLink=null capturedLinkTimestamp=0 requestedVisibleTypes=503 topActivityRequestOpenInBrowserEducationTimestamp=0 appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false isLeafTask= true eligibleForLetterboxEducation= false isLetterboxEducationEnabled= false isLetterboxDoubleTapEnabled= false eligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 topActivityAppBounds=Rect(0, 0 - 0, 0) isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false hasMinAspectRatioOverride=false topActivityLetterboxBounds=null topNonResizableActivityAspectRatio=-1.0} topActivityMainWindowFrame=null isAppBubble=false}, pipChange = null, remoteTransitionInfo = null, displayChanges = null, requestedLocation = null, userChange = null, windowingLayerChange = null, fullscreenRequestChange = null, flags = 0, debugId = 153 }
+08-26 17:33:42.234   961  1009 V ShellDesktopMode: DesktopTasksController: skipping handleRequest reason=triggerTask's display doesn't support desktop mode
+08-26 17:33:42.235   492   532 I libbinder.BpBinder: onLastStrongRef automatically unlinking death recipients for binder (0xb4007519fa02a2a0) with descriptor: '(not cached)'
+08-26 17:33:42.238   961  1009 V RecentTasksController: Notify recent tasks changed: 1
+08-26 17:33:42.239  1099  1099 D RecentTasksList: invalidateLoadedTasks - previous requestLoadId: -1
+08-26 17:33:42.239   657   670 V WindowManager: Defer transition id=153 for TaskFragmentTransaction=android.os.Binder@998a7ee
+08-26 17:33:42.240  1099  1099 D ViewRootImpl: Skipping stats log for color mode
+08-26 17:33:42.240  1099  1099 D BaseActivity: Launcher flags updated: [state_started] +[state_started]
+08-26 17:33:42.240  1099  1099 D BaseActivity: Launcher flags updated: [state_started|state_resumed|state_user_active] +[state_resumed|state_user_active]
+08-26 17:33:42.240  1099  1099 D BaseActivity: Launcher flags updated: [state_started|state_resumed|state_user_active] +[]
+08-26 17:33:42.240  1099  1099 D BaseActivity: Launcher flags updated: [state_started|state_resumed|state_deferred_resumed|state_user_active] +[state_deferred_resumed]
+08-26 17:33:42.241  1099  1099 D StatsLog: LAUNCHER_ONRESUME
+08-26 17:33:42.242  1777  1991 I AiAiEcho: Predicting[0]:  [CONTEXT sampling_count=5 ]
+08-26 17:33:42.242  1777  1991 I AiAiEcho: EchoTargets: 
+08-26 17:33:42.242  1777  1991 I AiAiEcho: Filtered by AiAi flag check: 
+08-26 17:33:42.242  1777  1991 I AiAiEcho: [CONTEXT ratelimit_period="10 SECONDS" ]
+08-26 17:33:42.242  1777  1991 I AiAiEcho: #remoteViewsTwiddler: feature disabled.
+08-26 17:33:42.242   657   670 V WindowManager: Continue transition id=153 for TaskFragmentTransaction=android.os.Binder@998a7ee
+08-26 17:33:42.242  1099  1163 D QuickstepModelDelegate: notifyAppTargetEvent action=1 launchLocation=workspace/0/[-1,-1]/[1,1]
+08-26 17:33:42.243  1777  1991 I AiAiEcho: #postPredictionTargets: Sending updates to UISurface home with targets# 0 (types=[])
+08-26 17:33:42.246   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.246   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.246   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.246   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.246   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.246  1099  1099 D SmartspaceInteractor: notifySmartspaceEvent: SmartspaceTargetEvent{mSmartspaceTarget=null, mSmartspaceActionId='null', mEventType=6}
+08-26 17:33:42.248  1777  1991 I AiAiEcho: AmbientDataPredictorImpl No tracked ambient data found for ID: null; for event type: 6, skipping event processing.
+08-26 17:33:42.248   657   922 D WindowManager: setClientSurface Surface(name=VRI-com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity#1742)/@0x91a231c for fbe6448 com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity
+08-26 17:33:42.265  1099  1099 I Surface : Creating surface for consumer unnamed-1099-73 with slotExpansion=1 for 64 slots
+08-26 17:33:42.267  1099  1099 I Surface : Creating surface for consumer VRI[NexusLauncherActivity]#69(BLAST Consumer)69 with slotExpansion=1 for 64 slots
+08-26 17:33:42.268  1099  1099 D BaseDepthController: setSurface:
+08-26 17:33:42.268  1099  1099 D BaseDepthController: 	mWaitingOnSurfaceValidity: false
+08-26 17:33:42.268  1099  1099 D BaseDepthController: 	mBaseSurface: Surface(name=VRI-com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity#1742)/@0xd13d287
+08-26 17:33:42.268  1099  1099 V BaseDepthController: Applying blur: 0 to Surface(name=VRI-com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity#1742)/@0xd13d287 applyImmediately: false
+08-26 17:33:42.268  1099  1099 D BaseDepthController: shouldBlurWorkspace: false targetState: Normal currentStableState: Normal mCurrentBlur: 0 mLauncher.getDepthBlurTargets(): [com.android.launcher3.Workspace{6fff5b4 V.ED..... .......D 0,0-1280,2856 #7f0a0498 app:id/workspace}, com.android.launcher3.Hotseat{510a5dd V.ED..... .......D 0,2289-1280,2856 #7f0a01f8 app:id/hotseat}]
+08-26 17:33:42.279   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.279   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.279   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.279   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.279   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.288   961  1575 D WallpaperService: onVisibilityChanged(true): com.android.systemui.wallpapers.ImageWallpaper$CanvasEngine@a3bb2ef
+08-26 17:33:42.316   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.316   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.316   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.316   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.316   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.341   961  1009 V RecentTasksController: Notify recent tasks changed: 1
+08-26 17:33:42.345   961  1009 V RecentTasksController: generateList(getRecentTasks)
+08-26 17:33:42.345   961  1009 V RecentTasksController: initializeDesksMap - allDeskIds: []
+08-26 17:33:42.345   961  1009 V RecentTasksController: Task 98 is not an active desktop task
+08-26 17:33:42.345   961  1009 V RecentTasksController: Added fullscreen task: 98
+08-26 17:33:42.345   961  1009 V RecentTasksController: generateList - complete
+08-26 17:33:42.346  1099  1161 D PreloadThumbnailUseCase: Preloading thumbnails for task ids: [[id=98 windowingMode=1 user=0 lastActiveTime=171838089 lastFocusedTime=171836107] null]
+08-26 17:33:42.362  1099  1099 D RecentTasksList: invalidateLoadedTasks - previous requestLoadId: -1
+08-26 17:33:42.364   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.364   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.364   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.364   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.364   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.371  1099  1099 D SsBaseTemplateCard: Passed-in item info is null
+08-26 17:33:42.371  1099  1099 D SsBaseTemplateCard: Passed-in item info is null
+08-26 17:33:42.371  1099  1099 D SsBaseTemplateCard: Passed-in item info is null
+08-26 17:33:42.371  1099  1099 D SsBaseTemplateCard: Passed-in item info is null
+08-26 17:33:42.371  1099  1099 I SsBaseTemplateCard: Secondary card pane is null
+08-26 17:33:42.372   657   681 V SharedSurfaceAnimation: Checking SharedSurface matching for: ComponentInfo{dev.quickapp.kit.android/dev.quickapp.kit.android.MainActivity}, user= 0
+08-26 17:33:42.372   657   681 V SharedSurfaceAnimation:   No matching provider found.
+08-26 17:33:42.374   961  2186 V WindowManagerShell: onTransitionReady(transaction=2821793525757)
+08-26 17:33:42.388   961  1009 V WindowManagerShell: onTransitionReady (#153) android.os.BinderProxy@4b16cfc: {id=153 t=CLOSE f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+08-26 17:33:42.388   961  1009 V WindowManagerShell:         {m=CLOSE f=FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=98#1727)/@0x5a85f85 sb=Rect(0, 0 - 1280, 2856) eb=Rect(0, 0 - 1280, 2856) epz=Point(1280, 2856) d=0 taskParent=-1 winMode=1 userId=0},
+08-26 17:33:42.388   961  1009 V WindowManagerShell:         {m=TO_FRONT f=SHOW_WALLPAPER|MOVE_TO_TOP|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=1#35)/@0xba961da sb=Rect(0, 0 - 1280, 2856) eb=Rect(0, 0 - 1280, 2856) epz=Point(1280, 2856) d=0 taskParent=-1 winMode=1 userId=0},
+08-26 17:33:42.388   961  1009 V WindowManagerShell:         {m=TO_FRONT f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{1d04423}#55)/@0xb8b460b sb=Rect(0, 0 - 1280, 2856) eb=Rect(0, 0 - 1280, 2856) epz=Point(1280, 2856) d=0}
+08-26 17:33:42.388   961  1009 V WindowManagerShell:     ]}
+08-26 17:33:42.388   961  1009 V WindowManagerShell: FocusTransitionObserver: Updating focus state for transition #153
+08-26 17:33:42.388   961  1009 D WindowManagerShell: FocusTransitionObserver: Focus updated on displayId=0 to taskId=1
+08-26 17:33:42.389   961  1009 V WindowManagerShell: FocusTransitionObserver: Notifying local listeners of task focus change: taskId=1, isFocusedOnDisplay=true, isFocusedGlobally=true
+08-26 17:33:42.389   961  1009 V RecentTasksController: Notify recent tasks changed: 2
+08-26 17:33:42.389   961  1009 V WindowManagerShell: FocusTransitionObserver: Notifying local listeners of task focus change: taskId=98, isFocusedOnDisplay=false, isFocusedGlobally=false
+08-26 17:33:42.389   961  1009 V WindowManagerShell: Playing animation for (#153) android.os.BinderProxy@4b16cfc@0
+08-26 17:33:42.389   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.389   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.389   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.389   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.389   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.389   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.389   961  1009 D ShellSplitScreen: startAnimation: transition=153 isSplitActive=false
+08-26 17:33:42.389   961  1009 V ShellRecents: RecentsTransitionHandler.startAnimation: no controller found
+08-26 17:33:42.389   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.389   961  1009 V ShellDesktopMode: DesktopMixedTransitionHandler: No pending desktop transition
+08-26 17:33:42.389   961  1009 V ShellDesktopMode: DesktopHomeScreenPeekTransitionHandler: startAnimation
+08-26 17:33:42.389   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.389   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.389   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.389   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.389   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.389   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.389   961  1009 V WindowManagerShell: Transition doesn't have explicit remote, search filters for match for {id=153 t=CLOSE f=0x0 trk=0 r=[0@Point(0, 0)] c=[{m=CLOSE f=FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=98#1727)/@0x5a85f85 sb=Rect(0, 0 - 1280, 2856) eb=Rect(0, 0 - 1280, 2856) epz=Point(1280, 2856) d=0 taskParent=-1 winMode=1 userId=0},{m=TO_FRONT f=SHOW_WALLPAPER|MOVE_TO_TOP|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=1#35)/@0xba961da sb=Rect(0, 0 - 1280, 2856) eb=Rect(0, 0 - 1280, 2856) epz=Point(1280, 2856) d=0 taskParent=-1 winMode=1 userId=0},{m=TO_FRONT f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{1d04423}#55)/@0xb8b460b sb=Rect(0, 0 - 1280, 2856) eb=Rect(0, 0 - 1280, 2856) epz=Point(1280, 2856) d=0}]}
+08-26 17:33:42.389   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.389   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.389   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.389   961  1009 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0 notFlags=0x0 checks=[{atype=undefined independent=true modes=[CLOSE,TO_BACK] flags=IN_TASK_WITH_EMBEDDED_ACTIVITY mustBeTask=false order=ANY topActivity=null launchCookie=null taskFragmentToken=android.os.BinderProxy@9442ef0 windowingMode=undefined isCrossDisplayMove=false}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@5f54c69, appThread = android.app.IApplicationThread$Stub$Proxy@8efb6ee, debugName = overlayBackTransition, filter = {types=[] flags=0x0 notFlags=0x0 checks=[{atype=undefined independent=true modes=[CLOSE,TO_BACK] flags=IN_TASK_WITH_EMBEDDED_ACTIVITY mustBeTask=false order=ANY topActivity=null launchCookie=null taskFragmentToken=android.os.BinderProxy@9442ef0 windowingMode=undefined isCrossDisplayMove=false}]} }}
+08-26 17:33:42.389   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.389   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.389   961  1009 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0 notFlags=0x0 checks=[{atype=dream independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{atype=home independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=false}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@1e1978f, appThread = android.app.IApplicationThread$Stub$Proxy@d54a1c, debugName = LauncherToDream, filter = {types=[] flags=0x0 notFlags=0x0 checks=[{atype=dream independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{atype=home independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=false}]} }}
+08-26 17:33:42.389   961  1009 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0 notFlags=0x0 checks=[{atype=standard independent=false modes=[CHANGE] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=true}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@50d4625, appThread = android.app.IApplicationThread$Stub$Proxy@7a453fa, debugName = QuickstepDisplayMove, filter = {types=[] flags=0x0 notFlags=0x0 checks=[{atype=standard independent=false modes=[CHANGE] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=true}]} }}
+08-26 17:33:42.405   961  1009 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0 notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=ComponentInfo{com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity} launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{NOT atype=undefined independent=true modes=[] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null customAnim=true windowingMode=undefined isCrossDisplayMove=false}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@fea1dab, appThread = android.app.IApplicationThread$Stub$Proxy@8faec08, debugName = QuickstepLaunchHome, filter = {types=[] flags=0x0 notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=ComponentInfo{com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity} launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{NOT atype=undefined independent=true modes=[] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null customAnim=true windowingMode=undefined isCrossDisplayMove=false}]} }}
+08-26 17:33:42.405   961  1009 D RemoteTransitionHandler: Found filterPair{{types=[] flags=0x0 notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=ComponentInfo{com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity} launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{NOT atype=undefined independent=true modes=[] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null customAnim=true windowingMode=undefined isCrossDisplayMove=false}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@fea1dab, appThread = android.app.IApplicationThread$Stub$Proxy@8faec08, debugName = QuickstepLaunchHome, filter = {types=[] flags=0x0 notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=ComponentInfo{com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity} launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{NOT atype=undefined independent=true modes=[] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null customAnim=true windowingMode=undefined isCrossDisplayMove=false}]} }}
+08-26 17:33:42.405   961  1009 V WindowManagerShell:  Delegate animation for (#153) to RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@fea1dab, appThread = android.app.IApplicationThread$Stub$Proxy@8faec08, debugName = QuickstepLaunchHome, filter = {types=[] flags=0x0 notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=ComponentInfo{com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity} launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{NOT atype=undefined independent=true modes=[] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null customAnim=true windowingMode=undefined isCrossDisplayMove=false}]} }
+08-26 17:33:42.406   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.406   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.406   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.406   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.406   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.408  1099  1099 D LauncherStateManager: StateManager.cancelAnimation: animation ongoing: false, partial trace:
+08-26 17:33:42.408  1099  1099 D LauncherStateManager: 	at com.android.quickstep.util.ScalingWorkspaceRevealAnim.<init>(go/retraceme 64ad04f494114c4e1bfc071cc6fb1f37a0439afc37d567b0460a01861ea99cae:39)
+08-26 17:33:42.408  1099  1099 D LauncherStateManager: 	at com.android.launcher3.QuickstepTransitionManager$2.onHomeVisibilityChanged(go/retraceme 64ad04f494114c4e1bfc071cc6fb1f37a0439afc37d567b0460a01861ea99cae:42)
+08-26 17:33:42.408  1099  1099 D LauncherStateManager: 	at com.android.quickstep.HomeVisibilityState$init$1$onHomeVisibilityChanged$1.run(go/retraceme 64ad04f494114c4e1bfc071cc6fb1f37a0439afc37d567b0460a01861ea99cae:61)
+08-26 17:33:42.408  1099  1099 D LauncherStateManager: StateManager.createAtomicAnimation: fromState: Normal, toState: Normal, partial trace:
+08-26 17:33:42.408  1099  1099 D LauncherStateManager: 	at com.android.quickstep.util.ScalingWorkspaceRevealAnim.<init>(go/retraceme 64ad04f494114c4e1bfc071cc6fb1f37a0439afc37d567b0460a01861ea99cae:69)
+08-26 17:33:42.408  1099  1099 D LauncherStateManager: 	at com.android.launcher3.QuickstepTransitionManager$2.onHomeVisibilityChanged(go/retraceme 64ad04f494114c4e1bfc071cc6fb1f37a0439afc37d567b0460a01861ea99cae:42)
+08-26 17:33:42.408  1099  1099 D LauncherStateManager: 	at com.android.quickstep.HomeVisibilityState$init$1$onHomeVisibilityChanged$1.run(go/retraceme 64ad04f494114c4e1bfc071cc6fb1f37a0439afc37d567b0460a01861ea99cae:61)
+08-26 17:33:42.408  1099  1099 D AllAppsTransitionController: shouldProtectHeader: false skipScrim: true state: Normal stateManager.getState(): Normal
+08-26 17:33:42.409  1099  1099 D KeyboardInsetsHandler: removePendingImeController: pendingImeController=null
+08-26 17:33:42.409  1099  1099 V BaseDepthController: Applying blur: 0 to Surface(name=VRI-com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity#1742)/@0xd13d287 applyImmediately: false
+08-26 17:33:42.409  1099  1099 D BaseDepthController: shouldBlurWorkspace: false targetState: Normal currentStableState: Normal mCurrentBlur: 0 mLauncher.getDepthBlurTargets(): [com.android.launcher3.Workspace{6fff5b4 V.ED..... ......ID 0,0-1280,2856 #7f0a0498 app:id/workspace}, com.android.launcher3.Hotseat{510a5dd V.ED..... ........ 0,2289-1280,2856 #7f0a01f8 app:id/hotseat}]
+08-26 17:33:42.409  1099  1099 V BaseDepthController: Applying blur: 0 to Surface(name=VRI-com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity#1742)/@0xd13d287 applyImmediately: false
+08-26 17:33:42.409  1099  1099 D BaseDepthController: shouldBlurWorkspace: false targetState: Normal currentStableState: Normal mCurrentBlur: 0 mLauncher.getDepthBlurTargets(): [com.android.launcher3.Workspace{6fff5b4 V.ED..... ......ID 0,0-1280,2856 #7f0a0498 app:id/workspace}, com.android.launcher3.Hotseat{510a5dd V.ED..... ........ 0,2289-1280,2856 #7f0a01f8 app:id/hotseat}]
+08-26 17:33:42.409  1099  1099 D LauncherStateManager: StateManager.cancelAnimation: animation ongoing: false, partial trace:
+08-26 17:33:42.409  1099  1099 D LauncherStateManager: 	at com.android.launcher3.statemanager.StateManager.setCurrentAnimation(go/retraceme 64ad04f494114c4e1bfc071cc6fb1f37a0439afc37d567b0460a01861ea99cae:80)
+08-26 17:33:42.409  1099  1099 D LauncherStateManager: 	at com.android.quickstep.util.ScalingWorkspaceRevealAnim.start(go/retraceme 64ad04f494114c4e1bfc071cc6fb1f37a0439afc37d567b0460a01861ea99cae:10)
+08-26 17:33:42.409  1099  1099 D LauncherStateManager: 	at com.android.launcher3.QuickstepTransitionManager$2.onHomeVisibilityChanged(go/retraceme 64ad04f494114c4e1bfc071cc6fb1f37a0439afc37d567b0460a01861ea99cae:61)
+08-26 17:33:42.409  1099  1099 D LauncherStateManager: StateManager.cancelAnimation: animation ongoing: false, partial trace:
+08-26 17:33:42.409  1099  1099 D LauncherStateManager: 	at com.android.launcher3.statemanager.StateManager.setCurrentAnimation(go/retraceme 64ad04f494114c4e1bfc071cc6fb1f37a0439afc37d567b0460a01861ea99cae:59)
+08-26 17:33:42.409  1099  1099 D LauncherStateManager: 	at com.android.launcher3.statemanager.StateManager.setCurrentAnimation(go/retraceme 64ad04f494114c4e1bfc071cc6fb1f37a0439afc37d567b0460a01861ea99cae:81)
+08-26 17:33:42.409  1099  1099 D LauncherStateManager: 	at com.android.quickstep.util.ScalingWorkspaceRevealAnim.start(go/retraceme 64ad04f494114c4e1bfc071cc6fb1f37a0439afc37d567b0460a01861ea99cae:10)
+08-26 17:33:42.409  1099  1099 D BaseActivity: Launcher flags updated: [state_started|state_resumed|state_deferred_resumed|state_user_active|state_transition_active] +[state_transition_active]
+08-26 17:33:42.409  1099  1099 D LauncherStateManager: StateManager.onStateTransitionStart: state: Normal
+08-26 17:33:42.409  1099  1099 D ConnectorProvider: Connector disabled by gantry flag.
+08-26 17:33:42.423  1099  1099 D RecentTasksList: invalidateLoadedTasks - previous requestLoadId: -1
+08-26 17:33:42.424  1099  1099 D LauncherStateManager: StateManager.cancelAnimation: animation ongoing: true, partial trace:
+08-26 17:33:42.424  1099  1099 D LauncherStateManager: 	at com.android.launcher3.statemanager.StateManager.reapplyState(go/retraceme 64ad04f494114c4e1bfc071cc6fb1f37a0439afc37d567b0460a01861ea99cae:39)
+08-26 17:33:42.424  1099  1099 D LauncherStateManager: 	at com.android.launcher3.QuickstepTransitionManager.createWallpaperOpenAnimations(go/retraceme 64ad04f494114c4e1bfc071cc6fb1f37a0439afc37d567b0460a01861ea99cae:168)
+08-26 17:33:42.424  1099  1099 D LauncherStateManager: 	at com.android.launcher3.QuickstepTransitionManager$WallpaperOpenLauncherAnimationRunner.onAnimationStart(go/retraceme 64ad04f494114c4e1bfc071cc6fb1f37a0439afc37d567b0460a01861ea99cae:135)
+08-26 17:33:42.424  1099  1099 D ScalingWorkspaceRevealAnim: onAnimationCancel
+08-26 17:33:42.424  1099  1099 D ScalingWorkspaceRevealAnim: onAnimationEnd, workspace and hotseat are visible
+08-26 17:33:42.424  1099  1099 E ScalingWorkspaceRevealAnim: Unexpected invisibility after animation end: workspace.isVisible=true, workspace.alpha=1.0, hotseat.isVisible=false, hotseat.alpha=1.0
+08-26 17:33:42.424  1099  1099 E ScalingWorkspaceRevealAnim: java.lang.Exception
+08-26 17:33:42.424  1099  1099 E ScalingWorkspaceRevealAnim: 	at com.android.quickstep.util.ScalingWorkspaceRevealAnim$4.run(go/retraceme 64ad04f494114c4e1bfc071cc6fb1f37a0439afc37d567b0460a01861ea99cae:123)
+08-26 17:33:42.424  1099  1099 E ScalingWorkspaceRevealAnim: 	at com.android.launcher3.anim.AnimatorListeners$1.onAnimationEnd(go/retraceme 64ad04f494114c4e1bfc071cc6fb1f37a0439afc37d567b0460a01861ea99cae:2)
+08-26 17:33:42.424  1099  1099 E ScalingWorkspaceRevealAnim: 	at android.animation.Animator$AnimatorListener.onAnimationEnd(Animator.java:773)
+08-26 17:33:42.424  1099  1099 E ScalingWorkspaceRevealAnim: 	at android.animation.Animator$AnimatorCaller$$ExternalSyntheticLambda1.call(D8$$SyntheticClass:0)
+08-26 17:33:42.424  1099  1099 E ScalingWorkspaceRevealAnim: 	at android.animation.Animator.callOnList(Animator.java:731)
+08-26 17:33:42.424  1099  1099 E ScalingWorkspaceRevealAnim: 	at android.animation.Animator.notifyListeners(Animator.java:629)
+08-26 17:33:42.424  1099  1099 E ScalingWorkspaceRevealAnim: 	at android.animation.Animator.notifyEndListeners(Animator.java:654)
+08-26 17:33:42.424  1099  1099 E ScalingWorkspaceRevealAnim: 	at android.animation.Animator.completeEndAnimation(Animator.java:697)
+08-26 17:33:42.424  1099  1099 E ScalingWorkspaceRevealAnim: 	at android.animation.AnimatorSet.completeEndAnimation(AnimatorSet.java:1474)
+08-26 17:33:42.424  1099  1099 E ScalingWorkspaceRevealAnim: 	at android.animation.Animator.notifyEndListenersFromEndAnimation(Animator.java:686)
+08-26 17:33:42.424  1099  1099 E ScalingWorkspaceRevealAnim: 	at android.animation.AnimatorSet.endAnimation(AnimatorSet.java:1464)
+08-26 17:33:42.424  1099  1099 E ScalingWorkspaceRevealAnim: 	at android.animation.AnimatorSet.endAnimation(AnimatorSet.java:1447)
+08-26 17:33:42.424  1099  1099 E ScalingWorkspaceRevealAnim: 	at android.animation.AnimatorSet.endAnimationAndNotifyEndListenersImmediately(AnimatorSet.java:437)
+08-26 17:33:42.424  1099  1099 E ScalingWorkspaceRevealAnim: 	at android.animation.AnimatorSet.cancel(AnimatorSet.java:425)
+08-26 17:33:42.424  1099  1099 E ScalingWorkspaceRevealAnim: 	at com.android.launcher3.statemanager.StateManager$AnimationState.reset(go/retraceme 64ad04f494114c4e1bfc071cc6fb1f37a0439afc37d567b0460a01861ea99cae:66)
+08-26 17:33:42.424  1099  1099 E ScalingWorkspaceRevealAnim: 	at com.android.launcher3.statemanager.StateManager.cancelAnimation(go/retraceme 64ad04f494114c4e1bfc071cc6fb1f37a0439afc37d567b0460a01861ea99cae:70)
+08-26 17:33:42.424  1099  1099 E ScalingWorkspaceRevealAnim: 	at com.android.launcher3.statemanager.StateManager.reapplyState(go/retraceme 64ad04f494114c4e1bfc071cc6fb1f37a0439afc37d567b0460a01861ea99cae:39)
+08-26 17:33:42.424  1099  1099 E ScalingWorkspaceRevealAnim: 	at com.android.launcher3.QuickstepTransitionManager.createWallpaperOpenAnimations(go/retraceme 64ad04f494114c4e1bfc071cc6fb1f37a0439afc37d567b0460a01861ea99cae:168)
+08-26 17:33:42.424  1099  1099 E ScalingWorkspaceRevealAnim: 	at com.android.launcher3.QuickstepTransitionManager$WallpaperOpenLauncherAnimationRunner.onAnimationStart(go/retraceme 64ad04f494114c4e1bfc071cc6fb1f37a0439afc37d567b0460a01861ea99cae:135)
+08-26 17:33:42.424  1099  1099 E ScalingWorkspaceRevealAnim: 	at com.android.launcher3.LauncherAnimationRunner$$ExternalSyntheticLambda2.run(go/retraceme 64ad04f494114c4e1bfc071cc6fb1f37a0439afc37d567b0460a01861ea99cae:71)
+08-26 17:33:42.424  1099  1099 E ScalingWorkspaceRevealAnim: 	at android.os.Handler.handleCallback(Handler.java:1082)
+08-26 17:33:42.424  1099  1099 E ScalingWorkspaceRevealAnim: 	at android.os.Handler.dispatchMessageImpl(Handler.java:135)
+08-26 17:33:42.424  1099  1099 E ScalingWorkspaceRevealAnim: 	at android.os.Handler.dispatchMessage(Handler.java:126)
+08-26 17:33:42.424  1099  1099 E ScalingWorkspaceRevealAnim: 	at android.os.Looper.loopOnce(Looper.java:295)
+08-26 17:33:42.424  1099  1099 E ScalingWorkspaceRevealAnim: 	at android.os.Looper.loop(Looper.java:398)
+08-26 17:33:42.424  1099  1099 E ScalingWorkspaceRevealAnim: 	at android.app.ActivityThread.main(ActivityThread.java:9569)
+08-26 17:33:42.424  1099  1099 E ScalingWorkspaceRevealAnim: 	at java.lang.reflect.Method.invoke(Native Method)
+08-26 17:33:42.424  1099  1099 E ScalingWorkspaceRevealAnim: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:575)
+08-26 17:33:42.424  1099  1099 E ScalingWorkspaceRevealAnim: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:918)
+08-26 17:33:42.424  1099  1099 V BaseDepthController: Applying blur: 90 to Surface(name=VRI-com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity#1742)/@0xd13d287 applyImmediately: false
+08-26 17:33:42.424  1099  1099 D BaseDepthController: shouldBlurWorkspace: false targetState: Normal currentStableState: Normal mCurrentBlur: 90 mLauncher.getDepthBlurTargets(): [com.android.launcher3.Workspace{6fff5b4 V.ED..... ......ID 0,0-1280,2856 #7f0a0498 app:id/workspace}, com.android.launcher3.Hotseat{510a5dd I.ED..... .......D 0,2289-1280,2856 #7f0a01f8 app:id/hotseat}]
+08-26 17:33:42.424  1099  1099 D AllAppsTransitionController: shouldProtectHeader: false skipScrim: false state: Normal stateManager.getState(): Normal
+08-26 17:33:42.424  1099  1099 V BaseDepthController: Applying blur: 0 to Surface(name=VRI-com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity#1742)/@0xd13d287 applyImmediately: false
+08-26 17:33:42.424  1099  1099 D BaseDepthController: shouldBlurWorkspace: false targetState: Normal currentStableState: Normal mCurrentBlur: 0 mLauncher.getDepthBlurTargets(): [com.android.launcher3.Workspace{6fff5b4 V.ED..... ......ID 0,0-1280,2856 #7f0a0498 app:id/workspace}, com.android.launcher3.Hotseat{510a5dd V.ED..... ......ID 0,2289-1280,2856 #7f0a01f8 app:id/hotseat}]
+08-26 17:33:42.424  1099  1099 D KeyboardInsetsHandler: setState, toState:Normal StateManager(mLastStableState:Normal, mCurrentStableState:Normal, mState:Normal, mRestState:null, isInTransition:false)
+08-26 17:33:42.424  1099  1099 D KeyboardInsetsHandler: removePendingImeController: pendingImeController=null
+08-26 17:33:42.424  1099  1099 D KeyboardStateManager: hideKeyboard
+08-26 17:33:42.424  1099  1099 D KeyboardStateManager: isImeShown: false
+08-26 17:33:42.424  1099  1099 D BaseActivity: Launcher flags updated: [state_started|state_resumed|state_deferred_resumed|state_user_active] -[state_transition_active]
+08-26 17:33:42.424  1099  1099 D LauncherStateManager: StateManager.onStateTransitionEnd: state: Normal
+08-26 17:33:42.424  1099  1099 D RecentsView: reset - mEnableDrawingLiveTile: false, mRecentsAnimationController: null
+08-26 17:33:42.424  1099  1099 D ActivityAllAppsContainerView: rebindAdapters: force: false
+08-26 17:33:42.424  1099  1099 D ActivityAllAppsContainerView: rebindAdapters: Not needed.
+08-26 17:33:42.427  1099  1099 D ConnectorProvider: Connector disabled by gantry flag.
+08-26 17:33:42.427  1099  1099 D ConnectorProvider: Connector disabled by gantry flag.
+08-26 17:33:42.428  1099  1099 D LauncherStateManager: StateManager.cancelAnimation: animation ongoing: false, partial trace:
+08-26 17:33:42.428  1099  1099 D LauncherStateManager: 	at com.android.launcher3.statemanager.StateManager.reapplyState(go/retraceme 64ad04f494114c4e1bfc071cc6fb1f37a0439afc37d567b0460a01861ea99cae:39)
+08-26 17:33:42.428  1099  1099 D LauncherStateManager: 	at com.android.quickstep.util.ScalingWorkspaceRevealAnim.<init>(go/retraceme 64ad04f494114c4e1bfc071cc6fb1f37a0439afc37d567b0460a01861ea99cae:43)
+08-26 17:33:42.428  1099  1099 D LauncherStateManager: 	at com.android.launcher3.QuickstepTransitionManager.createWallpaperOpenAnimations(go/retraceme 64ad04f494114c4e1bfc071cc6fb1f37a0439afc37d567b0460a01861ea99cae:624)
+08-26 17:33:42.428  1099  1099 D AllAppsTransitionController: shouldProtectHeader: false skipScrim: false state: Normal stateManager.getState(): Normal
+08-26 17:33:42.435   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.435   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.435   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.436   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.436   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.436   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.440  1099  1099 D KeyboardInsetsHandler: setState, toState:Normal StateManager(mLastStableState:Normal, mCurrentStableState:Normal, mState:Normal, mRestState:null, isInTransition:false)
+08-26 17:33:42.440  1099  1099 D KeyboardInsetsHandler: removePendingImeController: pendingImeController=null
+08-26 17:33:42.440  1099  1099 D KeyboardStateManager: hideKeyboard
+08-26 17:33:42.440  1099  1099 D KeyboardStateManager: isImeShown: false
+08-26 17:33:42.441  1099  1099 D LauncherStateManager: StateManager.createAtomicAnimation: fromState: Normal, toState: Normal, partial trace:
+08-26 17:33:42.441  1099  1099 D LauncherStateManager: 	at com.android.quickstep.util.ScalingWorkspaceRevealAnim.<init>(go/retraceme 64ad04f494114c4e1bfc071cc6fb1f37a0439afc37d567b0460a01861ea99cae:69)
+08-26 17:33:42.441  1099  1099 D LauncherStateManager: 	at com.android.launcher3.QuickstepTransitionManager.createWallpaperOpenAnimations(go/retraceme 64ad04f494114c4e1bfc071cc6fb1f37a0439afc37d567b0460a01861ea99cae:624)
+08-26 17:33:42.441  1099  1099 D LauncherStateManager: 	at com.android.launcher3.QuickstepTransitionManager$WallpaperOpenLauncherAnimationRunner.onAnimationStart(go/retraceme 64ad04f494114c4e1bfc071cc6fb1f37a0439afc37d567b0460a01861ea99cae:135)
+08-26 17:33:42.441  1099  1099 D AllAppsTransitionController: shouldProtectHeader: false skipScrim: true state: Normal stateManager.getState(): Normal
+08-26 17:33:42.441  1099  1099 D KeyboardInsetsHandler: removePendingImeController: pendingImeController=null
+08-26 17:33:42.441  1099  1099 V BaseDepthController: Applying blur: 0 to Surface(name=VRI-com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity#1742)/@0xd13d287 applyImmediately: false
+08-26 17:33:42.441  1099  1099 D BaseDepthController: shouldBlurWorkspace: false targetState: Normal currentStableState: Normal mCurrentBlur: 0 mLauncher.getDepthBlurTargets(): [com.android.launcher3.Workspace{6fff5b4 V.ED..... ......ID 0,0-1280,2856 #7f0a0498 app:id/workspace}, com.android.launcher3.Hotseat{510a5dd V.ED..... ......ID 0,2289-1280,2856 #7f0a01f8 app:id/hotseat}]
+08-26 17:33:42.441  1099  1099 V BaseDepthController: Applying blur: 0 to Surface(name=VRI-com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity#1742)/@0xd13d287 applyImmediately: false
+08-26 17:33:42.461   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.461   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.461   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.461   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.461   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.461   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.461   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.462   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.462   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.476  1099  1099 D BaseDepthController: shouldBlurWorkspace: false targetState: Normal currentStableState: Normal mCurrentBlur: 0 mLauncher.getDepthBlurTargets(): [com.android.launcher3.Workspace{6fff5b4 V.ED..... ......ID 0,0-1280,2856 #7f0a0498 app:id/workspace}, com.android.launcher3.Hotseat{510a5dd V.ED..... ......ID 0,2289-1280,2856 #7f0a01f8 app:id/hotseat}]
+08-26 17:33:42.477  1099  1099 D LauncherStateManager: StateManager.cancelAnimation: animation ongoing: false, partial trace:
+08-26 17:33:42.477  1099  1099 D LauncherStateManager: 	at com.android.launcher3.statemanager.StateManager.setCurrentAnimation(go/retraceme 64ad04f494114c4e1bfc071cc6fb1f37a0439afc37d567b0460a01861ea99cae:59)
+08-26 17:33:42.477  1099  1099 D LauncherStateManager: 	at com.android.launcher3.QuickstepTransitionManager.createWallpaperOpenAnimations(go/retraceme 64ad04f494114c4e1bfc071cc6fb1f37a0439afc37d567b0460a01861ea99cae:757)
+08-26 17:33:42.477  1099  1099 D LauncherStateManager: 	at com.android.launcher3.QuickstepTransitionManager$WallpaperOpenLauncherAnimationRunner.onAnimationStart(go/retraceme 64ad04f494114c4e1bfc071cc6fb1f37a0439afc37d567b0460a01861ea99cae:135)
+08-26 17:33:42.477  1099  1099 D b/311077782: LauncherAnimationRunner.setAnimation
+08-26 17:33:42.477  1099  1099 V BaseDepthController: Applying blur: 0 to Surface(name=VRI-com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity#1742)/@0xd13d287 applyImmediately: false
+08-26 17:33:42.477  1099  1099 D BaseDepthController: shouldBlurWorkspace: false targetState: Normal currentStableState: Normal mCurrentBlur: 0 mLauncher.getDepthBlurTargets(): [com.android.launcher3.Workspace{6fff5b4 V.ED..... ......ID 0,0-1280,2856 #7f0a0498 app:id/workspace}, com.android.launcher3.Hotseat{510a5dd V.ED..... ......ID 0,2289-1280,2856 #7f0a01f8 app:id/hotseat}]
+08-26 17:33:42.478  1099  1099 V BaseDepthController: Applying blur: 0 to Surface(name=VRI-com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity#1742)/@0xd13d287 applyImmediately: false
+08-26 17:33:42.478  1099  1099 D BaseDepthController: shouldBlurWorkspace: false targetState: Normal currentStableState: Normal mCurrentBlur: 0 mLauncher.getDepthBlurTargets(): [com.android.launcher3.Workspace{6fff5b4 V.ED..... ......ID 0,0-1280,2856 #7f0a0498 app:id/workspace}, com.android.launcher3.Hotseat{510a5dd V.ED..... ......ID 0,2289-1280,2856 #7f0a01f8 app:id/hotseat}]
+08-26 17:33:42.479  1099  1099 V BaseDepthController: Applying blur: 0 to Surface(name=VRI-com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity#1742)/@0xd13d287 applyImmediately: false
+08-26 17:33:42.479  1099  1099 D BaseDepthController: shouldBlurWorkspace: false targetState: Normal currentStableState: Normal mCurrentBlur: 0 mLauncher.getDepthBlurTargets(): [com.android.launcher3.Workspace{6fff5b4 V.ED..... ......ID 0,0-1280,2856 #7f0a0498 app:id/workspace}, com.android.launcher3.Hotseat{510a5dd V.ED..... ......ID 0,2289-1280,2856 #7f0a01f8 app:id/hotseat}]
+08-26 17:33:42.481  1099  1099 V BaseDepthController: Applying blur: 0 to Surface(name=VRI-com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity#1742)/@0xd13d287 applyImmediately: false
+08-26 17:33:42.481  1099  1099 D BaseDepthController: shouldBlurWorkspace: false targetState: Normal currentStableState: Normal mCurrentBlur: 0 mLauncher.getDepthBlurTargets(): [com.android.launcher3.Workspace{6fff5b4 V.ED..... ......ID 0,0-1280,2856 #7f0a0498 app:id/workspace}, com.android.launcher3.Hotseat{510a5dd V.ED..... ......ID 0,2289-1280,2856 #7f0a01f8 app:id/hotseat}]
+08-26 17:33:42.481  1099  1099 V BaseDepthController: Applying blur: 0 to Surface(name=VRI-com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity#1742)/@0xd13d287 applyImmediately: false
+08-26 17:33:42.481  1099  1099 D BaseDepthController: shouldBlurWorkspace: false targetState: Normal currentStableState: Normal mCurrentBlur: 0 mLauncher.getDepthBlurTargets(): [com.android.launcher3.Workspace{6fff5b4 V.ED..... ......ID 0,0-1280,2856 #7f0a0498 app:id/workspace}, com.android.launcher3.Hotseat{510a5dd V.ED..... ......ID 0,2289-1280,2856 #7f0a01f8 app:id/hotseat}]
+08-26 17:33:42.482  1099  1099 V BaseDepthController: Applying blur: 0 to Surface(name=VRI-com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity#1742)/@0xd13d287 applyImmediately: false
+08-26 17:33:42.482  1099  1099 D BaseDepthController: shouldBlurWorkspace: false targetState: Normal currentStableState: Normal mCurrentBlur: 0 mLauncher.getDepthBlurTargets(): [com.android.launcher3.Workspace{6fff5b4 V.ED..... ......ID 0,0-1280,2856 #7f0a0498 app:id/workspace}, com.android.launcher3.Hotseat{510a5dd V.ED..... ......ID 0,2289-1280,2856 #7f0a01f8 app:id/hotseat}]
+08-26 17:33:42.532   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.542   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.542   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.542   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.544   657   677 V WindowManager: Sent Transition (#153) createdAt=08-26 17:33:42.232 via request=TransitionRequestInfo { type = CLOSE, triggerTask = TaskInfo{userId=0 taskId=98 effectiveUid=10231 seqId=0 displayId=0 isRunning=false baseIntent=Intent { flg=0x10000000 cmp=dev.quickapp.kit.android/.MainActivity } baseActivity=null topActivity=null origActivity=null realActivity=ComponentInfo{dev.quickapp.kit.android/dev.quickapp.kit.android.MainActivity} realActivityIsAppLockEnabled=false numActivities=0 lastActiveTime=171836110 supportsMultiWindow=true supportsMultiWindowWithoutConstraints=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{RemoteToken{13c49ea Task{b2a7a39 #98 type=standard A=10231:dev.quickapp.kit.android}}} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 0 - 0, 0) topActivityInfo=null launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=true isInteractive=true isVisible=true isVisibleRequested=true isTopActivityNoDisplay=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false isActivityStackTransparent=true lastNonFullscreenBounds=null leafTaskBoundsFromOptions= false capturedLink=null capturedLinkTimestamp=0 requestedVisibleTypes=503 topActivityRequestOpenInBrowserEducationTimestamp=0 appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false isLeafTask= true eligibleForLetterboxEducation= false isLetterboxEducationEnabled= false isLetterboxDoubleTapEnabled= false eligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 topActivityAppBounds=Rect(0, 0 - 0, 0) isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false hasMinAspectRatioOverride=false topActivityLetterboxBounds=null topNonResizableActivityAspectRatio=-1.0} topActivityMainWindowFrame=null isAppBubble=false}, pipChange = null, remoteTransitionInfo = null, displayChanges = null, requestedLocation = null, userChange = null, windowingLayerChange = null, fullscreenRequestChange = null, flags = 0, debugId = 153 }
+08-26 17:33:42.544   657   677 V WindowManager:     startWCT=WindowContainerTransaction { changes= {} hops= [] flags= 0 errorCallbackToken=null taskFragmentOrganizer=null }
+08-26 17:33:42.544   657   677 V WindowManager:     info={id=153 t=CLOSE f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+08-26 17:33:42.544   657   677 V WindowManager:         {WCT{RemoteToken{13c49ea Task{b2a7a39 #98 type=standard A=10231:dev.quickapp.kit.android}}} m=CLOSE f=FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=98#1727)/@0x609728c sb=Rect(0, 0 - 1280, 2856) eb=Rect(0, 0 - 1280, 2856) epz=Point(1280, 2856) d=0 taskParent=-1 winMode=1 userId=0},
+08-26 17:33:42.544   657   677 V WindowManager:         {WCT{RemoteToken{9ab9cb Task{7d5ebf #1 type=home}}} m=TO_FRONT f=SHOW_WALLPAPER|MOVE_TO_TOP|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=1#35)/@0x7cd23db sb=Rect(0, 0 - 1280, 2856) eb=Rect(0, 0 - 1280, 2856) epz=Point(1280, 2856) d=0 taskParent=-1 winMode=1 userId=0},
+08-26 17:33:42.544   657   677 V WindowManager:         {m=TO_FRONT f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{1d04423}#55)/@0xfa5f86 sb=Rect(0, 0 - 1280, 2856) eb=Rect(0, 0 - 1280, 2856) epz=Point(1280, 2856) d=0}
+08-26 17:33:42.544   657   677 V WindowManager:     ]}
+08-26 17:33:42.544  1099  1099 D OverviewActionsView: updateForGroupedTask() called with: isGroupedTask = [false]
+08-26 17:33:42.544  1099  1099 D OverviewActionsView: updateActionButtonsVisibility() called: showActions = [true]
+08-26 17:33:42.562  1099  1099 D BaseActivity: Launcher flags updated: [state_started|state_resumed|state_deferred_resumed|state_window_focused|state_user_active] +[state_window_focused]
+08-26 17:33:42.562  1099  1099 D ExtendedEditText: onWindowFocusChanged: hasWindowFocus=true
+08-26 17:33:42.563   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.564   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.564   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.564   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.564   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.564   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.564   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.564   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.564   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.572   657   794 I ImeTracker: com.google.android.apps.nexuslauncher:cc975d07: onRequestHide at ORIGIN_SERVER reason HIDE_UNSPECIFIED_WINDOW fromUser false userId 0 displayId 0
+08-26 17:33:42.573   657   794 W InputChannel-JNI: Channel already disposed.
+08-26 17:33:42.573   657   670 W ActivityTaskManager: setRunningRemoteTransition: no process for null
+08-26 17:33:42.575   657  1217 I ImeTracker: system_server:8d4ecbcf: onRequestHide at ORIGIN_SERVER reason IME_REQUESTED_CHANGED_LISTENER fromUser false displayId 0
+08-26 17:33:42.575   961  1009 V WindowManagerShell:  animated by com.android.wm.shell.transition.RemoteTransitionHandler@665ffa
+08-26 17:33:42.576  5412  5412 I GoogleInputMethodService: GoogleInputMethodService.onFinishInput():2269 
+08-26 17:33:42.577  5412  5412 I Module  : DeviceLockedStatusModuleProvider$Module.updateDeviceLockedStatusInternal():127 repeatCheckTimes = 0, locked = false
+08-26 17:33:42.577  5412  5412 I GoogleInputMethodService: GoogleInputMethodService.onStartInput():1454 onStartInput(EditorInfo{EditorInfo{packageName=com.google.android.apps.nexuslauncher, inputType=0, inputTypeString=NULL, enableLearning=false, autoCorrection=false, autoComplete=false, imeOptions=0, privateImeOptions=null, actionName=UNSPECIFIED, actionLabel=null, initialSelStart=-1, initialSelEnd=-1, initialCapsMode=0, label=null, fieldId=0, fieldName=null, extras=null, hintText=null, hintLocales=[]}}, false)
+08-26 17:33:42.577  5412  5412 I AndroidIME: LatinIMEBase.updateInputViewCoverNavigation():321 Update input view padding, isNavbarOverInputWindow=true, bottom inset=144
+08-26 17:33:42.578  5412  5412 I Module  : DeviceLockedStatusModuleProvider$Module.updateDeviceLockedStatusInternal():127 repeatCheckTimes = 1, locked = false
+08-26 17:33:42.582   657  1224 W PackageConfigPersister: App-specific configuration not found for packageName: com.google.android.apps.nexuslauncher and userId: 0
+08-26 17:33:42.583  1099  1099 D InsetsController: hide(ime())
+08-26 17:33:42.583  1099  1099 I ImeTracker: com.google.android.apps.nexuslauncher:cc975d07: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+08-26 17:33:42.589  1099  1099 V BaseDepthController: Applying blur: 0 to Surface(name=VRI-com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity#1742)/@0xd13d287 applyImmediately: false
+08-26 17:33:42.589  1099  1099 D BaseDepthController: shouldBlurWorkspace: false targetState: Normal currentStableState: Normal mCurrentBlur: 0 mLauncher.getDepthBlurTargets(): [com.android.launcher3.Workspace{6fff5b4 V.ED..... ........ 0,0-1280,2856 #7f0a0498 app:id/workspace}, com.android.launcher3.Hotseat{510a5dd V.ED..... .......D 0,2289-1280,2856 #7f0a01f8 app:id/hotseat}]
+08-26 17:33:42.594   657   680 I ImeTracker: system_server:8d4ecbcf: onCancelled at PHASE_SERVER_SHOULD_HIDE
+08-26 17:33:42.600   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.600   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.600   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.600   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.600   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.600   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.600   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.600   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.607  1059  1059 I HidDeviceService: unregisterAppUid(): uid=10231
+08-26 17:33:42.608  1059  1059 W HidDeviceService: unregisterAppUid(): caller UID doesn't match user UID
+08-26 17:33:42.629   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.630   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.630   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.630   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.630   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.630   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.630   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.664  1099  1099 V BaseDepthController: Applying blur: 0 to Surface(name=VRI-com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity#1742)/@0xd13d287 applyImmediately: false
+08-26 17:33:42.664  1099  1099 D BaseDepthController: shouldBlurWorkspace: false targetState: Normal currentStableState: Normal mCurrentBlur: 0 mLauncher.getDepthBlurTargets(): [com.android.launcher3.Workspace{6fff5b4 V.ED..... ........ 0,0-1280,2856 #7f0a0498 app:id/workspace}, com.android.launcher3.Hotseat{510a5dd V.ED..... .......D 0,2289-1280,2856 #7f0a01f8 app:id/hotseat}]
+08-26 17:33:42.667   657   666 I system_server: Background young concurrent mark compact GC freed 23MB AllocSpace bytes, 8(272KB) LOS objects, 39% free, 35MB/59MB, paused 1.388ms,1.596ms total 123.117ms
+08-26 17:33:42.690   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.690   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.690   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.690   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.690   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.690   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.690   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.690   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.690   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.692   451   515 I RanchuHwc: logCompositionFallbackIfChanged: layer 268 CompositionType fallback from 2 to 1
+08-26 17:33:42.692   451   515 I RanchuHwc: logCompositionFallbackIfChanged: layer 269 CompositionType fallback from 2 to 1
+08-26 17:33:42.693   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.693   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.693   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.693   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.693   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.693   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.693   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.730   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.730   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.730   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.736  1099  1099 V BaseDepthController: Applying blur: 0 to Surface(name=VRI-com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity#1742)/@0xd13d287 applyImmediately: false
+08-26 17:33:42.736  1099  1099 D BaseDepthController: setEarlyWakeup: true
+08-26 17:33:42.736  1099  1099 D BaseDepthController: shouldBlurWorkspace: false targetState: Normal currentStableState: Normal mCurrentBlur: 0 mLauncher.getDepthBlurTargets(): [com.android.launcher3.Workspace{6fff5b4 V.ED..... ........ 0,0-1280,2856 #7f0a0498 app:id/workspace}, com.android.launcher3.Hotseat{510a5dd V.ED..... ........ 0,2289-1280,2856 #7f0a01f8 app:id/hotseat}]
+08-26 17:33:42.764   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.764   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.764   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.764   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.764   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.764   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.764   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.764   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.764   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.764   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.764   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.764   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.764   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.764   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.764   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.764   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.790  1099  1099 V BaseDepthController: Applying blur: 0 to Surface(name=VRI-com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity#1742)/@0xd13d287 applyImmediately: false
+08-26 17:33:42.790  1099  1099 D BaseDepthController: shouldBlurWorkspace: false targetState: Normal currentStableState: Normal mCurrentBlur: 0 mLauncher.getDepthBlurTargets(): [com.android.launcher3.Workspace{6fff5b4 V.ED..... ........ 0,0-1280,2856 #7f0a0498 app:id/workspace}, com.android.launcher3.Hotseat{510a5dd V.ED..... ........ 0,2289-1280,2856 #7f0a01f8 app:id/hotseat}]
+08-26 17:33:42.827   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.827   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.833   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.833   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.833   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.833   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.833   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.833   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.833   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.833   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.889   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.889   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.889   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.889   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.889   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.889   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.889   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.889   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.919  1099  1099 V BaseDepthController: Applying blur: 0 to Surface(name=VRI-com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity#1742)/@0xd13d287 applyImmediately: false
+08-26 17:33:42.920  1099  1099 D BaseDepthController: shouldBlurWorkspace: false targetState: Normal currentStableState: Normal mCurrentBlur: 0 mLauncher.getDepthBlurTargets(): [com.android.launcher3.Workspace{6fff5b4 V.ED..... ........ 0,0-1280,2856 #7f0a0498 app:id/workspace}, com.android.launcher3.Hotseat{510a5dd V.ED..... ........ 0,2289-1280,2856 #7f0a01f8 app:id/hotseat}]
+08-26 17:33:42.928   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.928   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.949   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.949   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.949   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.949   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.949   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.949   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.949   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:42.950  1099  1099 V BaseDepthController: Applying blur: 0 to Surface(name=VRI-com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity#1742)/@0xd13d287 applyImmediately: false
+08-26 17:33:42.952  1099  1099 D BaseDepthController: shouldBlurWorkspace: false targetState: Normal currentStableState: Normal mCurrentBlur: 0 mLauncher.getDepthBlurTargets(): [com.android.launcher3.Workspace{6fff5b4 V.ED..... ........ 0,0-1280,2856 #7f0a0498 app:id/workspace}, com.android.launcher3.Hotseat{510a5dd V.ED..... ........ 0,2289-1280,2856 #7f0a01f8 app:id/hotseat}]
+08-26 17:33:43.013   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.013   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.013   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.013   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.013   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.013   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.013   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.013   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.055   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.055   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.055   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.055   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.055   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.055   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.055   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.055   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.068  1099  1099 V BaseDepthController: Applying blur: 0 to Surface(name=VRI-com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity#1742)/@0xd13d287 applyImmediately: false
+08-26 17:33:43.068  1099  1099 D BaseDepthController: shouldBlurWorkspace: false targetState: Normal currentStableState: Normal mCurrentBlur: 0 mLauncher.getDepthBlurTargets(): [com.android.launcher3.Workspace{6fff5b4 V.ED..... ........ 0,0-1280,2856 #7f0a0498 app:id/workspace}, com.android.launcher3.Hotseat{510a5dd V.ED..... ........ 0,2289-1280,2856 #7f0a01f8 app:id/hotseat}]
+08-26 17:33:43.087   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.087   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.102   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.104   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.104   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.104   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.104   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.104   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.104   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.212  1099  1099 V BaseDepthController: Applying blur: 0 to Surface(name=VRI-com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity#1742)/@0xd13d287 applyImmediately: false
+08-26 17:33:43.212  1099  1099 D BaseDepthController: shouldBlurWorkspace: false targetState: Normal currentStableState: Normal mCurrentBlur: 0 mLauncher.getDepthBlurTargets(): [com.android.launcher3.Workspace{6fff5b4 V.ED..... ........ 0,0-1280,2856 #7f0a0498 app:id/workspace}, com.android.launcher3.Hotseat{510a5dd V.ED..... ........ 0,2289-1280,2856 #7f0a01f8 app:id/hotseat}]
+08-26 17:33:43.214   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.214   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.214   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.214   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.214   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.214   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.214   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.214   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.246   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.246   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.247   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.247   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.247   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.247   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.247   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.247   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.249  1099  1099 V BaseDepthController: Applying blur: 0 to Surface(name=VRI-com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity#1742)/@0xd13d287 applyImmediately: false
+08-26 17:33:43.249  1099  1099 D BaseDepthController: shouldBlurWorkspace: false targetState: Normal currentStableState: Normal mCurrentBlur: 0 mLauncher.getDepthBlurTargets(): [com.android.launcher3.Workspace{6fff5b4 V.ED..... ........ 0,0-1280,2856 #7f0a0498 app:id/workspace}, com.android.launcher3.Hotseat{510a5dd V.ED..... ........ 0,2289-1280,2856 #7f0a01f8 app:id/hotseat}]
+08-26 17:33:43.272   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.272   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.284   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.284   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.284   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.284   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.284   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.284   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.284   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.355  1099  1099 V BaseDepthController: Applying blur: 0 to Surface(name=VRI-com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity#1742)/@0xd13d287 applyImmediately: false
+08-26 17:33:43.355  1099  1099 D BaseDepthController: setEarlyWakeup: false
+08-26 17:33:43.355  1099  1099 D BaseDepthController: shouldBlurWorkspace: false targetState: Normal currentStableState: Normal mCurrentBlur: 0 mLauncher.getDepthBlurTargets(): [com.android.launcher3.Workspace{6fff5b4 V.ED..... ........ 0,0-1280,2856 #7f0a0498 app:id/workspace}, com.android.launcher3.Hotseat{510a5dd V.ED..... ........ 0,2289-1280,2856 #7f0a01f8 app:id/hotseat}]
+08-26 17:33:43.380   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.380   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.380   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.380   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.380   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.380   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.380   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.458   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.458   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.458   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.458   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.458   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.458   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.458   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.458   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.489   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.490   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.490   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.490   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.490   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.490   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.490   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.490   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.490   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.509  1099  1099 D ScalingWorkspaceRevealAnim: onAnimationEnd, workspace and hotseat are visible
+08-26 17:33:43.509  1099  1099 V BaseDepthController: Applying blur: 0 to Surface(name=VRI-com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity#1742)/@0xd13d287 applyImmediately: false
+08-26 17:33:43.509  1099  1099 D BaseDepthController: shouldBlurWorkspace: false targetState: Normal currentStableState: Normal mCurrentBlur: 0 mLauncher.getDepthBlurTargets(): [com.android.launcher3.Workspace{6fff5b4 V.ED..... ......ID 0,0-1280,2856 #7f0a0498 app:id/workspace}, com.android.launcher3.Hotseat{510a5dd V.ED..... ......ID 0,2289-1280,2856 #7f0a01f8 app:id/hotseat}]
+08-26 17:33:43.511   961  2363 V WindowManagerShell: Received remote transition finished callback for (#153)
+08-26 17:33:43.515   961  1009 V WindowManagerShell: Transition animation finished (aborted=false), notifying core (#153) android.os.BinderProxy@4b16cfc@0
+08-26 17:33:43.518   657   677 V WindowManager: Finish Transition (#153): created at 08-26 17:33:42.232 collect-started=0.023ms request-sent=0.076ms started=2.581ms ready=9.915ms sent=140.767ms commit=78.74ms finished=1285.343ms
+08-26 17:33:43.522   961  1009 V WindowManagerShell: Track 0 became idle
+08-26 17:33:43.522   961  1009 V WindowManagerShell: All active transition animations finished
+08-26 17:33:43.533   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.533   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.533   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.533   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.533   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.533   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.534   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.534   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.580   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.580   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.580   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.580   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.580   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.580   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.698   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.698   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.698   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.698   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.698   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.698   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.698   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.698   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.702   657   927 I Surface : Creating surface for consumer unnamed-657-31 with slotExpansion=1 for 64 slots
+08-26 17:33:43.702   657   927 I Surface : Creating surface for consumer ImageReader-1024x2284f1m1-657-31 with slotExpansion=1 for 64 slots
+08-26 17:33:43.702   657   927 W ImageReader_JNI: Unable to acquire a buffer item, very likely client tried to acquire more than maxImages buffers
+08-26 17:33:43.718   657   927 E ConsumerBase: [ImageReader-1024x2284f1m1-657-31] abandonLocked: ConsumerBase is abandoned!
+08-26 17:33:43.734   657  1821 E TaskPersister: File error accessing recents directory (directory doesn't exist?).
+08-26 17:33:43.760   657   657 W GrallocUploadTh: type=1400 audit(0.0:354): avc:  denied  { read } for  name="u:object_r:vendor_default_prop:s0" dev="tmpfs" ino=399 scontext=u:r:system_server:s0 tcontext=u:object_r:vendor_default_prop:s0 tclass=file permissive=0
+08-26 17:33:43.764   657 18549 I GFXSTREAM: [eglDisplay.cpp(297)] Opening libGLESv1_CM_emulation.so
+08-26 17:33:43.764   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.764   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.764   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.764   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.764   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.764   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.764   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.764   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.765   657 18549 I GFXSTREAM: [eglDisplay.cpp(297)] Opening libGLESv2_emulation.so
+08-26 17:33:43.767   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.767   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.777   657 18549 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+08-26 17:33:43.815   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.820   657 18549 W HWUI    : Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+08-26 17:33:43.835   657 18549 W HWUI    : Failed to initialize 101010-2 format, error = EGL_SUCCESS
+08-26 17:33:43.873   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.873   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.893 24089 24103 I GFXSTREAM: [eglDisplay.cpp(297)] Opening libGLESv1_CM_emulation.so
+08-26 17:33:43.894 24089 24103 I GFXSTREAM: [eglDisplay.cpp(297)] Opening libGLESv2_emulation.so
+08-26 17:33:43.905 24089 24103 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+08-26 17:33:43.906   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.906   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.906   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.906   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.906   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.906   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.906   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.913 24089 24103 W HWUI    : Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+08-26 17:33:43.915 24089 24103 W HWUI    : Failed to initialize 101010-2 format, error = EGL_SUCCESS
+08-26 17:33:43.932   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.992   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.992   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:43.997   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:44.063   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:44.103   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:44.103   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:44.130   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:44.181 24089 24089 D VRI[MainActivity]: visibilityChanged oldVisibility=true newVisibility=false
+08-26 17:33:44.197   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:44.258   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:44.258   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:44.262   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 17:33:44.271   517   517 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-t' '1200''

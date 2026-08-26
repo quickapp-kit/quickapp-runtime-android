@@ -8,6 +8,7 @@
 #include <functional>
 #include <future>
 #include <map>
+#include <memory>
 #include <mutex>
 #include <optional>
 #include <queue>
@@ -58,6 +59,61 @@ namespace qs = core::surface;
 namespace qj = js;
 namespace ja = js::abi;
 namespace qcf = core::feature;
+
+std::optional<qj::RuntimeValue> toJsRuntimeValue(
+    const qc::RuntimeValue& value) {
+  const auto& storage = value.storage();
+  if (std::holds_alternative<qc::RuntimeValue::Null>(storage)) {
+    return qj::RuntimeValue(nullptr);
+  }
+  if (const auto* boolean = std::get_if<bool>(&storage)) {
+    return qj::RuntimeValue(*boolean);
+  }
+  if (const auto* integer = std::get_if<std::int64_t>(&storage)) {
+    return qj::RuntimeValue(static_cast<double>(*integer));
+  }
+  if (const auto* number = std::get_if<double>(&storage)) {
+    return qj::RuntimeValue(*number);
+  }
+  if (const auto* string = std::get_if<std::string>(&storage)) {
+    return qj::RuntimeValue(*string);
+  }
+  if (const auto* array =
+          std::get_if<std::shared_ptr<const qc::RuntimeValue::Array>>(&storage)) {
+    if (!*array) return qj::RuntimeValue(nullptr);
+    qj::RuntimeValue::Array converted;
+    converted.reserve((*array)->size());
+    for (const auto& item : **array) {
+      auto value = toJsRuntimeValue(item);
+      if (!value) return std::nullopt;
+      converted.emplace_back(std::move(*value));
+    }
+    return qj::RuntimeValue(std::move(converted));
+  }
+  if (const auto* object =
+          std::get_if<std::shared_ptr<const qc::RuntimeValue::Object>>(&storage)) {
+    if (!*object) return qj::RuntimeValue(nullptr);
+    qj::RuntimeValue::Object converted;
+    for (const auto& [name, item] : **object) {
+      auto value = toJsRuntimeValue(item);
+      if (!value) return std::nullopt;
+      converted.emplace(name, std::move(*value));
+    }
+    return qj::RuntimeValue(std::move(converted));
+  }
+  return std::nullopt;
+}
+
+std::optional<ja::DynamicValues> toJsDynamicValues(
+    const qc::RuntimeValue::Object& payload) {
+  ja::DynamicValues converted;
+  for (const auto& [name, value] : payload) {
+    auto item = toJsRuntimeValue(value);
+    if (!item) return std::nullopt;
+    converted.emplace(name, std::move(*item));
+  }
+  return converted;
+}
 
 class CoreMailbox final {
  public:
@@ -445,6 +501,36 @@ class JsCoreIngress final : public ja::CoreIngressPort,
     if (runtime_abi_ == nullptr) return qc::EnqueueResult::failure(
         qc::RuntimeError::simple(qc::RuntimeErrorCode::kPlatformRejected,
                                  "Android Runtime ABI is closed"));
+    auto payload = toJsDynamicValues(event.payload);
+    if (!payload) return qc::EnqueueResult::failure(
+        qc::RuntimeError::simple(qc::RuntimeErrorCode::kAbiInvalidArgument,
+                                 "Android event payload conversion failed"));
+#if defined(__ANDROID__)
+    const auto valueType = [](const qj::RuntimeValue* value) {
+      if (value == nullptr) return "absent";
+      const auto& storage = value->storage();
+      if (std::holds_alternative<std::nullptr_t>(storage)) return "null";
+      if (std::holds_alternative<bool>(storage)) return "boolean";
+      if (std::holds_alternative<double>(storage)) return "number";
+      if (std::holds_alternative<std::string>(storage)) return "string";
+      if (std::holds_alternative<qj::RuntimeValue::Array>(storage)) return "array";
+      return "object";
+    };
+    const auto field = [&](std::string_view name) -> const qj::RuntimeValue* {
+      const auto found = payload->find(std::string(name));
+      return found == payload->end() ? nullptr : &found->second;
+    };
+    __android_log_print(
+        ANDROID_LOG_INFO, "QuickAppKit",
+        "android.event.payload event=%s keys=%zu index=%s value=%s checked=%s "
+        "isFromUser=%s selected=%s scrollOffset=%s",
+        event.event_type == qc::package::EventType::kClick
+            ? "click"
+            : std::string(qc::event::event_type_wire(event.event_type)).c_str(),
+        payload->size(), valueType(field("index")), valueType(field("value")),
+        valueType(field("checked")), valueType(field("isFromUser")),
+        valueType(field("selected")), valueType(field("scrollOffset")));
+#endif
     ja::JsEventDispatch dispatch{
         event.request_id.wire(), event.surface_id.wire(), event.handler_id.wire(),
         std::string(qc::event::event_type_wire(event.event_type)), event.phase,
@@ -452,7 +538,7 @@ class JsCoreIngress final : public ja::CoreIngressPort,
          event.target.template_node_id.value()},
         {qc::runtime_tree::owner_wire(event.current_target.owner),
          event.current_target.template_node_id.value()},
-        static_cast<double>(event.timestamp_ns), {}};
+        static_cast<double>(event.timestamp_ns), std::move(*payload)};
     const auto posted = runtime_abi_->postCallback(ja::JsInboundMessage{
         std::move(dispatch)});
 #if defined(__ANDROID__)
@@ -860,10 +946,20 @@ class JsCoreIngress final : public ja::CoreIngressPort,
       }
       std::optional<qc::RequestId> causal;
       if (render->requestId) causal = qc::RequestId::parse(*render->requestId).value();
-      static_cast<void>(coordinator_->submit(qr::RenderTransactionIntent{
+      auto submitted = coordinator_->submit(qr::RenderTransactionIntent{
           surface.value(), transaction.value(), render->revision, causal,
           std::move(updates), std::move(block_instantiates),
-          std::move(block_removes), std::move(block_moves)}));
+          std::move(block_removes), std::move(block_moves)});
+#if defined(__ANDROID__)
+      __android_log_print(
+          ANDROID_LOG_INFO, "QuickAppKit",
+          "android.render.submit surface=%s transaction=%s revision=%llu ok=%d error=%s",
+          render->surfaceId.c_str(), render->transactionId.c_str(),
+          static_cast<unsigned long long>(render->revision),
+          submitted.has_value() ? 1 : 0,
+          submitted.has_value() ? ""
+                                : std::string(qc::to_wire(submitted.error().code)).c_str());
+#endif
     }
   }
 

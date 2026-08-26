@@ -1,0 +1,267 @@
+--------- beginning of main
+08-26 13:39:53.967   517   517 I adbd    : adbd service requested 'shell,v2,TERM=dumb,raw:input tap 489 2754'
+08-26 13:39:54.015 14848 14848 I QuickAppKit: android.input.tabs.change surface=srf:1 node=node:7 index=1 value=分类
+08-26 13:39:54.016 14848 14848 I QuickAppKit: android.event.change.received surface=srf:1 node=node:7
+08-26 13:39:54.020 14848 14912 I QuickAppKit: android.event.js_callback posted=1 error=
+08-26 13:39:54.020 14848 14912 I QuickAppKit: android.event.change.dispatched=1
+08-26 13:39:54.021   657   756 W AS.PlaybackActivityMon: No piid assigned for invalid/internal port id 16
+08-26 13:39:54.021   657  2056 W AS.PlaybackActivityMon: No piid assigned for invalid/internal port id 16
+08-26 13:39:54.021 14848 14914 I QuickAppKit: android.event.handler_execute surface=srf:1 handler=hdl:3 dispatched=1
+08-26 13:39:54.023   488   516 D AudioFlinger: mixer(0xb40078b88a03b790) throttle end: throttle time(18)
+08-26 13:39:54.080   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 13:39:54.118   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 13:39:54.186   488   505 I APM_AudioPolicyManager: getNewOutputDevices io 13 recent device override {AUDIO_DEVICE_OUT_SPEAKER, @:}
+08-26 13:39:55.070   517   517 I adbd    : adbd service requested 'exec:screencap '-p''
+08-26 13:39:55.148 15056 15056 W libbinder.BackendUnifiedServiceManager: Thread Pool max thread count is 0. Cannot cache binder as linkToDeath cannot be implemented. serviceName: SurfaceFlingerAIDL
+08-26 13:39:55.148 15056 15056 W libbinder.BpBinder: Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
+08-26 13:39:55.149 15056 15056 W libbinder.ProcessState: Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
+08-26 13:39:55.151   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 13:39:55.151   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 13:39:55.151   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 13:39:55.175 15056 15057 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+08-26 13:39:55.347   517   517 I adbd    : adbd service requested 'shell,v2,TERM=dumb,raw:uiautomator dump /sdcard/commerce-category-v3.xml'
+08-26 13:39:55.381 15058 15058 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+08-26 13:39:55.383 15058 15058 I AndroidRuntime: Using default boot image
+08-26 13:39:55.383 15058 15058 I AndroidRuntime: Leaving lock profiling enabled
+08-26 13:39:55.384 15058 15058 I app_process: Core platform API enforcement reporting only by runtime option
+08-26 13:39:55.384 15058 15058 I app_process: Using generational CollectorTypeCMC GC.
+08-26 13:39:55.406 15058 15058 D nativeloader: InitDefaultPublicLibraries for_preload=1: libandroid.so:libaaudio.so:libamidi.so:libbinder_ndk.so:libc.so:libcamera2ndk.so:libdl.so:libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libicu.so:libicui18n.so:libicuuc.so:libjnigraphics.so:liblog.so:libmediandk.so:libm.so:libnativehelper.so:libnativewindow.so:libOpenMAXAL.so:libOpenSLES.so:libRS.so:libstdc++.so:libsync.so:libvulkan.so:libwebviewchromium_plat_support.so:libz.so
+08-26 13:39:55.412 15058 15058 D nativeloader: Load libicu_jni.so using APEX ns com_android_art for caller /apex/com.android.art/javalib/core-oj.jar: ok
+08-26 13:39:55.412 15058 15058 D app_process: u_setTimeZoneFilesDirectory("/apex/com.android.tzdata/etc/tz/versioned/10/icu") succeeded. 
+08-26 13:39:55.412 15058 15058 D app_process: I18n APEX ICU file found: /apex/com.android.i18n/etc/icu/icudt78l.dat
+08-26 13:39:55.412 15058 15058 D nativeloader: Load libjavacore.so using APEX ns com_android_art for caller /apex/com.android.art/javalib/core-oj.jar: ok
+08-26 13:39:55.412 15058 15058 D nativeloader: Load libopenjdk.so using APEX ns com_android_art for caller /apex/com.android.art/javalib/core-oj.jar: ok
+08-26 13:39:55.413 15058 15058 I app_process: Priority-to-niceness mapping: 19, 16, 13, 10, 0, -2, -4, -5, -6, -8
+08-26 13:39:55.414 15058 15058 W app_process: ClassLoaderContext shared library size mismatch. Expected=2, found=0 (PCL[]{PCL[/system/framework/android.test.base.jar*1579129895]#PCL[/system/framework/android.test.mock.jar*1147775851]} | PCL[])
+08-26 13:39:55.414 15058 15058 W app_process: ClassLoaderContext classpath size mismatch. expected=0, found=1 (PCL[]{PCL[/system/framework/android.test.runner.jar*2652887513]{PCL[/system/framework/android.test.base.jar*1579129895]#PCL[/system/framework/android.test.mock.jar*1147775851]}#PCL[/system/framework/android.test.base.jar*1579129895]} | PCL[/system/framework/android.test.runner.jar*2652887513])
+08-26 13:39:55.425 15058 15058 D nativeloader: Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+08-26 13:39:55.425 15058 15058 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+08-26 13:39:55.427 15058 15058 I AconfigPackage: android.media.swcodec.flags is mapped to com.android.media.swcodec
+08-26 13:39:55.427 15058 15058 I AconfigPackage: com.android.permission.flags is mapped to com.android.permission
+08-26 13:39:55.427 15058 15058 I AconfigPackage: com.android.permissioncontroller.flags is mapped to com.android.permission
+08-26 13:39:55.427 15058 15058 I AconfigPackage: com.google.android.widevine.flags is mapped to com.google.android.widevine
+08-26 13:39:55.427 15058 15058 I AconfigPackage: com.android.icu is mapped to com.android.i18n
+08-26 13:39:55.427 15058 15058 I AconfigPackage: com.android.appsearch.flags is mapped to com.android.appsearch
+08-26 13:39:55.427 15058 15058 I AconfigPackage: com.android.uprobestats.flags is mapped to com.android.uprobestats
+08-26 13:39:55.427 15058 15058 I AconfigPackage: android.uprobestats.mainline.flags is mapped to com.android.uprobestats
+08-26 13:39:55.427 15058 15058 I AconfigPackage: com.android.crashrecovery.flags is mapped to com.android.crashrecovery
+08-26 13:39:55.427 15058 15058 I AconfigPackage: android.provider.flags is mapped to com.android.configinfrastructure
+08-26 13:39:55.427 15058 15058 I AconfigPackage: com.android.server.deviceconfig is mapped to com.android.configinfrastructure
+08-26 13:39:55.427 15058 15058 I AconfigPackage: com.android.art.flags is mapped to com.android.art
+08-26 13:39:55.427 15058 15058 I AconfigPackage: com.android.art.rw.flags is mapped to com.android.art
+08-26 13:39:55.427 15058 15058 I AconfigPackage: com.android.libcore is mapped to com.android.art
+08-26 13:39:55.427 15058 15058 I AconfigPackage: android.telecom.flags is mapped to com.android.telephonycore
+08-26 13:39:55.427 15058 15058 I AconfigPackage: com.android.internal.telecom.flags is mapped to com.android.telephonycore
+08-26 13:39:55.427 15058 15058 I AconfigPackage: com.android.telephony.flags is mapped to com.android.telephonycore
+08-26 13:39:55.427 15058 15058 I AconfigPackage: com.android.media.extractor.flags is mapped to com.android.media
+08-26 13:39:55.427 15058 15058 I AconfigPackage: com.android.media.metrics.flags is mapped to com.android.media
+08-26 13:39:55.427 15058 15058 I AconfigPackage: com.android.media.mainline.flags is mapped to com.android.media
+08-26 13:39:55.427 15058 15058 I AconfigPackage: com.android.wifi.flags is mapped to com.android.wifi
+08-26 13:39:55.427 15058 15058 I AconfigPackage: com.android.org.conscrypt.flags is mapped to com.android.conscrypt
+08-26 13:39:55.427 15058 15058 I AconfigPackage: com.android.org.conscrypt.net.flags is mapped to com.android.conscrypt
+08-26 13:39:55.427 15058 15058 I AconfigPackage: com.android.healthfitness.flags is mapped to com.android.healthfitness
+08-26 13:39:55.427 15058 15058 I AconfigPackage: com.android.healthfitness.beta is mapped to com.android.healthfitness
+08-26 13:39:55.427 15058 15058 I AconfigPackage: com.android.ipsec.flags is mapped to com.android.ipsec
+08-26 13:39:55.428 15058 15058 I AconfigPackage: com.android.nfc.module.flags is mapped to com.android.nfcservices
+08-26 13:39:55.428 15058 15058 I AconfigPackage: com.android.nfc.module.nonexported.flags is mapped to com.android.nfcservices
+08-26 13:39:55.428 15058 15058 I AconfigPackage: com.android.adservices.ondevicepersonalization.flags is mapped to com.android.ondevicepersonalization
+08-26 13:39:55.428 15058 15058 I AconfigPackage: com.android.scheduling.flags is mapped to com.android.scheduling
+08-26 13:39:55.428 15058 15058 I AconfigPackage: com.android.adbd.flags is mapped to com.android.adbd
+08-26 13:39:55.428 15058 15058 I AconfigPackage: com.android.bluetooth.beta.flags is mapped to com.android.bt
+08-26 13:39:55.428 15058 15058 I AconfigPackage: com.android.bluetooth.flags is mapped to com.android.bt
+08-26 13:39:55.428 15058 15058 I AconfigPackage: com.android.devicelock.flags is mapped to com.android.devicelock
+08-26 13:39:55.428 15058 15058 I AconfigPackage: android.os.profiling is mapped to com.android.profiling
+08-26 13:39:55.428 15058 15058 I AconfigPackage: android.os.profiling.anomaly.beta.flags is mapped to com.android.profiling
+08-26 13:39:55.428 15058 15058 I AconfigPackage: android.os.profiling.anomaly.flags is mapped to com.android.profiling
+08-26 13:39:55.428 15058 15058 I AconfigPackage: com.android.os.statsd.flags is mapped to com.android.os.statsd
+08-26 13:39:55.428 15058 15058 I AconfigPackage: com.android.webapp.flags is mapped to com.android.webapp
+08-26 13:39:55.428 15058 15058 I AconfigPackage: com.android.rkpd.flags is mapped to com.android.rkpd
+08-26 13:39:55.428 15058 15058 I AconfigPackage: com.android.cellbroadcastreceiver.flags is mapped to com.android.cellbroadcast
+08-26 13:39:55.428 15058 15058 I AconfigPackage: com.android.adservices.flags is mapped to com.android.adservices
+08-26 13:39:55.428 15058 15058 I AconfigPackage: com.android.sdksandbox.flags is mapped to com.android.adservices
+08-26 13:39:55.428 15058 15058 I AconfigPackage: android.app.sdksandbox.flags is mapped to com.android.adservices
+08-26 13:39:55.428 15058 15058 I AconfigPackage: com.android.uwb.flags is mapped to com.android.uwb
+08-26 13:39:55.428 15058 15058 I AconfigPackage: com.android.ranging.flags is mapped to com.android.uwb
+08-26 13:39:55.428 15058 15058 I AconfigPackage: com.android.npumanager is mapped to com.android.npumanager
+08-26 13:39:55.428 15058 15058 I AconfigPackage: com.android.signature.flags is mapped to com.android.mediaprovider
+08-26 13:39:55.428 15058 15058 I AconfigPackage: com.android.providers.media.flags is mapped to com.android.mediaprovider
+08-26 13:39:55.428 15058 15058 I AconfigPackage: android.graphics.pdf.flags is mapped to com.android.mediaprovider
+08-26 13:39:55.428 15058 15058 I AconfigPackage: android.graphics.pdf.flags.readonly is mapped to com.android.mediaprovider
+08-26 13:39:55.428 15058 15058 I AconfigPackage: com.android.tethering.mainline.beta is mapped to com.android.tethering
+08-26 13:39:55.428 15058 15058 I AconfigPackage: android.net.http is mapped to com.android.tethering
+08-26 13:39:55.428 15058 15058 I AconfigPackage: com.android.tethering.readonly.flags is mapped to com.android.tethering
+08-26 13:39:55.428 15058 15058 I AconfigPackage: android.net.vcn is mapped to com.android.tethering
+08-26 13:39:55.428 15058 15058 I AconfigPackage: com.android.net.flags is mapped to com.android.tethering
+08-26 13:39:55.428 15058 15058 I AconfigPackage: com.android.tethering.flags is mapped to com.android.tethering
+08-26 13:39:55.428 15058 15058 I AconfigPackage: com.android.tethering.beta.test is mapped to com.android.tethering
+08-26 13:39:55.428 15058 15058 I AconfigPackage: com.android.nearby.flags is mapped to com.android.tethering
+08-26 13:39:55.428 15058 15058 I AconfigPackage: com.android.net.thread.flags is mapped to com.android.tethering
+08-26 13:39:55.428 15058 15058 I AconfigPackage: android.net.http.flags is mapped to com.android.tethering
+08-26 13:39:55.428 15058 15058 I AconfigPackage: com.android.system.virtualmachine.flags is mapped to com.android.virt
+08-26 13:39:55.428 15058 15058 E FeatureFlagsImplExport: android.os.flagging.AconfigStorageReadException: ERROR_PACKAGE_NOT_FOUND: package android.xr cannot be found on the device
+08-26 13:39:55.430 15058 15058 D UiAutomationConnection: Created on user UserHandle{0}
+08-26 13:39:55.430 15058 15058 I UiAutomation: Initialized for user 0 on display 0
+08-26 13:39:55.430 15058 15058 W UiAutomation: Created with deprecatead constructor, assumes DEFAULT_DISPLAY
+--------- beginning of system
+08-26 13:39:55.430   657   756 D AccessibilityManagerService: changeCurrentUserForTestAutomationIfNeededLocked(0): ignoring because device doesn't support visible background users
+08-26 13:39:55.431   657   756 I UiAutomationManager: Registering UiTestAutomationService (id=com.android.server.accessibility/UiAutomation, flags=0x0) when called by user 0
+08-26 13:39:55.431   657   756 V AccessibilityManagerService: onUserStateChangedLocked for userId: 0, forceUpdate: false
+08-26 13:39:55.431   657   756 V AccessibilityUserState: updateShortcutTargets: type:accessibility_shortcut_target_service, current:{}, new:{}
+08-26 13:39:55.431   657   756 V AccessibilityUserState: updateShortcutTargets: type:accessibility_button_targets, current:{}, new:{}
+08-26 13:39:55.431  1777  8086 I AiAiEcho: Settings changed for uri: content://settings/secure/accessibility_enabled
+08-26 13:39:55.432  1777  1991 I AiAiEcho: Predicting[0]:  [CONTEXT sampling_count=5 ]
+08-26 13:39:55.432   657   756 V AccessibilityUserState: updateShortcutTargets: type:accessibility_gesture_targets, current:{}, new:{}
+08-26 13:39:55.432   657   756 V AccessibilityUserState: updateShortcutTargets: type:accessibility_qs_targets, current:{}, new:{}
+08-26 13:39:55.432   657   756 V AccessibilityUserState: updateShortcutTargets: type:accessibility_key_gesture_targets, current:{}, new:{}
+08-26 13:39:55.432   657   756 V AccessibilityUserState: updateShortcutTargets: type:accessibility_top_row_key_targets, current:{}, new:{}
+08-26 13:39:55.432   657   756 V AccessibilityUserState: updateShortcutTargets: type:accessibility_quick_access_targets, current:{}, new:{}
+08-26 13:39:55.432  1777  1991 I AiAiEcho: EchoTargets: 
+08-26 13:39:55.432  1777  1991 I AiAiEcho: Filtered by AiAi flag check: 
+08-26 13:39:55.432  1777  1991 I AiAiEcho: [CONTEXT ratelimit_period="10 SECONDS" ]
+08-26 13:39:55.432   657   756 W MagnificationConnectionManager: requestConnection duplicated request: connect=false, mConnectionState=DISCONNECTED
+08-26 13:39:55.432  1777  1991 I AiAiEcho: #remoteViewsTwiddler: feature disabled.
+08-26 13:39:55.432  1777  1991 I AiAiEcho: #postPredictionTargets: Sending updates to UISurface home with targets# 0 (types=[])
+08-26 13:39:55.433   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:55.433   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:55.433   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:55.433   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:55.433   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:55.433   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:55.433   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:55.433   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:55.433   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:55.433   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:55.433   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:55.433   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:55.434   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:55.434   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:55.434   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:55.434   657  2047 V AccessibilityManagerService: onUserStateChangedLocked for userId: 0, forceUpdate: false
+08-26 13:39:55.434   657  2047 V AccessibilityUserState: updateShortcutTargets: type:accessibility_shortcut_target_service, current:{}, new:{}
+08-26 13:39:55.435   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:55.435   657  2047 V AccessibilityUserState: updateShortcutTargets: type:accessibility_button_targets, current:{}, new:{}
+08-26 13:39:55.435   657  2047 V AccessibilityUserState: updateShortcutTargets: type:accessibility_gesture_targets, current:{}, new:{}
+08-26 13:39:55.435   657  2047 V AccessibilityUserState: updateShortcutTargets: type:accessibility_qs_targets, current:{}, new:{}
+08-26 13:39:55.435   657  2047 V AccessibilityUserState: updateShortcutTargets: type:accessibility_key_gesture_targets, current:{}, new:{}
+08-26 13:39:55.435   657  2047 V AccessibilityUserState: updateShortcutTargets: type:accessibility_top_row_key_targets, current:{}, new:{}
+08-26 13:39:55.435   657  2047 V AccessibilityUserState: updateShortcutTargets: type:accessibility_quick_access_targets, current:{}, new:{}
+08-26 13:39:55.435   657  2047 W MagnificationConnectionManager: requestConnection duplicated request: connect=false, mConnectionState=DISCONNECTED
+08-26 13:39:55.435   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:55.436   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:55.436   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:55.436  1777  8086 I AiAiEcho: Settings changed for uri: content://settings/secure/accessibility_enabled
+08-26 13:39:55.436   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:55.436   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:55.436  1777  1991 I AiAiEcho: Predicting[0]:  [CONTEXT sampling_count=5 ]
+08-26 13:39:55.436  1777  1991 I AiAiEcho: EchoTargets: 
+08-26 13:39:55.436  1777  1991 I AiAiEcho: Filtered by AiAi flag check: 
+08-26 13:39:55.436  1777  1991 I AiAiEcho: [CONTEXT ratelimit_period="10 SECONDS" ]
+08-26 13:39:55.437  1777  1991 I AiAiEcho: #remoteViewsTwiddler: feature disabled.
+08-26 13:39:55.437  1777  1991 I AiAiEcho: #postPredictionTargets: Sending updates to UISurface home with targets# 0 (types=[])
+08-26 13:39:55.437   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:55.438   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:55.438   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:55.438   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:55.438   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:55.438   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:55.438   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:55.438   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:55.438   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:55.439   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:55.439   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:55.439   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:55.439   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:55.439   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:55.439   657   657 D BatterySaverPolicy: accessibility changed to true, updating policy.
+08-26 13:39:55.440   657  2047 D AccessibilityManagerService: .getAccessibilityShortcutTargets {shortcutType=32, userId=0}
+08-26 13:39:55.447   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 13:39:55.447   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 13:39:55.447   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 13:39:55.447   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 13:39:55.447   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 13:39:55.449   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 13:39:55.480   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 13:39:55.480   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 13:39:55.480   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 13:39:55.480   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 13:39:55.480   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 13:39:55.549   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 13:39:56.445  1725 10884 W MediaProvider: isAppCloneUserPair for user 0: false
+08-26 13:39:56.449 15058 15058 I AccessibilityNodeInfoDumper: Skipping invisible child: android.view.accessibility.AccessibilityNodeInfo@fc9a; boundsInParent: Rect(0, 0 - 1209, 96); boundsInScreen: Rect(36, 2508 - 1245, 2460); boundsInWindow: Rect(36, 2508 - 1245, 2460); packageName: dev.quickapp.kit.android; className: android.widget.TextView; text: 小夜灯套装 / 家居 / 热卖 / 149 元; error: null; maxTextLength: -1; stateDescription: null; contentDescription: null; tooltipText: null; containerTitle: null; viewIdResName: null; uniqueId: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; granularScrollingSupported: false; importantForAccessibility: true; visible: false; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_NEXT_AT_MOVEMENT_GRANULARITY - null, AccessibilityAction: ACTION_PREVIOUS_AT_MOVEMENT_GRANULARITY - null, AccessibilityAction: ACTION_SET_SELECTION - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]; isTextSelectable: false
+08-26 13:39:56.449 15058 15058 I AccessibilityNodeInfoDumper: Skipping invisible child: android.view.accessibility.AccessibilityNodeInfo@1005b; boundsInParent: Rect(0, 0 - 1209, 96); boundsInScreen: Rect(36, 2616 - 1245, 2460); boundsInWindow: Rect(36, 2616 - 1245, 2460); packageName: dev.quickapp.kit.android; className: android.widget.TextView; text: 轻量电脑包 / 出行 / 上新 / 359 元; error: null; maxTextLength: -1; stateDescription: null; contentDescription: null; tooltipText: null; containerTitle: null; viewIdResName: null; uniqueId: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; granularScrollingSupported: false; importantForAccessibility: true; visible: false; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_NEXT_AT_MOVEMENT_GRANULARITY - null, AccessibilityAction: ACTION_PREVIOUS_AT_MOVEMENT_GRANULARITY - null, AccessibilityAction: ACTION_SET_SELECTION - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]; isTextSelectable: false
+08-26 13:39:56.449 15058 15058 I AccessibilityNodeInfoDumper: Skipping invisible child: android.view.accessibility.AccessibilityNodeInfo@1041c; boundsInParent: Rect(0, 0 - 1209, 96); boundsInScreen: Rect(36, 2724 - 1245, 2460); boundsInWindow: Rect(36, 2724 - 1245, 2460); packageName: dev.quickapp.kit.android; className: android.widget.TextView; text: 透明冷水壶 / 生活 / 稳定 / 119 元; error: null; maxTextLength: -1; stateDescription: null; contentDescription: null; tooltipText: null; containerTitle: null; viewIdResName: null; uniqueId: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; granularScrollingSupported: false; importantForAccessibility: true; visible: false; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_NEXT_AT_MOVEMENT_GRANULARITY - null, AccessibilityAction: ACTION_PREVIOUS_AT_MOVEMENT_GRANULARITY - null, AccessibilityAction: ACTION_SET_SELECTION - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]; isTextSelectable: false
+08-26 13:39:56.449 15058 15058 I AccessibilityNodeInfoDumper: Skipping invisible child: android.view.accessibility.AccessibilityNodeInfo@107dd; boundsInParent: Rect(0, 0 - 1209, 96); boundsInScreen: Rect(36, 2832 - 1245, 2460); boundsInWindow: Rect(36, 2832 - 1245, 2460); packageName: dev.quickapp.kit.android; className: android.widget.TextView; text: 阅读工作灯 / 家居 / 精选 / 249 元; error: null; maxTextLength: -1; stateDescription: null; contentDescription: null; tooltipText: null; containerTitle: null; viewIdResName: null; uniqueId: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; granularScrollingSupported: false; importantForAccessibility: true; visible: false; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_NEXT_AT_MOVEMENT_GRANULARITY - null, AccessibilityAction: ACTION_PREVIOUS_AT_MOVEMENT_GRANULARITY - null, AccessibilityAction: ACTION_SET_SELECTION - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]; isTextSelectable: false
+08-26 13:39:56.449 15058 15058 I AccessibilityNodeInfoDumper: Skipping invisible child: android.view.accessibility.AccessibilityNodeInfo@10b9e; boundsInParent: Rect(0, 0 - 1209, 96); boundsInScreen: Rect(36, 2940 - 1245, 2460); boundsInWindow: Rect(36, 2940 - 1245, 2460); packageName: dev.quickapp.kit.android; className: android.widget.TextView; text: 短途旅行包 / 出行 / 热卖 / 289 元; error: null; maxTextLength: -1; stateDescription: null; contentDescription: null; tooltipText: null; containerTitle: null; viewIdResName: null; uniqueId: null; checkable: false; checked: false; focusable: false; focused: false; selected: false; clickable: false; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; granularScrollingSupported: false; importantForAccessibility: true; visible: false; actions: [AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_NEXT_AT_MOVEMENT_GRANULARITY - null, AccessibilityAction: ACTION_PREVIOUS_AT_MOVEMENT_GRANULARITY - null, AccessibilityAction: ACTION_SET_SELECTION - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]; isTextSelectable: false
+08-26 13:39:56.449 15058 15058 I AccessibilityNodeInfoDumper: Skipping invisible child: android.view.accessibility.AccessibilityNodeInfo@10f5f; boundsInParent: Rect(0, 0 - 468, 84); boundsInScreen: Rect(48, 3057 - 516, 2460); boundsInWindow: Rect(48, 3057 - 516, 2460); packageName: dev.quickapp.kit.android; className: android.widget.Button; text: 查看首个商品详情; error: null; maxTextLength: -1; stateDescription: null; contentDescription: null; tooltipText: null; containerTitle: null; viewIdResName: null; uniqueId: null; checkable: false; checked: false; focusable: true; focused: false; selected: false; clickable: true; longClickable: false; contextClickable: false; enabled: true; password: false; scrollable: false; granularScrollingSupported: false; importantForAccessibility: true; visible: false; actions: [AccessibilityAction: ACTION_FOCUS - null, AccessibilityAction: ACTION_SELECT - null, AccessibilityAction: ACTION_CLEAR_SELECTION - null, AccessibilityAction: ACTION_CLICK - null, AccessibilityAction: ACTION_ACCESSIBILITY_FOCUS - null, AccessibilityAction: ACTION_NEXT_AT_MOVEMENT_GRANULARITY - null, AccessibilityAction: ACTION_PREVIOUS_AT_MOVEMENT_GRANULARITY - null, AccessibilityAction: ACTION_SET_SELECTION - null, AccessibilityAction: ACTION_SHOW_ON_SCREEN - null]; isTextSelectable: false
+08-26 13:39:56.450 15058 15058 W AccessibilityNodeInfoDumper: Fetch time: 9ms
+08-26 13:39:56.452   657   941 V AccessibilityManagerService: onUserStateChangedLocked for userId: 0, forceUpdate: false
+08-26 13:39:56.453   657   941 V AccessibilityUserState: updateShortcutTargets: type:accessibility_shortcut_target_service, current:{}, new:{}
+08-26 13:39:56.453   657   941 V AccessibilityUserState: updateShortcutTargets: type:accessibility_button_targets, current:{}, new:{}
+08-26 13:39:56.453   657   941 V AccessibilityUserState: updateShortcutTargets: type:accessibility_gesture_targets, current:{}, new:{}
+08-26 13:39:56.453   657   941 V AccessibilityUserState: updateShortcutTargets: type:accessibility_qs_targets, current:{}, new:{}
+08-26 13:39:56.453   657   941 V AccessibilityUserState: updateShortcutTargets: type:accessibility_key_gesture_targets, current:{}, new:{}
+08-26 13:39:56.453   657   941 V AccessibilityUserState: updateShortcutTargets: type:accessibility_top_row_key_targets, current:{}, new:{}
+08-26 13:39:56.453   657   941 V AccessibilityUserState: updateShortcutTargets: type:accessibility_quick_access_targets, current:{}, new:{}
+08-26 13:39:56.453   657   941 W MagnificationConnectionManager: requestConnection duplicated request: connect=false, mConnectionState=DISCONNECTED
+08-26 13:39:56.453   657   941 D AccessibilityManagerService: restoreCurrentUserForTestAutomationIfNeededLocked(): ignoring because device doesn't support visible background users
+08-26 13:39:56.453   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:56.453   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:56.453   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:56.453   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:56.453 15058 15058 D AndroidRuntime: Shutting down VM
+08-26 13:39:56.453   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:56.453   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:56.453   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:56.453 15058 15067 W libbinder.IPCThreadState: call to talkWithDriver in joinThreadPool returned error: -9 (Bad file descriptor), FD: -1
+08-26 13:39:56.453   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:56.454   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:56.454 15058 15068 W libbinder.IPCThreadState: call to talkWithDriver in joinThreadPool returned error: -9 (Bad file descriptor), FD: -1
+08-26 13:39:56.454   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:56.454   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:56.454   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:56.454   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:56.454   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:56.454  1777  2828 I AiAiEcho: Settings changed for uri: content://settings/secure/accessibility_enabled
+08-26 13:39:56.455  1777  1991 I AiAiEcho: Predicting[0]:  [CONTEXT sampling_count=5 ]
+08-26 13:39:56.455  1777  1991 I AiAiEcho: EchoTargets: 
+08-26 13:39:56.455  1777  1991 I AiAiEcho: Filtered by AiAi flag check: 
+08-26 13:39:56.455  1777  1991 I AiAiEcho: [CONTEXT ratelimit_period="10 SECONDS" ]
+08-26 13:39:56.455  1777  1991 I AiAiEcho: #remoteViewsTwiddler: feature disabled.
+08-26 13:39:56.455  1777  1991 I AiAiEcho: #postPredictionTargets: Sending updates to UISurface home with targets# 0 (types=[])
+08-26 13:39:56.456   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:56.456   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:56.456   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:56.456   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:56.456   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:56.456   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:56.456   657   657 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+08-26 13:39:56.457   657   657 D BatterySaverPolicy: accessibility changed to false, updating policy.
+08-26 13:39:56.464   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 13:39:56.464   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 13:39:56.464   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 13:39:56.464   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 13:39:56.464   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 13:39:56.465   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 13:39:56.496   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 13:39:56.496   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 13:39:56.496   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 13:39:56.497   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 13:39:56.497   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 13:39:56.530   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 13:39:56.530   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 13:39:56.530   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 13:39:56.530   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 13:39:56.530   492   492 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 13:39:56.537   657   941 D ActivityManager: sync unfroze 5164 com.google.android.gms for 6
+08-26 13:39:56.539   657   941 D ActivityManager: sync unfroze 5348 com.google.android.gms.unstable for 6
+08-26 13:39:56.556   657  2047 W ProcessStats: Tracking association SourceState{127bd78 com.google.android.gms/10217 ImpBg #24312} whose proc state 6 is better than process ProcessState{c766c51 com.google.android.gms.unstable/10217 pkg=com.google.android.gms} proc state 14 (2 skipped)
+08-26 13:39:56.566   492   534 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+08-26 13:39:56.570  5164  5164 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.common.BIND_SHARED_PREFS xflg=0x4 pkg=com.google.android.gms }
+08-26 13:39:56.571  5147 14883 I NetworkScheduler.Stats: (REDACTED) Task %s/%s started execution. cause:%s exec_start_elapsed_seconds: %s
+08-26 13:39:56.576  5164 15071 I GmscoreIpa: Starting mediastore instant index [CONTEXT service_id=255 ]
+08-26 13:39:56.579  5147 14880 I NetworkScheduler.Stats: (REDACTED) Task %s/%s finished executing. cause:%s result: %s elapsed_millis: %s uptime_millis: %s exec_start_elapsed_seconds: %s
+08-26 13:39:57.099   438  2672 D android.hardware.audio@7.1-impl.ranchu: threadLoop: entering standby, frames: 14001472
+08-26 13:39:57.099   438  2672 D android.hardware.audio@7.1-impl.ranchu: ~TinyalsaSink: joining consumeThread
+08-26 13:39:57.100   438 15053 D android.hardware.audio@7.1-impl.ranchu: consumeThread: exiting
+08-26 13:39:57.325   517   517 I adbd    : adbd service requested 'shell,v2,TERM=dumb,raw:cat /sdcard/commerce-category-v3.xml'
+08-26 13:39:57.372   517   517 I adbd    : adbd service requested 'shell,v2,TERM=dumb:export ANDROID_LOG_TAGS=''; exec logcat '-d' '-t' '1200''

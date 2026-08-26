@@ -1,0 +1,73 @@
+08-26 12:20:27.011 11809 11836 I QuickAppKit: android.stage=run.begin
+08-26 12:20:27.011 11809 11836 I QuickAppKit: android.stage=factory.created
+08-26 12:20:27.012 11809 11836 I QuickAppKit: android.stage=rpk.read
+08-26 12:20:27.012 11809 11836 I QuickAppKit: android.stage=rpk.loader.created
+08-26 12:20:27.134 11809 11836 I QuickAppKit: android.stage=rpk.verified
+08-26 12:20:27.162 11809 11836 I QuickAppKit: android.stage=js.started
+08-26 12:20:27.162 11809 11836 I QuickAppKit: android.stage=coordinator.created
+08-26 12:20:27.162 11809 11836 I QuickAppKit: android.stage=surface_controller.created
+08-26 12:20:27.162 11809 11836 I QuickAppKit: android.stage=feature.registry.created
+08-26 12:20:27.190 11809 11837 I QuickAppKit: android.stage=js.module.loaded
+08-26 12:20:27.190 11809 11837 I QuickAppKit: android.js.module id=@quickapp-kit/app kind=app status=loaded error=
+08-26 12:20:27.191 11809 11837 I QuickAppKit: android.stage=js.setup.finished
+08-26 12:20:27.192 11809 11836 I QuickAppKit: android.stage=js.setup
+08-26 12:20:27.192 11809 11836 I QuickAppKit: android.stage=root.enqueued
+08-26 12:20:27.192 11809 11836 I QuickAppKit: android.stage=core.loop.before
+08-26 12:20:27.192 11809 11836 I QuickAppKit: android.stage=core.loop.mailbox.drained
+08-26 12:20:27.193 11809 11836 I QuickAppKit: android.native.create surface=srf:1
+08-26 12:20:27.208 11809 11836 I QuickAppKit: android.platform.create request=req:41 surface=srf:1
+08-26 12:20:27.208 11809 11836 I QuickAppKit: android.stage=core.loop.controller.work
+08-26 12:20:27.208 11809 11836 I QuickAppKit: android.core.controller.drained count=1
+08-26 12:20:27.208 11809 11836 I QuickAppKit: android.stage=core.loop.controller.drained
+08-26 12:20:27.208 11809 11809 I QuickAppKit: android.platform.create.ui surface=srf:1
+08-26 12:20:27.209 11809 11809 I QuickAppKit: android.platform.create.ui.result=true
+08-26 12:20:27.233 11809 11809 I QuickAppKit: android.stage=surface.result.received
+08-26 12:20:27.233 11809 11809 I QuickAppKit: android.platform.create.completed surface=srf:1
+08-26 12:20:27.238 11809 11836 I QuickAppKit: android.stage=surface.result.core
+08-26 12:20:27.238 11809 11836 I QuickAppKit: android.stage=page.command.received
+08-26 12:20:27.238 11809 11836 I QuickAppKit: android.stage=core.loop.controller.work
+08-26 12:20:27.238 11809 11836 I QuickAppKit: android.core.controller.drained count=1
+08-26 12:20:27.238 11809 11837 I QuickAppKit: android.stage=page.command.js
+08-26 12:20:27.257 11809 11837 I QuickAppKit: android.stage=js.module.loaded
+08-26 12:20:27.258 11809 11837 I QuickAppKit: android.js.module id=@quickapp-kit/page/pages/Home kind=page status=loaded error=
+08-26 12:20:27.258 11809 11837 I QuickAppKit: android.stage=page.start.completed
+08-26 12:20:27.258 11809 11836 I QuickAppKit: android.stage=initial.command.received
+08-26 12:20:27.258 11809 11836 I QuickAppKit: android.stage=initial.command.coordinator
+08-26 12:20:27.258 11809 11836 I QuickAppKit: android.stage=core.loop.controller.work
+08-26 12:20:27.258 11809 11836 I QuickAppKit: android.core.controller.drained count=1
+08-26 12:20:27.258 11809 11837 I QuickAppKit: android.stage=initial.command.js
+08-26 12:20:27.281 11809 11837 I QuickAppKit: android.stage=page.vm.ready
+08-26 12:20:27.281 11809 11837 I QuickAppKit: android.event.handler_bind surface=srf:1 handler=hdl:1 method=onRefresh bound=1 method_ok=1 vm_ok=1
+08-26 12:20:27.281 11809 11837 I QuickAppKit: android.event.handler_bind surface=srf:1 handler=hdl:2 method=onProduct bound=1 method_ok=1 vm_ok=1
+08-26 12:20:27.281 11809 11837 I QuickAppKit: android.event.handler_bind surface=srf:1 handler=hdl:3 method=onTabChange bound=1 method_ok=1 vm_ok=1
+08-26 12:20:27.301 11809 11836 I QuickAppKit: android.stage=core.ingress.instantiate
+08-26 12:20:27.306 11809 11837 I QuickAppKit: android.event.block_handler_bind surface=srf:1 handler=hdl:srf:1-1-blk:srf:1-6-if method=onRefresh bound=1
+08-26 12:20:27.306 11809 11837 I QuickAppKit: android.event.block_handler_bind surface=srf:1 handler=hdl:srf:1-2-blk:srf:1-10-lampA method=onProduct bound=1
+08-26 12:20:27.306 11809 11837 I QuickAppKit: android.event.block_handler_bind surface=srf:1 handler=hdl:srf:1-2-blk:srf:1-10-bagB method=onProduct bound=1
+08-26 12:20:27.306 11809 11837 I QuickAppKit: android.event.block_handler_bind surface=srf:1 handler=hdl:srf:1-2-blk:srf:1-10-cupC method=onProduct bound=1
+08-26 12:20:27.325 11809 11836 I QuickAppKit: android.native.mount surface=srf:1 operations=197
+08-26 12:20:27.325 11809 11836 I QuickAppKit: android.platform.mount surface=srf:1 operations=197
+08-26 12:20:27.326 11809 11836 I QuickAppKit: android.stage=core.ingress.instantiate.accepted
+08-26 12:20:27.326 11809 11836 I QuickAppKit: android.event.handlers count=5 hdl1node=
+08-26 12:20:27.326 11809 11809 I QuickAppKit: android.platform.mount.ui surface=srf:1
+08-26 12:20:27.574 11809 11809 I QuickAppKit: android.platform.mount.result surface=srf:1 ok=true
+08-26 12:20:27.574 11809 11809 I QuickAppKit: android.mount.result.received surface=srf:1 revision=0 attempt=mnt:1 source=req:j-1 mounted=1
+08-26 12:20:27.575 11809 11836 I QuickAppKit: android.stage=core.initial.prepared
+08-26 12:20:27.575 11809 11836 I QuickAppKit: android.initial.result surface=srf:1 prepared=1 error=
+08-26 12:20:27.575 11809 11836 I QuickAppKit: android.initial.controller.enqueue=1
+08-26 12:20:27.575 11809 11836 I QuickAppKit: android.mount.result.accepted=1
+08-26 12:20:27.575 11809 11836 I QuickAppKit: android.native.surface.present.enter request=req:59 surface=srf:1
+08-26 12:20:27.575 11809 11836 I QuickAppKit: android.native.present request=req:59 surface=srf:1 push=0
+08-26 12:20:27.575 11809 11836 I QuickAppKit: android.platform.present request=req:59 surface=srf:1
+08-26 12:20:27.575 11809 11836 I QuickAppKit: android.native.surface.present.exit posted=1
+08-26 12:20:27.575 11809 11836 I QuickAppKit: android.stage=core.loop.controller.work
+08-26 12:20:27.575 11809 11836 I QuickAppKit: android.core.controller.drained count=1
+08-26 12:20:27.613 11809 11809 I QuickAppKit: android.platform.present.ui surface=srf:1
+08-26 12:20:27.615 11809 11809 I QuickAppKit: android.stage=surface.result.received
+08-26 12:20:27.616 11809 11836 I QuickAppKit: android.stage=surface.result.core
+08-26 12:20:27.616 11809 11836 I QuickAppKit: android.stage=page.command.received
+08-26 12:20:27.616 11809 11837 I QuickAppKit: android.stage=page.command.js
+08-26 12:20:27.616 11809 11836 I QuickAppKit: android.stage=surface.operation.completed
+08-26 12:20:27.616 11809 11836 I QuickAppKit: android.surface.operation kind=0 request=req:android-root target=srf:1 error=
+08-26 12:20:27.616 11809 11836 I QuickAppKit: android.stage=core.loop.controller.work
+08-26 12:20:27.616 11809 11836 I QuickAppKit: android.core.controller.drained count=2

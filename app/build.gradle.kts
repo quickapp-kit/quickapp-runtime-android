@@ -58,6 +58,7 @@ val syncGoldenRpk by tasks.registering(Copy::class) {
     from("../../quickapp-examples/showcases/platform-001/dist/platform-001.rpk")
     from("../../quickapp-examples/showcases/media-001/dist/media-001.rpk")
     from("../../quickapp-examples/showcases/tabs-001/dist/tabs-001.rpk")
+    from("../../quickapp-examples/showcases/capability-gallery-001/dist/capability-gallery-001.rpk")
     into(layout.buildDirectory.dir("generated/case001-assets"))
 }
 

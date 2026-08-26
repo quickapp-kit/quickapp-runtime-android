@@ -1,0 +1,52 @@
+--------- beginning of main
+08-26 18:09:01.724 26130 26130 I QuickAppKit: android.event.focus.received surface=srf:1 node=node:4
+08-26 18:09:01.725 26130 26154 I QuickAppKit: android.event.payload event=focus keys=1 index=absent value=string checked=absent isFromUser=absent selected=absent scrollOffset=absent
+08-26 18:09:01.726 26130 26157 I QuickAppKit: android.event.handler_execute surface=srf:1 handler=hdl:3 dispatched=1
+08-26 18:09:01.726 26130 26154 I QuickAppKit: android.event.js_callback posted=1 error=
+08-26 18:09:01.726 26130 26154 I QuickAppKit: android.event.focus.dispatched=1
+08-26 18:09:02.110 26130 26130 I QuickAppKit: android.event.input.received surface=srf:1 node=node:4
+08-26 18:09:02.115 26130 26154 I QuickAppKit: android.event.payload event=input keys=1 index=absent value=string checked=absent isFromUser=absent selected=absent scrollOffset=absent
+08-26 18:09:02.115 26130 26154 I QuickAppKit: android.event.js_callback posted=1 error=
+08-26 18:09:02.115 26130 26154 I QuickAppKit: android.event.input.dispatched=1
+08-26 18:09:02.132 26130 26157 I QuickAppKit: android.event.handler_execute surface=srf:1 handler=hdl:1 dispatched=1
+08-26 18:09:02.551 26130 26130 I QuickAppKit: android.event.input.received surface=srf:1 node=node:4
+08-26 18:09:02.552 26130 26154 I QuickAppKit: android.event.payload event=input keys=1 index=absent value=string checked=absent isFromUser=absent selected=absent scrollOffset=absent
+08-26 18:09:02.552 26130 26154 I QuickAppKit: android.event.js_callback posted=1 error=
+08-26 18:09:02.552 26130 26154 I QuickAppKit: android.event.input.dispatched=1
+08-26 18:09:02.553 26130 26157 I QuickAppKit: android.event.handler_execute surface=srf:1 handler=hdl:1 dispatched=1
+08-26 18:09:02.648 26130 26130 I QuickAppKit: android.event.input.received surface=srf:1 node=node:4
+08-26 18:09:02.649 26130 26154 I QuickAppKit: android.event.payload event=input keys=1 index=absent value=string checked=absent isFromUser=absent selected=absent scrollOffset=absent
+08-26 18:09:02.649 26130 26154 I QuickAppKit: android.event.js_callback posted=1 error=
+08-26 18:09:02.649 26130 26154 I QuickAppKit: android.event.input.dispatched=1
+08-26 18:09:02.649 26130 26157 I QuickAppKit: android.event.handler_execute surface=srf:1 handler=hdl:1 dispatched=1
+08-26 18:09:02.744 26130 26130 I QuickAppKit: android.event.input.received surface=srf:1 node=node:4
+08-26 18:09:02.745 26130 26154 I QuickAppKit: android.event.payload event=input keys=1 index=absent value=string checked=absent isFromUser=absent selected=absent scrollOffset=absent
+08-26 18:09:02.745 26130 26154 I QuickAppKit: android.event.js_callback posted=1 error=
+08-26 18:09:02.745 26130 26154 I QuickAppKit: android.event.input.dispatched=1
+08-26 18:09:02.748 26130 26157 I QuickAppKit: android.event.handler_execute surface=srf:1 handler=hdl:1 dispatched=1
+08-26 18:09:02.759 26130 26130 I QuickAppKit: android.event.input.received surface=srf:1 node=node:4
+08-26 18:09:02.768 26130 26154 I QuickAppKit: android.event.payload event=input keys=1 index=absent value=string checked=absent isFromUser=absent selected=absent scrollOffset=absent
+08-26 18:09:02.768 26130 26154 I QuickAppKit: android.event.js_callback posted=1 error=
+08-26 18:09:02.768 26130 26154 I QuickAppKit: android.event.input.dispatched=1
+08-26 18:09:02.768 26130 26157 I QuickAppKit: android.event.handler_execute surface=srf:1 handler=hdl:1 dispatched=1
+08-26 18:09:02.827 26130 26130 I QuickAppKit: android.event.input.received surface=srf:1 node=node:4
+08-26 18:09:02.840 26130 26154 I QuickAppKit: android.event.payload event=input keys=1 index=absent value=string checked=absent isFromUser=absent selected=absent scrollOffset=absent
+08-26 18:09:02.840 26130 26154 I QuickAppKit: android.event.js_callback posted=1 error=
+08-26 18:09:02.840 26130 26154 I QuickAppKit: android.event.input.dispatched=1
+08-26 18:09:02.840 26130 26157 I QuickAppKit: android.event.handler_execute surface=srf:1 handler=hdl:1 dispatched=1
+08-26 18:09:03.986 26130 26130 I QuickAppKit: android.event.change.received surface=srf:1 node=node:4
+08-26 18:09:03.988 26130 26154 I QuickAppKit: android.event.payload event=change keys=1 index=absent value=string checked=absent isFromUser=absent selected=absent scrollOffset=absent
+08-26 18:09:03.988 26130 26154 I QuickAppKit: android.event.js_callback posted=1 error=
+08-26 18:09:03.988 26130 26154 I QuickAppKit: android.event.change.dispatched=1
+08-26 18:09:03.988 26130 26157 I QuickAppKit: android.event.handler_execute surface=srf:1 handler=hdl:2 dispatched=1
+08-26 18:09:03.997 26130 26130 I QuickAppKit: android.event.change.received surface=srf:1 node=node:7
+08-26 18:09:03.999 26130 26154 I QuickAppKit: android.event.payload event=change keys=1 index=absent value=absent checked=boolean isFromUser=absent selected=absent scrollOffset=absent
+08-26 18:09:03.999 26130 26154 I QuickAppKit: android.event.js_callback posted=1 error=
+08-26 18:09:03.999 26130 26154 I QuickAppKit: android.event.change.dispatched=1
+08-26 18:09:04.000 26130 26157 I QuickAppKit: android.event.handler_execute surface=srf:1 handler=hdl:4 dispatched=1
+08-26 18:09:05.064 26130 26130 I QuickAppKit: android.input.click surface=srf:1 node=node:9
+08-26 18:09:05.064 26130 26130 I QuickAppKit: android.event.click.received surface=srf:1 node=node:9
+08-26 18:09:05.065 26130 26154 I QuickAppKit: android.event.payload event=click keys=0 index=absent value=absent checked=absent isFromUser=absent selected=absent scrollOffset=absent
+08-26 18:09:05.065 26130 26154 I QuickAppKit: android.event.js_callback posted=1 error=
+08-26 18:09:05.065 26130 26154 I QuickAppKit: android.event.click.dispatched=1
+08-26 18:09:05.065 26130 26157 I QuickAppKit: android.event.handler_execute surface=srf:1 handler=hdl:5 dispatched=1

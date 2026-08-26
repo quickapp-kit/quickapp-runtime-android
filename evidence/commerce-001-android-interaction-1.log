@@ -1,0 +1,84 @@
+08-26 11:13:07.303  9152  9152 I QuickAppKit: android.input.tabs.change surface=srf:1 node=node:4 index=1 value=分类
+08-26 11:13:07.304  9152  9152 I QuickAppKit: android.event.change.received surface=srf:1 node=node:4
+08-26 11:13:07.305  9152  9177 I QuickAppKit: android.event.js_callback posted=1 error=
+08-26 11:13:07.305  9152  9177 I QuickAppKit: android.event.change.dispatched=1
+08-26 11:13:07.308  9152  9184 I QuickAppKit: android.event.handler_execute surface=srf:1 handler=hdl:1 dispatched=1
+08-26 11:13:08.650  9152  9152 I QuickAppKit: android.input.click surface=srf:1 node=node:8
+08-26 11:13:08.650  9152  9152 I QuickAppKit: android.event.click.received surface=srf:1 node=node:8
+08-26 11:13:08.651  9152  9177 I QuickAppKit: android.event.js_callback posted=1 error=
+08-26 11:13:08.651  9152  9177 I QuickAppKit: android.event.click.dispatched=1
+08-26 11:13:08.653  9152  9184 I QuickAppKit: android.event.handler_execute surface=srf:1 handler=hdl:2 dispatched=1
+08-26 11:13:08.657  9152  9177 I QuickAppKit: android.native.mount surface=srf:1 operations=11
+08-26 11:13:08.657  9152  9177 I QuickAppKit: android.platform.mount surface=srf:1 operations=11
+08-26 11:13:08.661  9152  9152 I QuickAppKit: android.platform.mount.ui surface=srf:1
+08-26 11:13:08.662  9152  9152 I QuickAppKit: android.platform.mount.result surface=srf:1 ok=true
+08-26 11:13:08.662  9152  9152 I QuickAppKit: android.mount.result.received surface=srf:1 revision=1 attempt=mnt:2 source=txn:srf:1-1 mounted=1
+08-26 11:13:08.662  9152  9177 I QuickAppKit: android.mount.result.accepted=1
+08-26 11:13:09.914  9152  9152 I QuickAppKit: android.input.click surface=srf:1 node=node:26
+08-26 11:13:09.914  9152  9152 I QuickAppKit: android.event.click.received surface=srf:1 node=node:26
+08-26 11:13:09.915  9152  9177 I QuickAppKit: android.event.js_callback posted=1 error=
+08-26 11:13:09.915  9152  9177 I QuickAppKit: android.event.click.dispatched=1
+08-26 11:13:09.915  9152  9184 I QuickAppKit: android.event.handler_execute surface=srf:1 handler=hdl:srf:1-3-blk:srf:1-2-bagB dispatched=1
+08-26 11:13:09.916  9152  9177 I QuickAppKit: android.navigation.push request=req:j-100001 source=srf:1 uri=/pages/ProductDetail accepted=1
+08-26 11:13:09.917  9152  9177 I QuickAppKit: android.native.create surface=srf:2
+08-26 11:13:09.917  9152  9177 I QuickAppKit: android.platform.create request=req:81 surface=srf:2
+08-26 11:13:09.917  9152  9177 I QuickAppKit: android.stage=core.loop.controller.work
+08-26 11:13:09.917  9152  9177 I QuickAppKit: android.core.controller.drained count=1
+08-26 11:13:09.917  9152  9152 I QuickAppKit: android.platform.create.ui surface=srf:2
+08-26 11:13:09.917  9152  9152 I QuickAppKit: android.platform.create.ui.result=true
+08-26 11:13:09.917  9152  9152 I QuickAppKit: android.stage=surface.result.received
+08-26 11:13:09.917  9152  9152 I QuickAppKit: android.platform.create.completed surface=srf:2
+08-26 11:13:09.918  9152  9177 I QuickAppKit: android.stage=surface.result.core
+08-26 11:13:09.918  9152  9177 I QuickAppKit: android.stage=page.command.received
+08-26 11:13:09.918  9152  9177 I QuickAppKit: android.stage=core.loop.controller.work
+08-26 11:13:09.918  9152  9177 I QuickAppKit: android.core.controller.drained count=1
+08-26 11:13:09.919  9152  9184 I QuickAppKit: android.stage=page.command.js
+08-26 11:13:09.921  9152  9184 I QuickAppKit: android.stage=js.module.loaded
+08-26 11:13:09.921  9152  9184 I QuickAppKit: android.js.module id=@quickapp-kit/page/pages/ProductDetail kind=page status=loaded error=
+08-26 11:13:09.921  9152  9184 I QuickAppKit: android.stage=page.start.completed
+08-26 11:13:09.922  9152  9177 I QuickAppKit: android.stage=initial.command.received
+08-26 11:13:09.922  9152  9177 I QuickAppKit: android.stage=initial.command.coordinator
+08-26 11:13:09.922  9152  9177 I QuickAppKit: android.stage=core.loop.controller.work
+08-26 11:13:09.922  9152  9177 I QuickAppKit: android.core.controller.drained count=1
+08-26 11:13:09.922  9152  9184 I QuickAppKit: android.stage=initial.command.js
+08-26 11:13:09.923  9152  9184 I QuickAppKit: android.stage=page.vm.ready
+08-26 11:13:09.923  9152  9184 I QuickAppKit: android.event.handler_bind surface=srf:2 handler=hdl:1 method=onAdd bound=1 method_ok=1 vm_ok=1
+08-26 11:13:09.923  9152  9184 I QuickAppKit: android.event.handler_bind surface=srf:2 handler=hdl:2 method=onBack bound=1 method_ok=1 vm_ok=1
+08-26 11:13:09.924  9152  9177 I QuickAppKit: android.stage=core.ingress.instantiate
+08-26 11:13:09.924  9152  9177 I QuickAppKit: android.native.mount surface=srf:2 operations=47
+08-26 11:13:09.924  9152  9177 I QuickAppKit: android.platform.mount surface=srf:2 operations=47
+08-26 11:13:09.924  9152  9177 I QuickAppKit: android.stage=core.ingress.instantiate.accepted
+08-26 11:13:09.924  9152  9177 I QuickAppKit: android.event.handlers count=7 hdl1node=node:7
+08-26 11:13:09.932  9152  9152 I QuickAppKit: android.platform.mount.ui surface=srf:2
+08-26 11:13:09.934  9152  9152 I QuickAppKit: android.platform.mount.result surface=srf:2 ok=true
+08-26 11:13:09.934  9152  9152 I QuickAppKit: android.mount.result.received surface=srf:2 revision=0 attempt=mnt:3 source=req:j-2 mounted=1
+08-26 11:13:09.935  9152  9177 I QuickAppKit: android.stage=core.initial.prepared
+08-26 11:13:09.935  9152  9177 I QuickAppKit: android.initial.result surface=srf:2 prepared=1 error=
+08-26 11:13:09.935  9152  9177 I QuickAppKit: android.initial.controller.enqueue=1
+08-26 11:13:09.935  9152  9177 I QuickAppKit: android.mount.result.accepted=1
+08-26 11:13:09.935  9152  9177 I QuickAppKit: android.native.surface.present.enter request=req:88 surface=srf:2
+08-26 11:13:09.935  9152  9177 I QuickAppKit: android.native.present request=req:88 surface=srf:2 push=1
+08-26 11:13:09.935  9152  9177 I QuickAppKit: android.platform.present request=req:88 surface=srf:2
+08-26 11:13:09.935  9152  9177 I QuickAppKit: android.native.surface.present.exit posted=1
+08-26 11:13:09.935  9152  9177 I QuickAppKit: android.stage=core.loop.controller.work
+08-26 11:13:09.935  9152  9177 I QuickAppKit: android.core.controller.drained count=1
+08-26 11:13:09.973  9152  9152 I QuickAppKit: android.platform.present.ui surface=srf:2
+08-26 11:13:09.974  9152  9152 I QuickAppKit: android.stage=surface.result.received
+08-26 11:13:09.975  9152  9177 I QuickAppKit: android.stage=surface.result.core
+08-26 11:13:09.975  9152  9177 I QuickAppKit: android.stage=page.command.received
+08-26 11:13:09.975  9152  9177 I QuickAppKit: android.stage=core.loop.controller.work
+08-26 11:13:09.975  9152  9177 I QuickAppKit: android.core.controller.drained count=1
+08-26 11:13:09.975  9152  9184 I QuickAppKit: android.stage=page.command.js
+08-26 11:13:09.977  9152  9177 I QuickAppKit: android.stage=page.command.received
+08-26 11:13:09.977  9152  9177 I QuickAppKit: android.stage=core.loop.controller.work
+08-26 11:13:09.977  9152  9177 I QuickAppKit: android.core.controller.drained count=1
+08-26 11:13:09.977  9152  9184 I QuickAppKit: android.stage=page.command.js
+08-26 11:13:09.978  9152  9177 I QuickAppKit: android.stage=surface.operation.completed
+08-26 11:13:09.978  9152  9177 I QuickAppKit: android.surface.operation kind=1 request=req:j-100001 target=srf:2 error=
+08-26 11:13:09.978  9152  9177 I QuickAppKit: android.stage=core.loop.controller.work
+08-26 11:13:09.978  9152  9177 I QuickAppKit: android.core.controller.drained count=1
+08-26 11:13:11.210  9266  9266 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+08-26 11:13:11.213  9266  9266 I AndroidRuntime: Using default boot image
+08-26 11:13:11.213  9266  9266 I AndroidRuntime: Leaving lock profiling enabled
+08-26 11:13:11.269  9266  9266 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+08-26 11:13:12.420  9266  9266 D AndroidRuntime: Shutting down VM

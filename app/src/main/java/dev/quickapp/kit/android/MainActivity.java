@@ -55,7 +55,8 @@ public final class MainActivity extends Activity {
                 "list-001.rpk".equals(requested) ||
                 "platform-001.rpk".equals(requested) ||
                 "media-001.rpk".equals(requested) ||
-                "tabs-001.rpk".equals(requested)) {
+                "tabs-001.rpk".equals(requested) ||
+                "capability-gallery-001.rpk".equals(requested)) {
             return requested;
         }
         return DEFAULT_RPK;

@@ -1,0 +1,20 @@
+08-26 09:09:25.028  4240  4240 I QuickAppKit: android.input.tabs.change surface=srf:1 node=node:4 index=1 value=任务
+08-26 09:09:25.028  4240  4240 I QuickAppKit: android.event.change.received surface=srf:1 node=node:4
+08-26 09:09:25.032  4240  4287 I QuickAppKit: android.event.js_callback posted=1 error=
+08-26 09:09:25.032  4240  4287 I QuickAppKit: android.event.change.dispatched=1
+08-26 09:09:25.033  4240  4289 I QuickAppKit: android.event.handler_execute surface=srf:1 handler=hdl:1 dispatched=1
+08-26 09:09:26.356  4240  4240 I QuickAppKit: android.input.tabs.change surface=srf:1 node=node:4 index=2 value=我的
+08-26 09:09:26.357  4240  4240 I QuickAppKit: android.event.change.received surface=srf:1 node=node:4
+08-26 09:09:26.358  4240  4287 I QuickAppKit: android.event.js_callback posted=1 error=
+08-26 09:09:26.358  4240  4287 I QuickAppKit: android.event.change.dispatched=1
+08-26 09:09:26.358  4240  4289 I QuickAppKit: android.event.handler_execute surface=srf:1 handler=hdl:1 dispatched=1
+08-26 09:09:27.655  4240  4240 I QuickAppKit: android.input.tabs.change surface=srf:1 node=node:4 index=2 value=我的
+08-26 09:09:27.655  4240  4240 I QuickAppKit: android.event.change.received surface=srf:1 node=node:4
+08-26 09:09:27.655  4240  4287 I QuickAppKit: android.event.js_callback posted=1 error=
+08-26 09:09:27.655  4240  4287 I QuickAppKit: android.event.change.dispatched=1
+08-26 09:09:27.656  4240  4289 I QuickAppKit: android.event.handler_execute surface=srf:1 handler=hdl:1 dispatched=1
+08-26 09:09:28.756  4240  4240 I QuickAppKit: android.input.tabs.change surface=srf:1 node=node:4 index=0 value=首页
+08-26 09:09:28.756  4240  4240 I QuickAppKit: android.event.change.received surface=srf:1 node=node:4
+08-26 09:09:28.758  4240  4287 I QuickAppKit: android.event.js_callback posted=1 error=
+08-26 09:09:28.758  4240  4287 I QuickAppKit: android.event.change.dispatched=1
+08-26 09:09:28.758  4240  4289 I QuickAppKit: android.event.handler_execute surface=srf:1 handler=hdl:1 dispatched=1
