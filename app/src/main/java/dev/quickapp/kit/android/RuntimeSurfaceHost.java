@@ -22,6 +22,8 @@ import android.widget.VideoView;
 import android.net.Uri;
 import android.util.Log;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.zip.ZipFile;
@@ -102,6 +104,7 @@ final class RuntimeSurfaceHost {
     private final String rpkPath;
     private final Map<String, FrameLayout> surfaces = new HashMap<>();
     private final Map<String, NodeRecord> nodes = new HashMap<>();
+    private final Map<String, File> materializedVideos = new HashMap<>();
 
     RuntimeSurfaceHost(FrameLayout appRoot, EventSink eventSink, String rpkPath) {
         this.appRoot = appRoot;
@@ -213,6 +216,10 @@ final class RuntimeSurfaceHost {
         }
         nodes.clear();
         surfaces.clear();
+        for (File video : materializedVideos.values()) {
+            if (video != null) video.delete();
+        }
+        materializedVideos.clear();
     }
 
     private boolean applyOperation(
@@ -529,7 +536,9 @@ final class RuntimeSurfaceHost {
                 }
                 if (node.videoView != null) {
                     try {
-                        node.videoView.setVideoURI(Uri.parse(operation.stringValue));
+                        Uri source = videoUri(operation.stringValue);
+                        if (source == null) return false;
+                        node.videoView.setVideoURI(source);
                         return true;
                     } catch (RuntimeException failure) {
                         Log.w(TAG, "android.video.source.failed node=" + operation.nodeId,
@@ -999,6 +1008,38 @@ final class RuntimeSurfaceHost {
         } catch (IOException failure) {
             Log.w(TAG, "android.image.load.failed member=" + member, failure);
             return false;
+        }
+    }
+
+    private Uri videoUri(String source) {
+        if (source == null || source.isEmpty()) return null;
+        if (!source.startsWith("assets/")) return Uri.parse(source);
+        File cached = materializedVideos.get(source);
+        if (cached != null && cached.isFile()) return Uri.fromFile(cached);
+        if (rpkPath == null) return null;
+        String safeName = source.replaceAll("[^A-Za-z0-9._-]", "_");
+        File output = new File(appRoot.getContext().getCacheDir(),
+                "quickapp-kit-video-" + safeName);
+        try (ZipFile packageFile = new ZipFile(rpkPath)) {
+            java.util.zip.ZipEntry entry = packageFile.getEntry(source);
+            if (entry == null) return null;
+            try (InputStream input = packageFile.getInputStream(entry);
+                 FileOutputStream stream = new FileOutputStream(output, false)) {
+                byte[] buffer = new byte[16 * 1024];
+                int read;
+                while ((read = input.read(buffer)) >= 0) {
+                    if (read > 0) stream.write(buffer, 0, read);
+                }
+                stream.getFD().sync();
+            }
+            materializedVideos.put(source, output);
+            Log.i(TAG, "android.video.resource.materialized member=" + source +
+                    " bytes=" + output.length());
+            return Uri.fromFile(output);
+        } catch (IOException failure) {
+            Log.w(TAG, "android.video.resource.failed member=" + source, failure);
+            if (output.exists()) output.delete();
+            return null;
         }
     }
 
