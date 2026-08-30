@@ -1,7 +1,0 @@
---------- beginning of main
-08-26 18:10:20.673 26266 26266 I QuickAppKit: android.input.picker.change surface=srf:1 node=node:7 selected=2 value=性能
-08-26 18:10:20.674 26266 26266 I QuickAppKit: android.event.change.received surface=srf:1 node=node:7
-08-26 18:10:20.676 26266 26290 I QuickAppKit: android.event.payload event=change keys=2 index=absent value=string checked=absent isFromUser=absent selected=number scrollOffset=absent
-08-26 18:10:20.679 26266 26290 I QuickAppKit: android.event.js_callback posted=1 error=
-08-26 18:10:20.679 26266 26290 I QuickAppKit: android.event.change.dispatched=1
-08-26 18:10:20.695 26266 26291 I QuickAppKit: android.event.handler_execute surface=srf:1 handler=hdl:2 dispatched=1
