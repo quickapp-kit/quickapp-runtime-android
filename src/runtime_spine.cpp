@@ -1751,7 +1751,7 @@ struct RuntimeSpine::Impl final {
     }
     if (engine) {
       std::promise<void> stopped_result;
-      static_cast<void>(engine->post([this](qj::JsEnginePort&, const qj::JsContextRef&) {
+      const auto teardown_services = [this] {
         if (handler_registry) handler_registry->stopOnExecutor();
         if (vm) vm->stopOnExecutor();
         if (transaction_builder) transaction_builder->stopOnExecutor();
@@ -1760,8 +1760,11 @@ struct RuntimeSpine::Impl final {
         if (runtime_abi) runtime_abi->stopOnExecutor();
         if (modules) modules->stopOnExecutor();
         if (facades) facades->stopOnExecutor();
-      }));
-      static_cast<void>(engine->stop({}, [&] { stopped_result.set_value(); }));
+      };
+      if (!engine->stop(teardown_services, [&] { stopped_result.set_value(); })) {
+        teardown_services();
+        stopped_result.set_value();
+      }
       stopped_result.get_future().wait();
     }
     delete handler_registry;

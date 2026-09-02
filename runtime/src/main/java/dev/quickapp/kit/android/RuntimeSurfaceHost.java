@@ -101,7 +101,7 @@ final class RuntimeSurfaceHost {
     private final FrameLayout appRoot;
     private final EventSink eventSink;
     private final float density;
-    private final String rpkPath;
+    private String rpkPath;
     private final Map<String, FrameLayout> surfaces = new HashMap<>();
     private final Map<String, NodeRecord> nodes = new HashMap<>();
     private final Map<String, File> materializedVideos = new HashMap<>();
@@ -112,6 +112,21 @@ final class RuntimeSurfaceHost {
         this.density = appRoot.getResources().getDisplayMetrics().density;
         this.rpkPath = rpkPath;
         appRoot.setFocusableInTouchMode(true);
+    }
+
+    void setRpkPath(String rpkPath) {
+        this.rpkPath = rpkPath;
+    }
+
+    boolean dispatchInput(int action, float x, float y, long timestampNs) {
+        long eventTimeMs = timestampNs > 0 ? timestampNs / 1_000_000L : System.currentTimeMillis();
+        android.view.MotionEvent event = android.view.MotionEvent.obtain(
+                eventTimeMs, eventTimeMs, action, x, y, 0);
+        try {
+            return appRoot.dispatchTouchEvent(event);
+        } finally {
+            event.recycle();
+        }
     }
 
     boolean createSurface(String surfaceId) {

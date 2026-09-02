@@ -4,7 +4,7 @@ Android platform adapter for the [QuickApp Kit](https://github.com/quickapp-kit)
 
 ## Overview
 
-`quickapp-runtime-android` is the Android-specific layer of the QuickApp runtime. It provides the **Platform Composition Root**, **Runtime Host**, **JNI Gateway**, **Package Source**, and **Platform Adapter** — bridging the platform-independent [quickapp-runtime-core](https://github.com/quickapp-kit/quickapp-runtime-core) to the Android system.
+`quickapp-runtime-android` contains the Android SDK library and a minimal Host sample. The library provides the public Java facade, JNI gateway, C++ runtime composition and Android platform adapter. The Host only selects local RPK files and supplies a View container.
 
 ```
 ┌──────────────────────────────────────────────────┐
@@ -31,9 +31,11 @@ Android platform adapter for the [QuickApp Kit](https://github.com/quickapp-kit)
 
 | Component | Description |
 |-----------|-------------|
-| `quickapp_android_host` | Composition root, runtime host, launch profile, package source, executor |
-| `quickapp_android_platform` | Platform adapter + runtime spine (integrates Core & JS layers) |
-| `quickapp_android_runtime` | JNI shared library (`libquickapp_android_runtime.so`) |
+| `quickapp-runtime-android` | Android Library; publishes the AAR and JNI shared library |
+| `quickapp-host` | Minimal APK; local RPK catalog and Surface container only |
+| `quickapp_android_host` | C++ composition root inside the AAR |
+| `quickapp_android_platform` | Platform adapter + runtime spine inside the AAR |
+| `quickapp_android_runtime` | JNI shared library packaged by the AAR |
 
 ## Requirements
 
@@ -53,11 +55,14 @@ cmake --build build
 ctest --test-dir build --output-on-failure
 ```
 
-### Full Android build
+### SDK and Host build
 
 ```bash
-./gradlew :app:assembleDebug
+./gradlew :quickapp-runtime-android:bundleReleaseAar
+./gradlew :quickapp-host:assembleDebug
 ```
+
+The AAR never contains RPK files. RPK files are Host or caller inputs.
 
 ### Verification (with sanitizers)
 
@@ -78,7 +83,8 @@ ctest --test-dir build --output-on-failure
 │   ├── executor.h              # Task executor
 │   └── jni_gateway.h          # JNI entry point
 ├── src/                        # C++ implementation
-├── app/                        # Android application module (Kotlin)
+├── runtime/                    # Android Library module and public Java facade
+├── app/                        # Minimal Host APK module
 ├── tests/                      # Contract tests
 ├── cmake/                      # CMake utilities
 ├── tools/                      # Verification scripts

@@ -4,7 +4,7 @@
 
 ## 概述
 
-`quickapp-runtime-android` 是 QuickApp 运行时的 Android 平台层，提供 **平台组合根**、**Runtime Host**、**JNI Gateway**、**Package Source** 和 **Platform Adapter** —— 将平台无关的 [quickapp-runtime-core](https://github.com/quickapp-kit/quickapp-runtime-core) 桥接到 Android 系统。
+`quickapp-runtime-android` 包含 Android SDK Library 和最小 Host 示例。Library 提供稳定 Java Facade、JNI Gateway、C++ Runtime 组合和 Android Platform Adapter；Host 只选择本地 RPK 并提供 View 容器。
 
 ```
 ┌──────────────────────────────────────────────────┐
@@ -31,9 +31,11 @@
 
 | 组件 | 描述 |
 |------|------|
-| `quickapp_android_host` | 组合根、运行时宿主、启动配置、包源、执行器 |
-| `quickapp_android_platform` | 平台适配器 + 运行时骨架（集成 Core 与 JS 层） |
-| `quickapp_android_runtime` | JNI 共享库（`libquickapp_android_runtime.so`） |
+| `quickapp-runtime-android` | Android Library，生成 AAR 和 JNI 共享库 |
+| `quickapp-host` | 最小 APK，只负责本地 RPK 列表和 Surface 容器 |
+| `quickapp_android_host` | AAR 内部的 C++ 组合根 |
+| `quickapp_android_platform` | AAR 内部的平台适配器和 Runtime Spine |
+| `quickapp_android_runtime` | 由 AAR 打包的 JNI 共享库 |
 
 ## 环境要求
 
@@ -53,11 +55,14 @@ cmake --build build
 ctest --test-dir build --output-on-failure
 ```
 
-### 完整 Android 构建
+### SDK 和 Host 构建
 
 ```bash
-./gradlew :app:assembleDebug
+./gradlew :quickapp-runtime-android:bundleReleaseAar
+./gradlew :quickapp-host:assembleDebug
 ```
+
+AAR 不包含 RPK；RPK 始终由 Host 或调用方传入。
 
 ### 验证（含 Sanitizer）
 
@@ -78,7 +83,8 @@ ctest --test-dir build --output-on-failure
 │   ├── executor.h              # 任务执行器
 │   └── jni_gateway.h          # JNI 入口
 ├── src/                        # C++ 实现
-├── app/                        # Android 应用模块（Kotlin）
+├── runtime/                    # Android Library 模块和 Java Facade
+├── app/                        # 最小 Host APK 模块
 ├── tests/                      # 契约测试
 ├── cmake/                      # CMake 工具
 ├── tools/                      # 验证脚本

@@ -7,6 +7,8 @@ local.properties
 .DS_Store
 app/.cxx/
 app/build/
+runtime/.cxx/
+runtime/build/
 
 # Evidence 产物（截图/日志/UI dump）默认不提交，仅 img/ 白名单目录可提交
 evidence/**/*.png

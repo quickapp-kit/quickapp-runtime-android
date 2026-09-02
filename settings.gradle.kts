@@ -15,4 +15,6 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "QuickAppAndroidRuntime"
-include(":app")
+include(":quickapp-runtime-android", ":quickapp-host")
+project(":quickapp-runtime-android").projectDir = file("runtime")
+project(":quickapp-host").projectDir = file("app")

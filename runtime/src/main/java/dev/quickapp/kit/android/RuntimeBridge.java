@@ -1,6 +1,7 @@
 package dev.quickapp.kit.android;
 
-import android.app.Activity;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.FrameLayout;
 
@@ -9,13 +10,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 final class RuntimeBridge {
     private static final String TAG = "QuickAppKit";
 
-    private final Activity activity;
+    private final Handler mainHandler = new Handler(Looper.getMainLooper());
     private final RuntimeSurfaceHost platform;
     private final AtomicBoolean destroyed = new AtomicBoolean(false);
     private long nativeHandle;
 
-    RuntimeBridge(Activity activity, FrameLayout root, float width, float height, String rpkPath) {
-        this.activity = activity;
+    RuntimeBridge(FrameLayout root, float width, float height, String rpkPath) {
         this.platform = new RuntimeSurfaceHost(root, this::dispatchEvent, rpkPath);
         this.nativeHandle = NativeGateway.create(this, width, height);
         if (nativeHandle == 0) {
@@ -25,6 +25,18 @@ final class RuntimeBridge {
 
     void start(String rpkPath) {
         NativeGateway.start(nativeHandle, rpkPath);
+    }
+
+    void setRpkPath(String rpkPath) {
+        platform.setRpkPath(rpkPath);
+    }
+
+    boolean dispatchInput(QuickAppInput input) {
+        return platform.dispatchInput(input.action, input.x, input.y, input.timestampNs);
+    }
+
+    boolean updateLifecycle(QuickAppLifecycleState state) {
+        return false;
     }
 
     void destroy() {
@@ -81,7 +93,7 @@ final class RuntimeBridge {
     @SuppressWarnings("unused")
     private void postCreateSurface(String requestId, String surfaceId) {
         Log.i(TAG, "android.platform.create request=" + requestId + " surface=" + surfaceId);
-        activity.runOnUiThread(() -> {
+        mainHandler.post(() -> {
             Log.i(TAG, "android.platform.create.ui surface=" + surfaceId);
             boolean ok = !destroyed.get() && platform.createSurface(surfaceId);
             Log.i(TAG, "android.platform.create.ui.result=" + ok);
@@ -97,7 +109,7 @@ final class RuntimeBridge {
     private void postPresentSurface(
             String requestId, String targetSurfaceId, String sourceSurfaceId, boolean push) {
         Log.i(TAG, "android.platform.present request=" + requestId + " surface=" + targetSurfaceId);
-        activity.runOnUiThread(() -> {
+        mainHandler.post(() -> {
             Log.i(TAG, "android.platform.present.ui surface=" + targetSurfaceId);
             boolean ok = !destroyed.get() && (push
                     ? platform.presentPush(sourceSurfaceId, targetSurfaceId)
@@ -112,7 +124,7 @@ final class RuntimeBridge {
     @SuppressWarnings("unused")
     private void postSetSurfaceVisibility(
             String requestId, String surfaceId, boolean visible) {
-        activity.runOnUiThread(() -> {
+        mainHandler.post(() -> {
             boolean ok = !destroyed.get() && platform.setVisible(surfaceId, visible);
             NativeGateway.completeSurface(nativeHandle, requestId, 2, surfaceId,
                     null, null, visible ? 1 : 0, ok,
@@ -126,7 +138,7 @@ final class RuntimeBridge {
             String requestId, String sourceSurfaceId, String revealSurfaceId) {
         Log.i(TAG, "android.platform.close request=" + requestId +
                 " source=" + sourceSurfaceId + " reveal=" + revealSurfaceId);
-        activity.runOnUiThread(() -> {
+        mainHandler.post(() -> {
             boolean ok = !destroyed.get() &&
                     platform.closeAndReveal(sourceSurfaceId, revealSurfaceId);
             Log.i(TAG, "android.platform.close.result request=" + requestId +
@@ -143,7 +155,7 @@ final class RuntimeBridge {
     private void postDestroySurface(String requestId, String surfaceId) {
         Log.i(TAG, "android.platform.destroy request=" + requestId +
                 " surface=" + surfaceId);
-        activity.runOnUiThread(() -> {
+        mainHandler.post(() -> {
             boolean ok = platform.destroySurface(surfaceId);
             Log.i(TAG, "android.platform.destroy.result request=" + requestId +
                     " surface=" + surfaceId + " ok=" + ok +
@@ -160,7 +172,7 @@ final class RuntimeBridge {
     private void postMountTransaction(MountTransaction transaction) {
         Log.i(TAG, "android.platform.mount surface=" + transaction.surfaceId +
                 " operations=" + (transaction.operations == null ? -1 : transaction.operations.length));
-        activity.runOnUiThread(() -> {
+        mainHandler.post(() -> {
             Log.i(TAG, "android.platform.mount.ui surface=" + transaction.surfaceId);
             boolean ok = !destroyed.get() && platform.apply(transaction);
             Log.i(TAG, "android.platform.mount.result surface=" + transaction.surfaceId +
@@ -191,7 +203,7 @@ final class RuntimeBridge {
             int pendingCallbackCount,
             int jsResourceCount,
             int coreQueueDepth) {
-        activity.runOnUiThread(() -> {
+        mainHandler.post(() -> {
             platform.close();
             Log.i(TAG, "android.runtime.stopped surfaces=" + surfaceCount +
                     " nodes=" + nodeCount + " handlers=" + handlerCount +
