@@ -35,9 +35,9 @@ public final class MainActivity extends Activity {
             "tk-s11-image-input001.rpk",
             "tk-s12-lvgl-p0.rpk",
             "tk-timer-001.rpk",
-            "gallery-001.rpk",
-            "consumer-001.rpk",
-            "wearable-001.rpk",
+            "inspection-board.rpk",
+            "content-hub.rpk",
+            "health-summary.rpk",
             "controls-001.rpk",
             "controls-002.rpk",
             "list-001.rpk",
@@ -50,7 +50,7 @@ public final class MainActivity extends Activity {
             "sport-band.rpk",
             "sport-watch.rpk",
             "url-001.rpk",
-            "wallet-001.rpk"
+            "card-wallet.rpk"
     };
 
     private FrameLayout root;
