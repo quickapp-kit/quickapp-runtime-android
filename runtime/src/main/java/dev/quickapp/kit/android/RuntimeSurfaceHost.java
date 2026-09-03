@@ -416,6 +416,7 @@ final class RuntimeSurfaceHost {
             tabs.setOrientation(LinearLayout.HORIZONTAL);
             tabs.setGravity(Gravity.CENTER_VERTICAL);
             tabs.setBaselineAligned(false);
+            tabs.setClipToOutline(true);
             view = tabs;
         } else if (operation.componentType == COMPONENT_VIDEO) {
             FrameLayout container = new FrameLayout(appRoot.getContext());
@@ -678,12 +679,13 @@ final class RuntimeSurfaceHost {
                 if (operation.valueKind != MountOperation.VALUE_STRING) return false;
                 node.backgroundColor = Color.parseColor(operation.stringValue);
                 applyBackground(node);
+                if (node.tabsView != null) applyTabsSelection(node);
                 return true;
             case "color":
                 if (operation.valueKind != MountOperation.VALUE_STRING) return false;
                 if (node.tabsView != null) {
                     node.tabsTextColor = Color.parseColor(operation.stringValue);
-                    applyTabsTextColor(node);
+                    applyTabsSelection(node);
                     return true;
                 }
                 if (!(view instanceof TextView)) return false;
@@ -693,6 +695,7 @@ final class RuntimeSurfaceHost {
                 if (operation.valueKind != MountOperation.VALUE_NUMBER) return false;
                 node.borderRadius = logical(operation.numberValue);
                 applyBackground(node);
+                if (node.tabsView != null) applyTabsSelection(node);
                 return true;
             case "fontSize":
                 if (operation.valueKind != MountOperation.VALUE_NUMBER ||
@@ -723,6 +726,12 @@ final class RuntimeSurfaceHost {
         params.leftMargin = logical(operation.x);
         params.topMargin = logical(operation.y);
         node.view.setLayoutParams(params);
+        if (node.tabsView != null) {
+            Log.i(TAG, "android.tabs.layout surface=" + surfaceId +
+                    " node=" + operation.nodeId +
+                    " x=" + operation.x + " y=" + operation.y +
+                    " width=" + operation.width + " height=" + operation.height);
+        }
         return true;
     }
 
@@ -742,6 +751,13 @@ final class RuntimeSurfaceHost {
         }
         int index = Math.max(0, Math.min(operation.index, parentGroup.getChildCount()));
         parentGroup.addView(child.view, index);
+        if (child.tabsView != null) {
+            Log.i(TAG, "android.tabs.mount surface=" + surfaceId +
+                    " node=" + operation.nodeId +
+                    " parent=" + operation.parentNodeId +
+                    " index=" + index +
+                    " parentClass=" + parent.view.getClass().getSimpleName());
+        }
         return true;
     }
 
@@ -819,7 +835,8 @@ final class RuntimeSurfaceHost {
     private void applyBackground(NodeRecord node) {
         GradientDrawable drawable = new GradientDrawable();
         drawable.setColor(node.backgroundColor);
-        drawable.setCornerRadius(node.borderRadius);
+        drawable.setCornerRadius(node.tabsView == null
+                ? node.borderRadius : Math.max(node.borderRadius, logical(20)));
         node.view.setBackground(drawable);
     }
 
@@ -899,19 +916,18 @@ final class RuntimeSurfaceHost {
             View child = node.tabsView.getChildAt(index);
             if (!(child instanceof TextView)) continue;
             TextView tab = (TextView) child;
-            tab.setTextColor(node.tabsTextColor);
+            tab.setTextColor(index == node.tabsSelected
+                    ? node.backgroundColor : node.tabsTextColor);
             tab.setAlpha(index == node.tabsSelected ? 1f : 0.65f);
             tab.setTypeface(null, index == node.tabsSelected
                     ? android.graphics.Typeface.BOLD : android.graphics.Typeface.NORMAL);
-        }
-    }
-
-    private void applyTabsTextColor(NodeRecord node) {
-        if (node.tabsView == null) return;
-        for (int index = 0; index < node.tabsView.getChildCount(); index++) {
-            View child = node.tabsView.getChildAt(index);
-            if (child instanceof TextView) {
-                ((TextView) child).setTextColor(node.tabsTextColor);
+            if (index == node.tabsSelected) {
+                GradientDrawable selectedBackground = new GradientDrawable();
+                selectedBackground.setColor(Color.WHITE);
+                selectedBackground.setCornerRadius(Math.max(node.borderRadius, logical(20)));
+                tab.setBackground(selectedBackground);
+            } else {
+                tab.setBackground(null);
             }
         }
     }

@@ -268,17 +268,20 @@ public final class MainActivity extends Activity {
         surfaceParams.topMargin = dp(68);
         runtimeContainer.addView(runtimeSurface, surfaceParams);
 
-        runtime = QuickAppRuntime.create(this);
-        QuickAppResult attached = runtime.attachSurface(runtimeSurface);
-        if (!attached.isSuccess()) {
-            showFailure(attached);
-            return;
-        }
-        File rpk = copyRuntimeRpk(assetName);
-        QuickAppResult loaded = rpk == null
-                ? QuickAppResult.failed("RPK_COPY_FAILED", "Cannot copy RPK into private storage")
-                : runtime.loadRpk(rpk);
-        if (!loaded.isSuccess()) showFailure(loaded);
+        runtimeSurface.post(() -> {
+            if (runtimeSurface == null || runtime != null) return;
+            runtime = QuickAppRuntime.create(this);
+            QuickAppResult attached = runtime.attachSurface(runtimeSurface);
+            if (!attached.isSuccess()) {
+                showFailure(attached);
+                return;
+            }
+            File rpk = copyRuntimeRpk(assetName);
+            QuickAppResult loaded = rpk == null
+                    ? QuickAppResult.failed("RPK_COPY_FAILED", "Cannot copy RPK into private storage")
+                    : runtime.loadRpk(rpk);
+            if (!loaded.isSuccess()) showFailure(loaded);
+        });
     }
 
     private void closeRuntime() {
