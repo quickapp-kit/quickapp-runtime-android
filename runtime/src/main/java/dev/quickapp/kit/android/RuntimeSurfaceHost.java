@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.SeekBar;
@@ -84,9 +85,14 @@ final class RuntimeSurfaceHost {
         ImageView videoPoster;
         android.media.MediaPlayer videoPlayer;
         Runnable videoProgressRunnable;
+        TextView videoTimeLabel;
+        SeekBar videoProgressBar;
+        ImageButton videoPlayButton;
+        MediaController videoController;
         boolean videoAutoplay;
         boolean videoControls;
         boolean videoMuted;
+        boolean videoPlayRequested;
         LinearLayout tabsView;
         String[] tabsItems = new String[0];
         int tabsSelected;
@@ -447,10 +453,11 @@ final class RuntimeSurfaceHost {
                         " node=" + operation.nodeId);
                 emitVideoEvent(surfaceId, operation.nodeId, "prepared", null);
                 scheduleVideoTimeUpdates(surfaceId, operation.nodeId, video, node);
-                if (node.videoAutoplay) {
+                if (node.videoAutoplay || node.videoPlayRequested) {
+                    node.videoPlayRequested = false;
                     video.start();
                     Log.i(TAG, "android.video.start surface=" + surfaceId +
-                            " node=" + operation.nodeId + " autoplay=true");
+                            " node=" + operation.nodeId + " autoplay=" + node.videoAutoplay);
                     emitVideoEvent(surfaceId, operation.nodeId, "start", null);
                 }
             });
@@ -477,7 +484,14 @@ final class RuntimeSurfaceHost {
             });
             video.setOnClickListener(ignored -> {
                 NodeRecord node = nodes.get(key(surfaceId, operation.nodeId));
-                if (node == null || node.videoControls || node.videoPlayer == null) return;
+                if (node == null) return;
+                if (node.videoPlayer == null) {
+                    node.videoPlayRequested = true;
+                    Log.i(TAG, "android.video.play.pending surface=" + surfaceId +
+                            " node=" + operation.nodeId);
+                    if (node.videoController != null) node.videoController.show();
+                    return;
+                }
                 if (video.isPlaying()) {
                     video.pause();
                     emitVideoEvent(surfaceId, operation.nodeId, "pause", null);
@@ -485,7 +499,9 @@ final class RuntimeSurfaceHost {
                     video.start();
                     emitVideoEvent(surfaceId, operation.nodeId, "start", null);
                 }
+                if (node.videoController != null) node.videoController.show();
             });
+            poster.setOnClickListener(ignored -> video.performClick());
             view = container;
         } else {
             return false;
@@ -554,6 +570,8 @@ final class RuntimeSurfaceHost {
                     try {
                         Uri source = videoUri(operation.stringValue);
                         if (source == null) return false;
+                        Log.i(TAG, "android.video.set_uri node=" + operation.nodeId +
+                                " uri=" + source);
                         node.videoView.setVideoURI(source);
                         return true;
                     } catch (RuntimeException failure) {
@@ -582,13 +600,13 @@ final class RuntimeSurfaceHost {
                 if (operation.valueKind != MountOperation.VALUE_BOOLEAN ||
                         node.videoView == null) return false;
                 node.videoControls = operation.booleanValue;
-                if (node.videoControls) {
-                    MediaController controls = new MediaController(appRoot.getContext());
-                    controls.setAnchorView(node.videoView);
-                    node.videoView.setMediaController(controls);
-                } else {
-                    node.videoView.setMediaController(null);
-                }
+                node.videoView.setMediaController(null);
+                node.videoController = null;
+                if (!node.videoControls) return true;
+                MediaController controls = new MediaController(appRoot.getContext());
+                controls.setAnchorView(node.videoView);
+                node.videoController = controls;
+                node.videoView.setMediaController(controls);
                 return true;
             case "muted":
                 if (operation.valueKind != MountOperation.VALUE_BOOLEAN ||
@@ -804,6 +822,7 @@ final class RuntimeSurfaceHost {
             record.videoView.setOnErrorListener(null);
             record.videoView.setOnClickListener(null);
             record.videoView.setMediaController(null);
+            record.videoController = null;
             record.videoView.stopPlayback();
             record.videoPlayer = null;
         }
