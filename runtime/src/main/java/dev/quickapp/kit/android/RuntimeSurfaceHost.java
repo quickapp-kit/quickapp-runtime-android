@@ -298,7 +298,7 @@ final class RuntimeSurfaceHost {
             view = new FrameLayout(appRoot.getContext());
         } else if (operation.componentType == COMPONENT_IMAGE) {
             ImageView image = new ImageView(appRoot.getContext());
-            image.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+            image.setScaleType(ImageView.ScaleType.FIT_CENTER);
             view = image;
         } else if (operation.componentType == COMPONENT_INPUT) {
             EditText input = new EditText(appRoot.getContext());
@@ -428,7 +428,7 @@ final class RuntimeSurfaceHost {
             FrameLayout container = new FrameLayout(appRoot.getContext());
             container.setBackgroundColor(Color.rgb(32, 37, 43));
             ImageView poster = new ImageView(appRoot.getContext());
-            poster.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+            poster.setScaleType(ImageView.ScaleType.FIT_CENTER);
             poster.setBackgroundColor(Color.rgb(32, 37, 43));
             container.addView(poster, new FrameLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
