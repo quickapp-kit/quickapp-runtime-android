@@ -25,8 +25,12 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public final class MainActivity extends Activity {
+    private static final String DEFAULT_RPK_ASSET = "shop.rpk";
     private static final String[] RPK_ASSETS = {
             "tk-s07-case001.rpk",
             "tk-s08-binding001.rpk",
@@ -90,6 +94,9 @@ public final class MainActivity extends Activity {
                     OnBackInvokedDispatcher.PRIORITY_DEFAULT, backCallback);
         }
         showCatalog();
+        if (Arrays.asList(availableRpkAssets()).contains(DEFAULT_RPK_ASSET)) {
+            openRuntime(DEFAULT_RPK_ASSET);
+        }
     }
 
     @Override
@@ -158,15 +165,29 @@ public final class MainActivity extends Activity {
         catalog.addView(grid, new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        for (int index = 0; index < RPK_ASSETS.length; index += 3) {
+        String[] availableRpkAssets = availableRpkAssets();
+        for (int index = 0; index < availableRpkAssets.length; index += 3) {
             LinearLayout row = new LinearLayout(this);
             row.setGravity(android.view.Gravity.TOP);
             grid.addView(row, new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            for (int column = 0; column < 3 && index + column < RPK_ASSETS.length; column++) {
-                row.addView(createRpkTile(RPK_ASSETS[index + column]), new LinearLayout.LayoutParams(
+            for (int column = 0; column < 3 && index + column < availableRpkAssets.length; column++) {
+                row.addView(createRpkTile(availableRpkAssets[index + column]), new LinearLayout.LayoutParams(
                         0, dp(160), 1));
             }
+        }
+    }
+
+    private String[] availableRpkAssets() {
+        try {
+            String[] bundledAssets = getAssets().list("");
+            if (bundledAssets == null) return new String[0];
+            Set<String> bundledAssetNames = new HashSet<>(Arrays.asList(bundledAssets));
+            return Arrays.stream(RPK_ASSETS)
+                    .filter(bundledAssetNames::contains)
+                    .toArray(String[]::new);
+        } catch (IOException error) {
+            return new String[0];
         }
     }
 

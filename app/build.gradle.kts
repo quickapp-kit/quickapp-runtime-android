@@ -39,7 +39,7 @@ android {
     }
 }
 
-val syncGoldenRpk by tasks.registering(Copy::class) {
+val syncGoldenRpk by tasks.registering(Sync::class) {
     from(rootProject.file("../quickapp-toolkit/evidence/tk-s07-case001.rpk"))
     from(rootProject.file("../quickapp-toolkit/evidence/tk-s08-binding001.rpk"))
     from(rootProject.file("../quickapp-toolkit/evidence/tk-s09-case002.rpk"))

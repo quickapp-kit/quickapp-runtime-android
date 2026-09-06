@@ -23,6 +23,8 @@ class Gateway {
   virtual bool postCloseSurface(const core::surface::SurfaceCloseCommand& command) noexcept = 0;
   virtual bool postDestroySurface(const core::surface::SurfaceDestroyCommand& command) noexcept = 0;
   virtual bool postMount(const core::render::MountTransaction& transaction) noexcept = 0;
+  virtual bool postShowToast(std::string_view message,
+                             std::uint64_t duration_ms) noexcept = 0;
 
   virtual void notifyStarted(std::string_view surface_id) noexcept = 0;
   virtual void notifyFailed(std::string_view code, std::string_view message) noexcept = 0;

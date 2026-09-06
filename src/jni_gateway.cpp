@@ -95,6 +95,8 @@ class JniGateway final : public platform::Gateway {
       value->post_mount_ = env->GetMethodID(
           value->bridge_class_, "postMountTransaction",
           "(Ldev/quickapp/kit/android/MountTransaction;)V");
+      value->post_show_toast_ = env->GetMethodID(
+          value->bridge_class_, "postShowToast", "(Ljava/lang/String;J)V");
       value->started_ = env->GetMethodID(
           value->bridge_class_, "onRuntimeStarted", "(Ljava/lang/String;)V");
       value->failed_ = env->GetMethodID(
@@ -206,6 +208,21 @@ class JniGateway final : public platform::Gateway {
       ok = false;
     }
     pending_.fetch_sub(1, std::memory_order_relaxed);
+    return ok;
+  }
+
+  bool postShowToast(std::string_view message,
+                     std::uint64_t duration_ms) noexcept override {
+    if (!open_.load(std::memory_order_acquire)) return false;
+    EnvScope scope(vm_);
+    JNIEnv* env = scope.get();
+    if (!env) return false;
+    jstring text = javaString(env, message);
+    env->CallVoidMethod(bridge_, post_show_toast_, text,
+                        static_cast<jlong>(duration_ms));
+    env->DeleteLocalRef(text);
+    const bool ok = !env->ExceptionCheck();
+    clearException(env);
     return ok;
   }
 
@@ -423,6 +440,7 @@ class JniGateway final : public platform::Gateway {
   jmethodID post_close_{nullptr};
   jmethodID post_destroy_{nullptr};
   jmethodID post_mount_{nullptr};
+  jmethodID post_show_toast_{nullptr};
   jmethodID started_{nullptr};
   jmethodID failed_{nullptr};
   jmethodID stopped_{nullptr};

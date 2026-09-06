@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -11,11 +12,14 @@ final class RuntimeBridge {
     private static final String TAG = "QuickAppKit";
 
     private final Handler mainHandler = new Handler(Looper.getMainLooper());
+    private final FrameLayout root;
     private final RuntimeSurfaceHost platform;
     private final AtomicBoolean destroyed = new AtomicBoolean(false);
+    private Toast activeToast;
     private long nativeHandle;
 
     RuntimeBridge(FrameLayout root, float width, float height, String rpkPath) {
+        this.root = root;
         this.platform = new RuntimeSurfaceHost(root, this::dispatchEvent, rpkPath);
         this.nativeHandle = NativeGateway.create(this, width, height);
         if (nativeHandle == 0) {
@@ -41,6 +45,12 @@ final class RuntimeBridge {
 
     void destroy() {
         if (!destroyed.compareAndSet(false, true)) return;
+        mainHandler.post(() -> {
+            if (activeToast != null) {
+                activeToast.cancel();
+                activeToast = null;
+            }
+        });
         long handle = nativeHandle;
         Log.i(TAG, "android.runtime.destroy.begin surfaces=" + platform.surfaceCount() +
                 " nodes=" + platform.nodeCount());
@@ -182,6 +192,23 @@ final class RuntimeBridge {
                     transaction.sourceId, ok,
                     ok ? null : "PLATFORM_REJECTED",
                     ok ? null : "Android Mount transaction failed");
+        });
+    }
+
+    @SuppressWarnings("unused")
+    private void postShowToast(String message, long durationMs) {
+        mainHandler.post(() -> {
+            if (destroyed.get()) return;
+            if (activeToast != null) activeToast.cancel();
+            Toast toast = Toast.makeText(root.getContext(), message, Toast.LENGTH_LONG);
+            activeToast = toast;
+            toast.show();
+            long resolvedDurationMs = durationMs > 0 ? durationMs : 2000;
+            mainHandler.postDelayed(() -> {
+                if (activeToast != toast) return;
+                toast.cancel();
+                activeToast = null;
+            }, resolvedDurationMs);
         });
     }
 

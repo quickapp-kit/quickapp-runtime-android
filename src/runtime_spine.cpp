@@ -481,11 +481,13 @@ class JsCoreIngress final : public ja::CoreIngressPort,
 
   void bind(qr::MountCoordinator& coordinator, qs::SurfaceController& controller,
             ja::RuntimeAbiService& runtime_abi,
-            qcf::ModuleRegistry& feature_registry) noexcept {
+            qcf::ModuleRegistry& feature_registry,
+            platform::Gateway& gateway) noexcept {
     coordinator_ = &coordinator;
     controller_ = &controller;
     runtime_abi_ = &runtime_abi;
     feature_registry_ = &feature_registry;
+    gateway_ = &gateway;
   }
   void bindHandlerSinks(HandlerBindingSink bind_sink,
                         HandlerUnbindSink unbind_sink) noexcept {
@@ -717,6 +719,43 @@ class JsCoreIngress final : public ja::CoreIngressPort,
                           "android.navigation.close request=%s source=%s accepted=%d",
                           request_id.value().wire().c_str(), source.value().wire().c_str(),
                           accepted ? 1 : 0);
+#endif
+      return;
+    }
+    if (auto* toast = std::get_if<ja::ShowToast>(&message)) {
+      if (feature_registry_ == nullptr || runtime_abi_ == nullptr) return;
+      const auto request_id = qc::RequestId::parse(toast->requestId);
+      const auto surface_id = qc::SurfaceId::parse(toast->surfaceId);
+      if (!request_id || !surface_id || toast->message.empty()) return;
+      auto result = feature_registry_->invoke(qcf::Request{
+          request_id.value(), surface_id.value(), qcf::ModuleId::kSystemPrompt,
+          qcf::Method::kShowToast, toast->message, std::nullopt,
+          toast->durationMs, std::nullopt, {}, {}, std::nullopt, 0, {},
+          std::nullopt, std::nullopt, std::nullopt});
+      if (result.status == qcf::Status::kSuccess &&
+          (gateway_ == nullptr ||
+           !gateway_->postShowToast(toast->message,
+                                    toast->durationMs == 0 ? 2000
+                                                           : toast->durationMs))) {
+        result.status = qcf::Status::kFailed;
+        result.error = qcf::Error{
+            "PLATFORM_REJECTED", "Android Toast dispatch failed", false};
+      }
+      std::optional<ja::MessageRuntimeError> error;
+      if (result.error) {
+        error = ja::MessageRuntimeError{
+            result.error->code, result.error->message, result.error->retryable,
+            toast->surfaceId, toast->requestId, std::nullopt, std::nullopt};
+      }
+      static_cast<void>(runtime_abi_->postCallback(ja::JsInboundMessage{
+          ja::ShowToastResult{toast->requestId, toast->surfaceId,
+                              std::string(qcf::status_wire(result.status)),
+                              std::move(error)}}));
+#if defined(__ANDROID__)
+      __android_log_print(ANDROID_LOG_INFO, "QuickAppKit",
+                          "android.toast.result request=%s surface=%s status=%s",
+                          toast->requestId.c_str(), toast->surfaceId.c_str(),
+                          std::string(qcf::status_wire(result.status)).c_str());
 #endif
       return;
     }
@@ -969,6 +1008,7 @@ class JsCoreIngress final : public ja::CoreIngressPort,
   qs::SurfaceController* controller_{nullptr};
   ja::RuntimeAbiService* runtime_abi_{nullptr};
   qcf::ModuleRegistry* feature_registry_{nullptr};
+  platform::Gateway* gateway_{nullptr};
   std::mutex pages_mutex_;
   std::map<std::string, qp::PageIrHandle, std::less<>> pages_;
   std::map<std::string, std::string, std::less<>> navigation_sources_;
@@ -1198,7 +1238,7 @@ struct RuntimeSpine::Impl final {
           (void)task;
         });
     core_ingress->bind(*coordinator, *controller, *runtime_abi,
-                       *feature_registry);
+                       *feature_registry, *gateway);
     if (!postRoot()) throw std::runtime_error("Android root request rejected");
     androidStage("root.enqueued");
     running.store(true);
